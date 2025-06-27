@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Shield,
   Phone,
@@ -113,9 +114,12 @@ export default function Index() {
                 </p>
               </div>
             </div>
-            <Badge variant="outline" className="text-safe border-safe">
-              Online
-            </Badge>
+            <div className="flex items-center space-x-3">
+              <ThemeToggle />
+              <Badge variant="outline" className="text-safe border-safe">
+                Online
+              </Badge>
+            </div>
           </div>
         </div>
       </header>

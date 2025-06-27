@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import {
   Shield,
   Phone,
@@ -87,9 +88,12 @@ export default function Emergency() {
                 </h1>
               </div>
             </div>
-            <Badge variant={sosActivated ? "destructive" : "outline"}>
-              {sosActivated ? "SOS Active" : "Ready"}
-            </Badge>
+            <div className="flex items-center space-x-3">
+              <ThemeToggle />
+              <Badge variant={sosActivated ? "destructive" : "outline"}>
+                {sosActivated ? "SOS Active" : "Ready"}
+              </Badge>
+            </div>
           </div>
         </div>
       </header>

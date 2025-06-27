@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ArrowLeft, Shield } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -22,20 +23,23 @@ export default function Placeholder({
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/")}
-              className="hover:bg-muted"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
-            </Button>
-            <div className="flex items-center space-x-2">
-              <Icon className="w-6 h-6 text-trust" />
-              <h1 className="text-xl font-bold text-foreground">{title}</h1>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/")}
+                className="hover:bg-muted"
+              >
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Back
+              </Button>
+              <div className="flex items-center space-x-2">
+                <Icon className="w-6 h-6 text-trust" />
+                <h1 className="text-xl font-bold text-foreground">{title}</h1>
+              </div>
             </div>
+            <ThemeToggle />
           </div>
         </div>
       </header>
