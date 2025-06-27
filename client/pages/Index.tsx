@@ -63,11 +63,6 @@ export default function Index() {
       description: "Get warned about unsafe areas based on community reports",
     },
     {
-      icon: Users,
-      title: "Safe Walk",
-      description: "Connect with verified volunteers for safe walks home",
-    },
-    {
       icon: Eye,
       title: "Hidden Mode",
       description: "Disguise the app as a calculator for discretion",
@@ -76,11 +71,6 @@ export default function Index() {
       icon: Clock,
       title: "Check-In Timer",
       description: "Automated safety check-ins with emergency escalation",
-    },
-    {
-      icon: Heart,
-      title: "Crisis Support",
-      description: "AI chatbot for immediate crisis assistance and guidance",
     },
     {
       icon: Scale,
@@ -109,11 +99,15 @@ export default function Index() {
         <div className="max-w-4xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 bg-trust rounded-xl flex items-center justify-center">
-                <Shield className="w-6 h-6 text-trust-foreground" />
-              </div>
+              <div
+                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                style={{
+                  backgroundColor: "rgba(255, 108, 250, 1)",
+                  fontFamily: "Tapestry, sans-serif",
+                }}
+              ></div>
               <div>
-                <h1 className="text-xl font-bold text-foreground">SafeGuard</h1>
+                <h1 className="text-xl font-bold text-foreground">Siren</h1>
                 <p className="text-sm text-muted-foreground">
                   Your personal safety companion
                 </p>
@@ -304,7 +298,7 @@ export default function Index() {
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center">
             <p className="text-sm text-muted-foreground">
-              SafeGuard - Your trusted safety companion. Available 24/7 for
+              Siren - Your trusted safety companion. Available 24/7 for
               emergencies.
             </p>
             <p className="text-xs text-muted-foreground mt-2">
