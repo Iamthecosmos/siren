@@ -8,6 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Index from "./pages/Index";
 import Emergency from "./pages/Emergency";
+import FakeCall from "./pages/FakeCall";
+import Location from "./pages/Location";
+import QuickDial from "./pages/QuickDial";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +24,9 @@ const App = () => (
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/emergency" element={<Emergency />} />
+          <Route path="/fake-call" element={<FakeCall />} />
+          <Route path="/location" element={<Location />} />
+          <Route path="/quick-dial" element={<QuickDial />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
