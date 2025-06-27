@@ -1,61 +1,319 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Shield,
+  Phone,
+  MessageSquare,
+  MapPin,
+  AlertTriangle,
+  Users,
+  Eye,
+  Clock,
+  Volume2,
+  Smartphone,
+  Heart,
+  Scale,
+} from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export default function Index() {
-  const [messageFromServer, setMessageFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchHello();
-  }, []);
+  const navigate = useNavigate();
 
-  const fetchHello = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setMessageFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
-    }
-  };
+  const quickActions = [
+    {
+      title: "Emergency SOS",
+      description: "Instant alert to emergency contacts",
+      icon: Shield,
+      color: "emergency",
+      action: () => navigate("/emergency"),
+    },
+    {
+      title: "Fake Call",
+      description: "Simulate a call to exit situations",
+      icon: Phone,
+      color: "trust",
+      action: () => navigate("/fake-call"),
+    },
+    {
+      title: "Share Location",
+      description: "Share live location with trusted contacts",
+      icon: MapPin,
+      color: "safe",
+      action: () => navigate("/location"),
+    },
+    {
+      title: "Quick Dial",
+      description: "Instant access to emergency services",
+      icon: Phone,
+      color: "warning",
+      action: () => navigate("/quick-dial"),
+    },
+  ];
+
+  const safetyFeatures = [
+    {
+      icon: MessageSquare,
+      title: "Fake Chat",
+      description: "Simulate conversations to escape uncomfortable situations",
+    },
+    {
+      icon: AlertTriangle,
+      title: "Danger Zone Alerts",
+      description: "Get warned about unsafe areas based on community reports",
+    },
+    {
+      icon: Users,
+      title: "Safe Walk",
+      description: "Connect with verified volunteers for safe walks home",
+    },
+    {
+      icon: Eye,
+      title: "Hidden Mode",
+      description: "Disguise the app as a calculator for discretion",
+    },
+    {
+      icon: Clock,
+      title: "Check-In Timer",
+      description: "Automated safety check-ins with emergency escalation",
+    },
+    {
+      icon: Heart,
+      title: "Crisis Support",
+      description: "AI chatbot for immediate crisis assistance and guidance",
+    },
+    {
+      icon: Scale,
+      title: "Legal Rights",
+      description: "Self-defense guides and legal resources",
+    },
+  ];
+
+  const handsFreeModes = [
+    {
+      icon: Volume2,
+      title: "Voice Activation",
+      description: "Secret phrase triggers emergency alert",
+    },
+    {
+      icon: Smartphone,
+      title: "Shake Alert",
+      description: "Shake pattern sends instant SOS",
+    },
+  ];
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 text-slate-600 max-w-md">{messageFromServer}</p>
-      </div>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
+      {/* Header */}
+      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <div className="w-10 h-10 bg-trust rounded-xl flex items-center justify-center">
+                <Shield className="w-6 h-6 text-trust-foreground" />
+              </div>
+              <div>
+                <h1 className="text-xl font-bold text-foreground">SafeGuard</h1>
+                <p className="text-sm text-muted-foreground">
+                  Your personal safety companion
+                </p>
+              </div>
+            </div>
+            <Badge variant="outline" className="text-safe border-safe">
+              Online
+            </Badge>
+          </div>
+        </div>
+      </header>
+
+      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+        {/* Emergency Banner */}
+        <Card className="border-emergency/20 bg-emergency/5">
+          <CardContent className="p-6">
+            <div className="flex items-center space-x-4">
+              <div className="w-12 h-12 bg-emergency rounded-full flex items-center justify-center">
+                <Shield className="w-6 h-6 text-emergency-foreground" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-lg font-semibold text-foreground">
+                  Emergency Ready
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Your safety network is active. Tap any quick action for
+                  immediate help.
+                </p>
+              </div>
+              <Button
+                size="lg"
+                className="bg-emergency hover:bg-emergency/90 text-emergency-foreground"
+                onClick={() => navigate("/emergency")}
+              >
+                SOS
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Quick Actions */}
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Quick Actions
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {quickActions.map((action, index) => (
+              <Card
+                key={index}
+                className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1"
+                onClick={action.action}
+              >
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div
+                      className={`w-12 h-12 rounded-xl flex items-center justify-center ${
+                        action.color === "emergency"
+                          ? "bg-emergency"
+                          : action.color === "trust"
+                            ? "bg-trust"
+                            : action.color === "safe"
+                              ? "bg-safe"
+                              : action.color === "warning"
+                                ? "bg-warning"
+                                : "bg-primary"
+                      }`}
+                    >
+                      <action.icon
+                        className={`w-6 h-6 ${
+                          action.color === "emergency"
+                            ? "text-emergency-foreground"
+                            : action.color === "trust"
+                              ? "text-trust-foreground"
+                              : action.color === "safe"
+                                ? "text-safe-foreground"
+                                : action.color === "warning"
+                                  ? "text-warning-foreground"
+                                  : "text-primary-foreground"
+                        }`}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {action.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {action.description}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Safety Features */}
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Safety Features
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {safetyFeatures.map((feature, index) => (
+              <Card
+                key={index}
+                className="group cursor-pointer transition-all hover:shadow-md"
+              >
+                <CardContent className="p-6">
+                  <div className="space-y-4">
+                    <div className="w-10 h-10 bg-trust/10 rounded-lg flex items-center justify-center">
+                      <feature.icon className="w-5 h-5 text-trust" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-foreground group-hover:text-trust transition-colors">
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground mt-1">
+                        {feature.description}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Hands-Free Mode */}
+        <section>
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Hands-Free Safety
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {handsFreeModes.map((mode, index) => (
+              <Card key={index} className="border-safe/20">
+                <CardContent className="p-6">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-12 h-12 bg-safe/10 rounded-xl flex items-center justify-center">
+                      <mode.icon className="w-6 h-6 text-safe" />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground">
+                        {mode.title}
+                      </h3>
+                      <p className="text-sm text-muted-foreground">
+                        {mode.description}
+                      </p>
+                    </div>
+                    <Badge variant="outline" className="text-safe border-safe">
+                      Active
+                    </Badge>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
+        {/* Community */}
+        <Card className="bg-gradient-to-r from-trust/5 to-safe/5 border-trust/20">
+          <CardContent className="p-6">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 bg-trust/10 rounded-full flex items-center justify-center mx-auto">
+                <Users className="w-8 h-8 text-trust" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-foreground">
+                  Join the Safety Community
+                </h3>
+                <p className="text-muted-foreground">
+                  Share safety tips, report incidents, and help keep everyone
+                  safe
+                </p>
+              </div>
+              <Button
+                variant="outline"
+                className="border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+              >
+                View Community Reports
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </main>
+
+      {/* Footer */}
+      <footer className="bg-muted/30 mt-16">
+        <div className="max-w-4xl mx-auto px-4 py-8">
+          <div className="text-center">
+            <p className="text-sm text-muted-foreground">
+              SafeGuard - Your trusted safety companion. Available 24/7 for
+              emergencies.
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              In case of immediate danger, call local emergency services
+              directly.
+            </p>
+          </div>
+        </div>
+      </footer>
     </div>
   );
 }
