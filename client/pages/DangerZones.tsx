@@ -376,6 +376,232 @@ export default function DangerZones() {
           <TabsContent value="current" className="space-y-6">
             {currentLocation && (
               <>
+                {/* Interactive Map */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center justify-between">
+                      <div className="flex items-center space-x-2">
+                        <MapPin className="w-5 h-5" />
+                        <span>Local Safety Map</span>
+                      </div>
+                      <div className="flex items-center space-x-2">
+                        <Badge variant="outline" className="text-xs">
+                          Real-time
+                        </Badge>
+                        <Button variant="outline" size="sm">
+                          <Navigation className="w-3 h-3 mr-1" />
+                          Center
+                        </Button>
+                      </div>
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="relative w-full h-80 bg-gradient-to-br from-safe/10 to-trust/10 rounded-lg border overflow-hidden">
+                      {/* Map Grid Background */}
+                      <div className="absolute inset-0 opacity-10">
+                        <svg className="w-full h-full">
+                          <defs>
+                            <pattern
+                              id="grid"
+                              width="20"
+                              height="20"
+                              patternUnits="userSpaceOnUse"
+                            >
+                              <path
+                                d="M 20 0 L 0 0 0 20"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="0.5"
+                              />
+                            </pattern>
+                          </defs>
+                          <rect width="100%" height="100%" fill="url(#grid)" />
+                        </svg>
+                      </div>
+
+                      {/* Streets */}
+                      <div className="absolute inset-0">
+                        {/* Main Street - Horizontal */}
+                        <div className="absolute top-1/2 left-0 w-full h-1 bg-muted/60 transform -translate-y-1/2"></div>
+                        {/* 5th Avenue - Vertical */}
+                        <div className="absolute left-1/3 top-0 w-1 h-full bg-muted/60"></div>
+                        {/* Oak Street - Diagonal */}
+                        <div className="absolute top-1/4 left-1/4 w-32 h-1 bg-muted/40 transform rotate-45 origin-left"></div>
+                      </div>
+
+                      {/* Current Location */}
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10">
+                        <div className="relative">
+                          {/* Pulsing circle */}
+                          <div className="w-8 h-8 bg-trust/20 rounded-full animate-pulse"></div>
+                          <div className="absolute inset-0 w-8 h-8 bg-trust/40 rounded-full animate-ping"></div>
+                          {/* Center dot */}
+                          <div className="absolute top-1/2 left-1/2 w-3 h-3 bg-trust rounded-full transform -translate-x-1/2 -translate-y-1/2 border-2 border-background"></div>
+                        </div>
+                        <div className="absolute top-10 left-1/2 transform -translate-x-1/2 bg-background/90 px-2 py-1 rounded text-xs font-medium whitespace-nowrap">
+                          You are here
+                        </div>
+                      </div>
+
+                      {/* Incident Markers */}
+                      {currentAreaSafety.recentIncidents.map(
+                        (incident, index) => {
+                          const positions = [
+                            { top: "40%", left: "60%" }, // Phone theft
+                            { top: "65%", left: "40%" }, // Harassment
+                          ];
+                          const position = positions[index] || positions[0];
+                          const IconComponent = getIncidentIcon(incident.type);
+
+                          return (
+                            <div
+                              key={incident.id}
+                              className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group z-20"
+                              style={{ top: position.top, left: position.left }}
+                              onClick={() => setSelectedIncident(incident)}
+                            >
+                              <div
+                                className={`w-6 h-6 rounded-full border-2 border-background flex items-center justify-center ${
+                                  incident.severity === "high"
+                                    ? "bg-emergency"
+                                    : incident.severity === "medium"
+                                      ? "bg-warning"
+                                      : "bg-safe"
+                                }`}
+                              >
+                                <IconComponent className="w-3 h-3 text-white" />
+                              </div>
+
+                              {/* Tooltip */}
+                              <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 bg-background/95 backdrop-blur px-3 py-2 rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none min-w-48">
+                                <p className="font-semibold text-xs capitalize">
+                                  {incident.type}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {incident.location}
+                                </p>
+                                <p className="text-xs text-muted-foreground">
+                                  {formatTimeAgo(incident.timestamp)}
+                                </p>
+                                <div className="absolute top-full left-1/2 transform -translate-x-1/2 border-4 border-transparent border-t-background/95"></div>
+                              </div>
+                            </div>
+                          );
+                        },
+                      )}
+
+                      {/* Nearby Incidents (outside immediate area) */}
+                      {nearbyIncidents.slice(0, 2).map((incident, index) => {
+                        const positions = [
+                          { top: "25%", left: "75%" }, // Suspicious activity
+                          { top: "80%", left: "20%" }, // Assault
+                        ];
+                        const position = positions[index] || positions[0];
+                        const IconComponent = getIncidentIcon(incident.type);
+
+                        return (
+                          <div
+                            key={incident.id}
+                            className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer group opacity-70 z-10"
+                            style={{ top: position.top, left: position.left }}
+                            onClick={() => setSelectedIncident(incident)}
+                          >
+                            <div
+                              className={`w-5 h-5 rounded-full border border-background flex items-center justify-center ${
+                                incident.severity === "high"
+                                  ? "bg-emergency"
+                                  : incident.severity === "medium"
+                                    ? "bg-warning"
+                                    : "bg-safe"
+                              }`}
+                            >
+                              <IconComponent className="w-2.5 h-2.5 text-white" />
+                            </div>
+                          </div>
+                        );
+                      })}
+
+                      {/* Safety Zones */}
+                      <div className="absolute top-1/4 right-1/4 w-16 h-16 rounded-full bg-safe/20 border-2 border-safe/40 flex items-center justify-center">
+                        <Shield className="w-4 h-4 text-safe" />
+                      </div>
+
+                      {/* Police Station */}
+                      <div className="absolute bottom-1/4 left-1/4 w-6 h-6 rounded bg-trust flex items-center justify-center">
+                        <Shield className="w-3 h-3 text-trust-foreground" />
+                      </div>
+
+                      {/* Scale/Legend */}
+                      <div className="absolute bottom-4 left-4 bg-background/90 backdrop-blur rounded-lg p-2 text-xs space-y-1">
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 rounded-full bg-emergency"></div>
+                          <span>High Risk</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 rounded-full bg-warning"></div>
+                          <span>Medium Risk</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 rounded-full bg-safe"></div>
+                          <span>Low Risk</span>
+                        </div>
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 rounded-full bg-safe/30 border border-safe"></div>
+                          <span>Safe Zone</span>
+                        </div>
+                      </div>
+
+                      {/* Distance Scale */}
+                      <div className="absolute bottom-4 right-4 bg-background/90 backdrop-blur rounded p-2">
+                        <div className="flex items-center space-x-2 text-xs">
+                          <div className="w-8 h-0.5 bg-foreground"></div>
+                          <span>500m</span>
+                        </div>
+                      </div>
+
+                      {/* Zoom Controls */}
+                      <div className="absolute top-4 right-4 flex flex-col space-y-1">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-8 h-8 p-0"
+                        >
+                          <Plus className="w-3 h-3" />
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-8 h-8 p-0"
+                        >
+                          <span className="text-lg font-light">−</span>
+                        </Button>
+                      </div>
+                    </div>
+
+                    {/* Map Controls */}
+                    <div className="flex items-center justify-between mt-4">
+                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                        <div className="w-2 h-2 bg-trust rounded-full animate-pulse"></div>
+                        <span>Live updates enabled</span>
+                      </div>
+                      <div className="flex space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="w-3 h-3 mr-1" />
+                          Satellite
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Route className="w-3 h-3 mr-1" />
+                          Directions
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          <Share className="w-3 h-3 mr-1" />
+                          Share
+                        </Button>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
                 {/* Current Location Overview */}
                 <Card>
                   <CardHeader>
