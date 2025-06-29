@@ -43,6 +43,7 @@ import {
   XCircle,
   Info,
   Zap,
+  Plus,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
