@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -39,6 +39,11 @@ import {
   Share,
   Edit,
   Trash2,
+  Image,
+  Upload,
+  FileText,
+  Headphones,
+  RefreshCw,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -51,6 +56,9 @@ interface Persona {
   voiceId: string;
   conversationStyle: string;
   emergencyPhrases: string[];
+  script: string;
+  ttsVoice: string;
+  customImage?: File;
 }
 
 interface CommunityVoice {
@@ -67,6 +75,16 @@ interface CommunityVoice {
   sampleUrl: string;
 }
 
+interface TTSVoice {
+  id: string;
+  name: string;
+  language: string;
+  gender: "male" | "female";
+  speed: number;
+  pitch: number;
+  naturalness: "robotic" | "natural" | "very-natural";
+}
+
 export default function FakeCall() {
   const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState("call");
@@ -74,6 +92,11 @@ export default function FakeCall() {
   const [isCallActive, setIsCallActive] = useState(false);
   const [callDuration, setCallDuration] = useState(0);
   const [isCreatingPersona, setIsCreatingPersona] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [newPersonaScript, setNewPersonaScript] = useState("");
+  const [selectedTTSVoice, setSelectedTTSVoice] = useState("");
+  const [isPlayingScript, setIsPlayingScript] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Sample data
   const personas: Persona[] = [
@@ -85,6 +108,9 @@ export default function FakeCall() {
       personality: "Caring, concerned, asks about wellbeing",
       voiceId: "voice-1",
       conversationStyle: "Warm and nurturing",
+      script:
+        "Hi honey, I hope you're doing well. I was just thinking about you and wanted to check in. Are you eating properly? How's work going? You know I worry about you sometimes. Give me a call when you get this, okay? Love you so much.",
+      ttsVoice: "tts-female-warm",
       emergencyPhrases: [
         "Are you okay?",
         "Where are you?",
@@ -99,6 +125,9 @@ export default function FakeCall() {
       personality: "Casual, supportive, uses humor",
       voiceId: "voice-2",
       conversationStyle: "Friendly and relaxed",
+      script:
+        "Hey! What's up? I was just thinking we should hang out soon. Maybe grab some coffee or catch that movie we talked about? Let me know when you're free. Also, did you see what happened on social media today? It's crazy! Call me back when you can.",
+      ttsVoice: "tts-neutral-casual",
       emergencyPhrases: [
         "Need me to come over?",
         "Want me to call you back in 5?",
@@ -112,7 +141,49 @@ export default function FakeCall() {
       personality: "Professional, urgent, medical concern",
       voiceId: "voice-3",
       conversationStyle: "Professional and authoritative",
+      script:
+        "Hello, this is Dr. Sarah from the medical center. I'm calling regarding your recent test results. We need to schedule a follow-up appointment as soon as possible. Please call our office at your earliest convenience to discuss the next steps. This is important for your health.",
+      ttsVoice: "tts-female-professional",
       emergencyPhrases: ["You need to come in immediately", "This is urgent"],
+    },
+  ];
+
+  const ttsVoices: TTSVoice[] = [
+    {
+      id: "tts-female-warm",
+      name: "Emma - Warm Female",
+      language: "English (US)",
+      gender: "female",
+      speed: 1.0,
+      pitch: 1.1,
+      naturalness: "very-natural",
+    },
+    {
+      id: "tts-male-friendly",
+      name: "David - Friendly Male",
+      language: "English (US)",
+      gender: "male",
+      speed: 1.0,
+      pitch: 1.0,
+      naturalness: "very-natural",
+    },
+    {
+      id: "tts-female-professional",
+      name: "Sarah - Professional Female",
+      language: "English (US)",
+      gender: "female",
+      speed: 0.9,
+      pitch: 0.9,
+      naturalness: "natural",
+    },
+    {
+      id: "tts-neutral-casual",
+      name: "Alex - Casual Neutral",
+      language: "English (US)",
+      gender: "female",
+      speed: 1.1,
+      pitch: 1.0,
+      naturalness: "very-natural",
     },
   ];
 
@@ -201,6 +272,59 @@ export default function FakeCall() {
 
   const selectedPersonaData = personas.find((p) => p.id === selectedPersona);
 
+  const handleImageSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+    }
+  };
+
+  const playScript = async (script: string, voiceId: string) => {
+    setIsPlayingScript(true);
+
+    // Simulate text-to-speech playback
+    // In a real implementation, this would use Web Speech API or a TTS service
+    try {
+      if ("speechSynthesis" in window) {
+        const utterance = new SpeechSynthesisUtterance(script);
+        const voice = ttsVoices.find((v) => v.id === voiceId);
+
+        if (voice) {
+          utterance.rate = voice.speed;
+          utterance.pitch = voice.pitch;
+          // Try to find a matching browser voice
+          const voices = speechSynthesis.getVoices();
+          const browserVoice = voices.find(
+            (v) =>
+              v.lang.includes("en") &&
+              v.name.toLowerCase().includes(voice.gender),
+          );
+          if (browserVoice) {
+            utterance.voice = browserVoice;
+          }
+        }
+
+        utterance.onend = () => setIsPlayingScript(false);
+        speechSynthesis.speak(utterance);
+      } else {
+        // Fallback: simulate playback duration
+        setTimeout(() => {
+          setIsPlayingScript(false);
+        }, script.length * 50); // Rough estimate based on text length
+      }
+    } catch (error) {
+      console.error("TTS Error:", error);
+      setIsPlayingScript(false);
+    }
+  };
+
+  const stopScript = () => {
+    if ("speechSynthesis" in window) {
+      speechSynthesis.cancel();
+    }
+    setIsPlayingScript(false);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
@@ -269,6 +393,25 @@ export default function FakeCall() {
 
                     <Button
                       size="lg"
+                      variant="outline"
+                      className="w-16 h-16 rounded-full border-trust text-trust"
+                      onClick={() =>
+                        playScript(
+                          selectedPersonaData.script,
+                          selectedPersonaData.ttsVoice,
+                        )
+                      }
+                      disabled={isPlayingScript}
+                    >
+                      {isPlayingScript ? (
+                        <Pause className="w-6 h-6" />
+                      ) : (
+                        <Play className="w-6 h-6" />
+                      )}
+                    </Button>
+
+                    <Button
+                      size="lg"
                       onClick={endCall}
                       className="w-16 h-16 rounded-full bg-emergency hover:bg-emergency/90 text-emergency-foreground"
                     >
@@ -283,6 +426,59 @@ export default function FakeCall() {
                       <Volume2 className="w-6 h-6" />
                     </Button>
                   </div>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Script Display */}
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center space-x-2">
+                  <FileText className="w-5 h-5" />
+                  <span>Call Script</span>
+                  <Badge variant="outline" className="ml-auto">
+                    TTS:{" "}
+                    {ttsVoices.find(
+                      (v) => v.id === selectedPersonaData.ttsVoice,
+                    )?.name || "Default"}
+                  </Badge>
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-muted/30 rounded-lg p-4">
+                  <p className="text-foreground leading-relaxed">
+                    {selectedPersonaData.script}
+                  </p>
+                </div>
+                <div className="flex space-x-2">
+                  <Button
+                    variant="outline"
+                    onClick={() =>
+                      playScript(
+                        selectedPersonaData.script,
+                        selectedPersonaData.ttsVoice,
+                      )
+                    }
+                    disabled={isPlayingScript}
+                    className="flex-1"
+                  >
+                    {isPlayingScript ? (
+                      <>
+                        <Pause className="w-4 h-4 mr-2" />
+                        Playing Script...
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        Play Script
+                      </>
+                    )}
+                  </Button>
+                  {isPlayingScript && (
+                    <Button variant="outline" onClick={stopScript}>
+                      <Pause className="w-4 h-4" />
+                    </Button>
+                  )}
                 </div>
               </CardContent>
             </Card>
@@ -312,10 +508,11 @@ export default function FakeCall() {
             onValueChange={setActiveTab}
             className="space-y-8"
           >
-            <TabsList className="grid w-full grid-cols-3">
+            <TabsList className="grid w-full grid-cols-4">
               <TabsTrigger value="call">Start Call</TabsTrigger>
               <TabsTrigger value="personas">Personas</TabsTrigger>
               <TabsTrigger value="voices">Voice Library</TabsTrigger>
+              <TabsTrigger value="tts">TTS Voices</TabsTrigger>
             </TabsList>
 
             <TabsContent value="call" className="space-y-6">
@@ -384,30 +581,151 @@ export default function FakeCall() {
                       Create Persona
                     </Button>
                   </DialogTrigger>
-                  <DialogContent className="max-w-md">
+                  <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
                     <DialogHeader>
                       <DialogTitle>Create New Persona</DialogTitle>
                     </DialogHeader>
-                    <div className="space-y-4">
-                      <div>
-                        <Label htmlFor="name">Name</Label>
-                        <Input
-                          id="name"
-                          placeholder="e.g., Mom, Alex, Dr. Smith"
-                        />
+                    <div className="space-y-6">
+                      {/* Basic Info */}
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                          <Label htmlFor="name">Name</Label>
+                          <Input
+                            id="name"
+                            placeholder="e.g., Mom, Alex, Dr. Smith"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="relationship">Relationship</Label>
+                          <Input
+                            id="relationship"
+                            placeholder="e.g., Mother, Friend, Doctor"
+                          />
+                        </div>
                       </div>
-                      <div>
-                        <Label htmlFor="relationship">Relationship</Label>
-                        <Input
-                          id="relationship"
-                          placeholder="e.g., Mother, Friend, Doctor"
-                        />
+
+                      {/* Image Upload */}
+                      <div className="space-y-3">
+                        <Label>Profile Image</Label>
+                        <div className="flex items-center space-x-4">
+                          <div className="w-20 h-20 border-2 border-dashed border-muted rounded-lg flex items-center justify-center">
+                            {selectedImage ? (
+                              <img
+                                src={URL.createObjectURL(selectedImage)}
+                                alt="Selected"
+                                className="w-full h-full object-cover rounded-lg"
+                              />
+                            ) : (
+                              <Image className="w-8 h-8 text-muted-foreground" />
+                            )}
+                          </div>
+                          <div className="flex-1 space-y-2">
+                            <input
+                              ref={fileInputRef}
+                              type="file"
+                              accept="image/*"
+                              onChange={handleImageSelect}
+                              className="hidden"
+                            />
+                            <Button
+                              type="button"
+                              variant="outline"
+                              onClick={() => fileInputRef.current?.click()}
+                              className="w-full"
+                            >
+                              <Upload className="w-4 h-4 mr-2" />
+                              Choose from Gallery
+                            </Button>
+                            <p className="text-xs text-muted-foreground">
+                              Upload a photo from your device gallery
+                            </p>
+                          </div>
+                        </div>
                       </div>
+
+                      {/* TTS Voice Selection */}
                       <div>
-                        <Label htmlFor="voice">Voice</Label>
+                        <Label htmlFor="tts-voice">Text-to-Speech Voice</Label>
+                        <Select
+                          value={selectedTTSVoice}
+                          onValueChange={setSelectedTTSVoice}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a TTS voice" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {ttsVoices.map((voice) => (
+                              <SelectItem key={voice.id} value={voice.id}>
+                                <div className="flex items-center justify-between w-full">
+                                  <span>{voice.name}</span>
+                                  <span className="text-xs text-muted-foreground ml-2">
+                                    {voice.naturalness}
+                                  </span>
+                                </div>
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                      </div>
+
+                      {/* Script Writing */}
+                      <div className="space-y-3">
+                        <Label htmlFor="script">Call Script</Label>
+                        <Textarea
+                          id="script"
+                          value={newPersonaScript}
+                          onChange={(e) => setNewPersonaScript(e.target.value)}
+                          placeholder="Write what this person would say during the call..."
+                          rows={4}
+                        />
+                        <div className="flex space-x-2">
+                          <Button
+                            type="button"
+                            variant="outline"
+                            size="sm"
+                            onClick={() =>
+                              playScript(newPersonaScript, selectedTTSVoice)
+                            }
+                            disabled={
+                              !newPersonaScript ||
+                              !selectedTTSVoice ||
+                              isPlayingScript
+                            }
+                          >
+                            {isPlayingScript ? (
+                              <>
+                                <Pause className="w-3 h-3 mr-1" />
+                                Playing...
+                              </>
+                            ) : (
+                              <>
+                                <Play className="w-3 h-3 mr-1" />
+                                Preview Script
+                              </>
+                            )}
+                          </Button>
+                          {isPlayingScript && (
+                            <Button
+                              type="button"
+                              variant="outline"
+                              size="sm"
+                              onClick={stopScript}
+                            >
+                              <Pause className="w-3 h-3 mr-1" />
+                              Stop
+                            </Button>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Community Voice (Optional) */}
+                      <div>
+                        <Label htmlFor="community-voice">
+                          Community Voice (Optional)
+                        </Label>
                         <Select>
                           <SelectTrigger>
-                            <SelectValue placeholder="Select a voice" />
+                            <SelectValue placeholder="Select a community voice (optional)" />
                           </SelectTrigger>
                           <SelectContent>
                             {communityVoices.map((voice) => (
@@ -417,16 +735,23 @@ export default function FakeCall() {
                             ))}
                           </SelectContent>
                         </Select>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          Community voices override TTS during calls
+                        </p>
                       </div>
+
+                      {/* Personality */}
                       <div>
-                        <Label htmlFor="personality">Personality</Label>
+                        <Label htmlFor="personality">Personality & Style</Label>
                         <Textarea
                           id="personality"
-                          placeholder="Describe how this person speaks and acts"
-                          rows={3}
+                          placeholder="Describe how this person speaks and acts..."
+                          rows={2}
                         />
                       </div>
+
                       <Button className="w-full bg-trust hover:bg-trust/90">
+                        <Plus className="w-4 h-4 mr-2" />
                         Create Persona
                       </Button>
                     </div>
@@ -465,19 +790,40 @@ export default function FakeCall() {
                           <p className="text-xs text-muted-foreground">
                             {persona.personality}
                           </p>
-                          <div className="flex space-x-2 pt-2">
-                            <Button
-                              size="sm"
-                              onClick={() => startCall(persona.id)}
-                              className="bg-trust hover:bg-trust/90"
-                            >
-                              <PhoneCall className="w-3 h-3 mr-1" />
-                              Call
-                            </Button>
-                            <Button variant="outline" size="sm">
-                              <Play className="w-3 h-3 mr-1" />
-                              Preview
-                            </Button>
+                          <div className="space-y-2">
+                            <div className="bg-muted/50 rounded p-2">
+                              <p className="text-xs text-muted-foreground">
+                                Script Preview:
+                              </p>
+                              <p className="text-xs text-foreground line-clamp-2">
+                                {persona.script}
+                              </p>
+                            </div>
+                            <div className="flex space-x-2">
+                              <Button
+                                size="sm"
+                                onClick={() => startCall(persona.id)}
+                                className="bg-trust hover:bg-trust/90"
+                              >
+                                <PhoneCall className="w-3 h-3 mr-1" />
+                                Call
+                              </Button>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() =>
+                                  playScript(persona.script, persona.ttsVoice)
+                                }
+                                disabled={isPlayingScript}
+                              >
+                                {isPlayingScript ? (
+                                  <Pause className="w-3 h-3 mr-1" />
+                                ) : (
+                                  <Play className="w-3 h-3 mr-1" />
+                                )}
+                                Preview
+                              </Button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -604,6 +950,142 @@ export default function FakeCall() {
                       className="border-trust text-trust hover:bg-trust hover:text-trust-foreground"
                     >
                       Upload Voice Sample
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            <TabsContent value="tts" className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-foreground">
+                  Text-to-Speech Voices
+                </h2>
+                <p className="text-muted-foreground">
+                  High-quality TTS voices for your personas. Perfect for
+                  creating realistic call scripts.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {ttsVoices.map((voice) => (
+                  <Card key={voice.id} className="group">
+                    <CardContent className="p-6">
+                      <div className="space-y-4">
+                        <div className="flex items-start justify-between">
+                          <div className="flex-1">
+                            <div className="flex items-center space-x-2">
+                              <h3 className="font-semibold text-foreground">
+                                {voice.name}
+                              </h3>
+                              <Badge
+                                variant="outline"
+                                className={`${
+                                  voice.naturalness === "very-natural"
+                                    ? "border-safe text-safe"
+                                    : voice.naturalness === "natural"
+                                      ? "border-trust text-trust"
+                                      : "border-warning text-warning"
+                                }`}
+                              >
+                                {voice.naturalness}
+                              </Badge>
+                            </div>
+                            <p className="text-sm text-muted-foreground mt-1">
+                              {voice.language}
+                            </p>
+                          </div>
+                          <Button variant="ghost" size="sm">
+                            <Headphones className="w-4 h-4" />
+                          </Button>
+                        </div>
+
+                        <div className="space-y-2">
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">
+                              Speed:
+                            </span>
+                            <span className="text-foreground">
+                              {voice.speed}x
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">
+                              Pitch:
+                            </span>
+                            <span className="text-foreground">
+                              {voice.pitch}x
+                            </span>
+                          </div>
+                          <div className="flex justify-between text-sm">
+                            <span className="text-muted-foreground">
+                              Gender:
+                            </span>
+                            <span className="text-foreground capitalize">
+                              {voice.gender}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex space-x-2">
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="flex-1"
+                            onClick={() =>
+                              playScript(
+                                "Hello, this is a sample of how I sound. I can help make your fake calls more realistic.",
+                                voice.id,
+                              )
+                            }
+                            disabled={isPlayingScript}
+                          >
+                            {isPlayingScript ? (
+                              <>
+                                <Pause className="w-3 h-3 mr-1" />
+                                Playing...
+                              </>
+                            ) : (
+                              <>
+                                <Play className="w-3 h-3 mr-1" />
+                                Sample
+                              </>
+                            )}
+                          </Button>
+                          <Button
+                            size="sm"
+                            className="bg-trust hover:bg-trust/90"
+                          >
+                            <Plus className="w-3 h-3 mr-1" />
+                            Use Voice
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+
+              <Card className="bg-gradient-to-r from-trust/5 to-safe/5 border-trust/20">
+                <CardContent className="p-6">
+                  <div className="text-center space-y-4">
+                    <div className="w-12 h-12 bg-trust/10 rounded-lg flex items-center justify-center mx-auto">
+                      <Mic className="w-6 h-6 text-trust" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-semibold text-foreground">
+                        Premium TTS Voices
+                      </h3>
+                      <p className="text-muted-foreground">
+                        Upgrade to access ultra-realistic AI voices with emotion
+                        and accent controls
+                      </p>
+                    </div>
+                    <Button
+                      variant="outline"
+                      className="border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+                    >
+                      View Premium Options
                     </Button>
                   </div>
                 </CardContent>

@@ -54,11 +54,6 @@ export default function Index() {
 
   const safetyFeatures = [
     {
-      icon: MessageSquare,
-      title: "Fake Chat",
-      description: "Simulate conversations to escape uncomfortable situations",
-    },
-    {
       icon: AlertTriangle,
       title: "Danger Zone Alerts",
       description: "Get warned about unsafe areas based on community reports",
