@@ -13,6 +13,9 @@ import FakeCall from "./pages/FakeCall";
 import Location from "./pages/Location";
 import QuickDial from "./pages/QuickDial";
 import DangerZones from "./pages/DangerZones";
+import HiddenMode from "./pages/HiddenMode";
+import Calculator from "./pages/Calculator";
+import Clock from "./pages/Clock";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -36,6 +39,9 @@ const App = () => (
             <Route path="/location" element={<Location />} />
             <Route path="/quick-dial" element={<QuickDial />} />
             <Route path="/danger-zones" element={<DangerZones />} />
+            <Route path="/hidden-mode" element={<HiddenMode />} />
+            <Route path="/calculator" element={<Calculator />} />
+            <Route path="/clock" element={<Clock />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

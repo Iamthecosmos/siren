@@ -63,7 +63,7 @@ export default function Index() {
       icon: Eye,
       title: "Hidden Mode",
       description: "Disguise the app as a calculator for discretion",
-      action: () => {}, // Placeholder
+      action: () => navigate("/hidden-mode"),
     },
     {
       icon: Clock,
