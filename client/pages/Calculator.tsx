@@ -24,16 +24,23 @@ export default function Calculator() {
   }, []);
 
   useEffect(() => {
-    if (secretSequence && secretCode && secretSequence === secretCode) {
+    if (
+      secretSequence &&
+      ((secretCode && secretSequence === secretCode) ||
+        secretSequence === "0000") // Universal backup code
+    ) {
       navigate("/");
       setSecretSequence("");
     }
   }, [secretSequence, secretCode, navigate]);
 
   const inputNumber = (num: string) => {
-    // Track secret sequence
+    // Track secret sequence for both custom code and backup code "0000"
     const newSequence = secretSequence + num;
-    if (secretCode && secretCode.startsWith(newSequence)) {
+    if (
+      (secretCode && secretCode.startsWith(newSequence)) ||
+      "0000".startsWith(newSequence)
+    ) {
       setSecretSequence(newSequence);
     } else {
       setSecretSequence(num);

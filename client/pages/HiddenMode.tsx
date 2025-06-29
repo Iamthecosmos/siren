@@ -170,6 +170,11 @@ export default function HiddenMode() {
                   <p className="text-sm text-muted-foreground">
                     Use this code in the calculator to return to Siren
                   </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    <span className="font-medium">Backup:</span> If you forget
+                    your code, you can always use{" "}
+                    <span className="font-mono">0000</span>
+                  </p>
                 </div>
                 <div className="flex space-x-2">
                   <Dialog
@@ -256,6 +261,11 @@ export default function HiddenMode() {
                     Choose a 4-6 digit number code you'll remember to return
                     from hidden mode. Only numbers are allowed for security.
                   </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    💡 <span className="font-medium">Emergency backup:</span>{" "}
+                    <span className="font-mono">0000</span> will always work if
+                    you forget your custom code
+                  </p>
                 </div>
                 <Dialog open={showCodeDialog} onOpenChange={setShowCodeDialog}>
                   <DialogTrigger asChild>
@@ -272,8 +282,13 @@ export default function HiddenMode() {
                       <div className="bg-muted/30 rounded-lg p-3 text-sm">
                         <p className="font-medium mb-1">Important:</p>
                         <p>
-                          Remember this 4-6 digit number code! It's your only
-                          way back to Siren from calculator mode.
+                          Remember this 4-6 digit number code! It's your way
+                          back to Siren from calculator mode.
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-2">
+                          <span className="font-medium">Emergency backup:</span>{" "}
+                          <span className="font-mono">0000</span> will always
+                          work as a backup code
                         </p>
                       </div>
                       <div>
@@ -391,6 +406,12 @@ export default function HiddenMode() {
                     <p className="text-sm text-muted-foreground font-mono">
                       {mode.secretMethod}
                     </p>
+                    {mode.id === "calculator" && (
+                      <p className="text-xs text-muted-foreground mt-2">
+                        <span className="font-medium">Backup:</span>{" "}
+                        <span className="font-mono">0000</span> always works
+                      </p>
+                    )}
                   </div>
 
                   <div className="space-y-2">
@@ -437,7 +458,7 @@ export default function HiddenMode() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="text-center space-y-2">
                 <div className="w-12 h-12 bg-trust/10 rounded-lg flex items-center justify-center mx-auto">
                   <Eye className="w-6 h-6 text-trust" />
@@ -467,6 +488,16 @@ export default function HiddenMode() {
                 </h3>
                 <p className="text-sm text-muted-foreground">
                   Disguised apps work normally to maintain the deception
+                </p>
+              </div>
+              <div className="text-center space-y-2">
+                <div className="w-12 h-12 bg-emergency/10 rounded-lg flex items-center justify-center mx-auto">
+                  <Key className="w-6 h-6 text-emergency" />
+                </div>
+                <h3 className="font-semibold text-foreground">Backup Code</h3>
+                <p className="text-sm text-muted-foreground">
+                  <span className="font-mono">0000</span> always works as
+                  emergency access
                 </p>
               </div>
             </div>
