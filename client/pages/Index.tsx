@@ -57,21 +57,25 @@ export default function Index() {
       icon: AlertTriangle,
       title: "Danger Zone Alerts",
       description: "Get warned about unsafe areas based on community reports",
+      action: () => navigate("/danger-zones"),
     },
     {
       icon: Eye,
       title: "Hidden Mode",
       description: "Disguise the app as a calculator for discretion",
+      action: () => {}, // Placeholder
     },
     {
       icon: Clock,
       title: "Check-In Timer",
       description: "Automated safety check-ins with emergency escalation",
+      action: () => {}, // Placeholder
     },
     {
       icon: Scale,
       title: "Legal Rights",
       description: "Self-defense guides and legal resources",
+      action: () => {}, // Placeholder
     },
   ];
 
@@ -213,6 +217,7 @@ export default function Index() {
               <Card
                 key={index}
                 className="group cursor-pointer transition-all hover:shadow-md"
+                onClick={feature.action}
               >
                 <CardContent className="p-6">
                   <div className="space-y-4">
