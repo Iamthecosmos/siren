@@ -90,7 +90,7 @@ export default function Index() {
       icon: Smartphone,
       title: "Shake Alert",
       description: "Shake pattern sends instant SOS",
-      action: () => {}, // Placeholder
+      action: () => navigate("/shake-alert"),
     },
   ];
 

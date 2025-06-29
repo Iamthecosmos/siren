@@ -18,6 +18,7 @@ import Calculator from "./pages/Calculator";
 import Clock from "./pages/Clock";
 import CheckIn from "./pages/CheckIn";
 import VoiceActivation from "./pages/VoiceActivation";
+import ShakeAlert from "./pages/ShakeAlert";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -46,6 +47,7 @@ const App = () => (
             <Route path="/clock" element={<Clock />} />
             <Route path="/check-in" element={<CheckIn />} />
             <Route path="/voice-activation" element={<VoiceActivation />} />
+            <Route path="/shake-alert" element={<ShakeAlert />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
