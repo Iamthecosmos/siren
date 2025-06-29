@@ -84,11 +84,13 @@ export default function Index() {
       icon: Volume2,
       title: "Voice Activation",
       description: "Secret phrase triggers emergency alert",
+      action: () => navigate("/voice-activation"),
     },
     {
       icon: Smartphone,
       title: "Shake Alert",
       description: "Shake pattern sends instant SOS",
+      action: () => {}, // Placeholder
     },
   ];
 
@@ -246,7 +248,11 @@ export default function Index() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {handsFreeModes.map((mode, index) => (
-              <Card key={index} className="border-safe/20">
+              <Card
+                key={index}
+                className="border-safe/20 cursor-pointer transition-all hover:shadow-md hover:-translate-y-1"
+                onClick={mode.action}
+              >
                 <CardContent className="p-6">
                   <div className="flex items-center space-x-4">
                     <div className="w-12 h-12 bg-safe/10 rounded-xl flex items-center justify-center">
@@ -261,7 +267,7 @@ export default function Index() {
                       </p>
                     </div>
                     <Badge variant="outline" className="text-safe border-safe">
-                      Active
+                      Setup
                     </Badge>
                   </div>
                 </CardContent>

@@ -17,6 +17,7 @@ import HiddenMode from "./pages/HiddenMode";
 import Calculator from "./pages/Calculator";
 import Clock from "./pages/Clock";
 import CheckIn from "./pages/CheckIn";
+import VoiceActivation from "./pages/VoiceActivation";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -44,6 +45,7 @@ const App = () => (
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/clock" element={<Clock />} />
             <Route path="/check-in" element={<CheckIn />} />
+            <Route path="/voice-activation" element={<VoiceActivation />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
