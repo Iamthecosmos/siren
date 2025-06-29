@@ -46,8 +46,14 @@ export default function HiddenMode() {
       return;
     }
 
-    if (customCode.length < 4) {
-      setCodeError("Code must be at least 4 characters long");
+    // Check if code contains only numbers
+    if (!/^\d+$/.test(customCode)) {
+      setCodeError("Code must contain only numbers (0-9)");
+      return;
+    }
+
+    if (customCode.length < 4 || customCode.length > 6) {
+      setCodeError("Code must be between 4-6 numbers");
       return;
     }
 
@@ -89,8 +95,8 @@ export default function HiddenMode() {
       color: "bg-trust",
       route: "/calculator",
       secretMethod: isCodeSet
-        ? "Enter your custom secret code"
-        : "Set your custom secret code first",
+        ? "Enter your custom 4-6 digit code"
+        : "Set your custom 4-6 digit code first",
     },
     {
       id: "clock",
@@ -181,16 +187,22 @@ export default function HiddenMode() {
                       </DialogHeader>
                       <div className="space-y-4">
                         <div>
-                          <Label htmlFor="new-code">New Secret Code</Label>
+                          <Label htmlFor="new-code">
+                            New Secret Code (4-6 numbers)
+                          </Label>
                           <Input
                             id="new-code"
                             type="password"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            maxLength={6}
                             value={customCode}
                             onChange={(e) => {
-                              setCustomCode(e.target.value);
+                              const value = e.target.value.replace(/\D/g, ""); // Only allow digits
+                              setCustomCode(value);
                               setCodeError("");
                             }}
-                            placeholder="Enter 4+ digit/character code"
+                            placeholder="Enter 4-6 numbers (e.g. 1234)"
                           />
                         </div>
                         <div>
@@ -198,12 +210,16 @@ export default function HiddenMode() {
                           <Input
                             id="confirm-code"
                             type="password"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
+                            maxLength={6}
                             value={confirmCode}
                             onChange={(e) => {
-                              setConfirmCode(e.target.value);
+                              const value = e.target.value.replace(/\D/g, ""); // Only allow digits
+                              setConfirmCode(value);
                               setCodeError("");
                             }}
-                            placeholder="Re-enter your code"
+                            placeholder="Re-enter your 4-6 digit code"
                           />
                         </div>
                         {codeError && (
@@ -237,8 +253,8 @@ export default function HiddenMode() {
                     Set your secret return code
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Choose a code you'll remember to return from hidden mode.
-                    This can be numbers, letters, or a combination.
+                    Choose a 4-6 digit number code you'll remember to return
+                    from hidden mode. Only numbers are allowed for security.
                   </p>
                 </div>
                 <Dialog open={showCodeDialog} onOpenChange={setShowCodeDialog}>
@@ -256,21 +272,27 @@ export default function HiddenMode() {
                       <div className="bg-muted/30 rounded-lg p-3 text-sm">
                         <p className="font-medium mb-1">Important:</p>
                         <p>
-                          Remember this code! It's your only way back to Siren
-                          from hidden mode.
+                          Remember this 4-6 digit number code! It's your only
+                          way back to Siren from calculator mode.
                         </p>
                       </div>
                       <div>
-                        <Label htmlFor="secret-code">Secret Code</Label>
+                        <Label htmlFor="secret-code">
+                          Secret Code (4-6 numbers only)
+                        </Label>
                         <Input
                           id="secret-code"
                           type="password"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          maxLength={6}
                           value={customCode}
                           onChange={(e) => {
-                            setCustomCode(e.target.value);
+                            const value = e.target.value.replace(/\D/g, ""); // Only allow digits
+                            setCustomCode(value);
                             setCodeError("");
                           }}
-                          placeholder="Enter 4+ digit/character code"
+                          placeholder="Enter 4-6 numbers (e.g. 1234)"
                         />
                       </div>
                       <div>
@@ -278,12 +300,16 @@ export default function HiddenMode() {
                         <Input
                           id="confirm-secret"
                           type="password"
+                          inputMode="numeric"
+                          pattern="[0-9]*"
+                          maxLength={6}
                           value={confirmCode}
                           onChange={(e) => {
-                            setConfirmCode(e.target.value);
+                            const value = e.target.value.replace(/\D/g, ""); // Only allow digits
+                            setConfirmCode(value);
                             setCodeError("");
                           }}
-                          placeholder="Re-enter your code"
+                          placeholder="Re-enter your 4-6 digit code"
                         />
                       </div>
                       {codeError && (

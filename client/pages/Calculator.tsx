@@ -48,11 +48,9 @@ export default function Calculator() {
   };
 
   const inputOperation = (nextOperation: string) => {
-    // Track secret sequence for operation symbols too
-    const newSequence = secretSequence + nextOperation;
-    if (secretCode && secretCode.startsWith(newSequence)) {
-      setSecretSequence(newSequence);
-    } else if (secretSequence !== "") {
+    // Don't track operations for secret sequence since we only use numbers now
+    // Reset sequence if user presses an operation
+    if (secretSequence !== "") {
       setSecretSequence("");
     }
 
