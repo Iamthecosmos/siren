@@ -16,6 +16,7 @@ import DangerZones from "./pages/DangerZones";
 import HiddenMode from "./pages/HiddenMode";
 import Calculator from "./pages/Calculator";
 import Clock from "./pages/Clock";
+import CheckIn from "./pages/CheckIn";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,6 +43,7 @@ const App = () => (
             <Route path="/hidden-mode" element={<HiddenMode />} />
             <Route path="/calculator" element={<Calculator />} />
             <Route path="/clock" element={<Clock />} />
+            <Route path="/check-in" element={<CheckIn />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

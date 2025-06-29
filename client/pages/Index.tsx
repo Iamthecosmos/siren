@@ -69,7 +69,7 @@ export default function Index() {
       icon: Clock,
       title: "Check-In Timer",
       description: "Automated safety check-ins with emergency escalation",
-      action: () => {}, // Placeholder
+      action: () => navigate("/check-in"),
     },
     {
       icon: Scale,
