@@ -1,6 +1,16 @@
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import {
   ArrowLeft,
   Eye,
@@ -8,11 +18,67 @@ import {
   Clock as ClockIcon,
   Shield,
   Info,
+  Key,
+  Check,
+  AlertCircle,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 export default function HiddenMode() {
   const navigate = useNavigate();
+  const [customCode, setCustomCode] = useState("");
+  const [confirmCode, setConfirmCode] = useState("");
+  const [isCodeSet, setIsCodeSet] = useState(false);
+  const [showCodeDialog, setShowCodeDialog] = useState(false);
+  const [codeError, setCodeError] = useState("");
+
+  useEffect(() => {
+    // Check if custom code is already set
+    const savedCode = localStorage.getItem("siren_secret_code");
+    if (savedCode) {
+      setIsCodeSet(true);
+    }
+  }, []);
+
+  const saveCustomCode = () => {
+    if (!customCode.trim()) {
+      setCodeError("Please enter a secret code");
+      return;
+    }
+
+    if (customCode.length < 4) {
+      setCodeError("Code must be at least 4 characters long");
+      return;
+    }
+
+    if (customCode !== confirmCode) {
+      setCodeError("Codes don't match");
+      return;
+    }
+
+    localStorage.setItem("siren_secret_code", customCode);
+    setIsCodeSet(true);
+    setShowCodeDialog(false);
+    setCodeError("");
+    setCustomCode("");
+    setConfirmCode("");
+  };
+
+  const resetCode = () => {
+    localStorage.removeItem("siren_secret_code");
+    setIsCodeSet(false);
+    setCustomCode("");
+    setConfirmCode("");
+    setCodeError("");
+  };
+
+  const enterHiddenMode = (route: string) => {
+    if (!isCodeSet) {
+      setShowCodeDialog(true);
+      return;
+    }
+    navigate(route);
+  };
 
   const hiddenModes = [
     {
@@ -22,7 +88,9 @@ export default function HiddenMode() {
       icon: CalculatorIcon,
       color: "bg-trust",
       route: "/calculator",
-      secretMethod: "Enter: 1234567890",
+      secretMethod: isCodeSet
+        ? "Enter your custom secret code"
+        : "Set your custom secret code first",
     },
     {
       id: "clock",
@@ -64,6 +132,177 @@ export default function HiddenMode() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+        {/* Secret Code Setup */}
+        <Card
+          className={`border-2 transition-all ${isCodeSet ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}
+        >
+          <CardHeader>
+            <CardTitle className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Key className="w-5 h-5" />
+                <span>Secret Return Code</span>
+              </div>
+              {isCodeSet ? (
+                <div className="flex items-center space-x-2">
+                  <Check className="w-4 h-4 text-safe" />
+                  <span className="text-sm text-safe font-normal">
+                    Code Set
+                  </span>
+                </div>
+              ) : (
+                <AlertCircle className="w-5 h-5 text-warning" />
+              )}
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {isCodeSet ? (
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-medium text-foreground">
+                    Your secret code is set
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Use this code in the calculator to return to Siren
+                  </p>
+                </div>
+                <div className="flex space-x-2">
+                  <Dialog
+                    open={showCodeDialog}
+                    onOpenChange={setShowCodeDialog}
+                  >
+                    <DialogTrigger asChild>
+                      <Button variant="outline" size="sm">
+                        Change Code
+                      </Button>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>Set New Secret Code</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <div>
+                          <Label htmlFor="new-code">New Secret Code</Label>
+                          <Input
+                            id="new-code"
+                            type="password"
+                            value={customCode}
+                            onChange={(e) => {
+                              setCustomCode(e.target.value);
+                              setCodeError("");
+                            }}
+                            placeholder="Enter 4+ digit/character code"
+                          />
+                        </div>
+                        <div>
+                          <Label htmlFor="confirm-code">Confirm Code</Label>
+                          <Input
+                            id="confirm-code"
+                            type="password"
+                            value={confirmCode}
+                            onChange={(e) => {
+                              setConfirmCode(e.target.value);
+                              setCodeError("");
+                            }}
+                            placeholder="Re-enter your code"
+                          />
+                        </div>
+                        {codeError && (
+                          <div className="text-sm text-emergency bg-emergency/10 p-2 rounded">
+                            {codeError}
+                          </div>
+                        )}
+                        <div className="flex space-x-2">
+                          <Button onClick={saveCustomCode} className="flex-1">
+                            Save Code
+                          </Button>
+                          <Button
+                            variant="outline"
+                            onClick={() => setShowCodeDialog(false)}
+                          >
+                            Cancel
+                          </Button>
+                        </div>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                  <Button variant="outline" size="sm" onClick={resetCode}>
+                    Reset
+                  </Button>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <p className="font-medium text-foreground mb-2">
+                    Set your secret return code
+                  </p>
+                  <p className="text-sm text-muted-foreground">
+                    Choose a code you'll remember to return from hidden mode.
+                    This can be numbers, letters, or a combination.
+                  </p>
+                </div>
+                <Dialog open={showCodeDialog} onOpenChange={setShowCodeDialog}>
+                  <DialogTrigger asChild>
+                    <Button className="bg-warning hover:bg-warning/90 text-warning-foreground">
+                      <Key className="w-4 h-4 mr-2" />
+                      Set Secret Code
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>Set Your Secret Code</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4">
+                      <div className="bg-muted/30 rounded-lg p-3 text-sm">
+                        <p className="font-medium mb-1">Important:</p>
+                        <p>
+                          Remember this code! It's your only way back to Siren
+                          from hidden mode.
+                        </p>
+                      </div>
+                      <div>
+                        <Label htmlFor="secret-code">Secret Code</Label>
+                        <Input
+                          id="secret-code"
+                          type="password"
+                          value={customCode}
+                          onChange={(e) => {
+                            setCustomCode(e.target.value);
+                            setCodeError("");
+                          }}
+                          placeholder="Enter 4+ digit/character code"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="confirm-secret">Confirm Code</Label>
+                        <Input
+                          id="confirm-secret"
+                          type="password"
+                          value={confirmCode}
+                          onChange={(e) => {
+                            setConfirmCode(e.target.value);
+                            setCodeError("");
+                          }}
+                          placeholder="Re-enter your code"
+                        />
+                      </div>
+                      {codeError && (
+                        <div className="text-sm text-emergency bg-emergency/10 p-2 rounded">
+                          {codeError}
+                        </div>
+                      )}
+                      <Button onClick={saveCustomCode} className="w-full">
+                        <Key className="w-4 h-4 mr-2" />
+                        Set Secret Code
+                      </Button>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+              </div>
+            )}
+          </CardContent>
+        </Card>
+
         {/* Important Notice */}
         <Card className="border-warning bg-warning/5">
           <CardContent className="p-6">
@@ -150,7 +389,9 @@ export default function HiddenMode() {
                   </div>
 
                   <Button
-                    className={`w-full ${mode.color} hover:opacity-90 text-white`}
+                    className={`w-full ${mode.color} hover:opacity-90 text-white ${!isCodeSet && mode.id === "calculator" ? "opacity-50" : ""}`}
+                    onClick={() => enterHiddenMode(mode.route)}
+                    disabled={!isCodeSet && mode.id === "calculator"}
                   >
                     <mode.icon className="w-4 h-4 mr-2" />
                     Activate {mode.name} Mode

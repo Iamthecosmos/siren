@@ -10,21 +10,30 @@ export default function Calculator() {
   const [operation, setOperation] = useState("");
   const [waitingForNewValue, setWaitingForNewValue] = useState(false);
   const [secretSequence, setSecretSequence] = useState("");
-
-  // Secret sequence to return to real app: "1234567890"
-  const SECRET_CODE = "1234567890";
+  const [secretCode, setSecretCode] = useState("");
 
   useEffect(() => {
-    if (secretSequence === SECRET_CODE) {
+    // Get custom secret code from localStorage
+    const savedCode = localStorage.getItem("siren_secret_code");
+    if (savedCode) {
+      setSecretCode(savedCode);
+    } else {
+      // Fallback to default if no custom code set
+      setSecretCode("1234567890");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (secretSequence && secretCode && secretSequence === secretCode) {
       navigate("/");
       setSecretSequence("");
     }
-  }, [secretSequence, navigate]);
+  }, [secretSequence, secretCode, navigate]);
 
   const inputNumber = (num: string) => {
     // Track secret sequence
     const newSequence = secretSequence + num;
-    if (SECRET_CODE.startsWith(newSequence)) {
+    if (secretCode && secretCode.startsWith(newSequence)) {
       setSecretSequence(newSequence);
     } else {
       setSecretSequence(num);
@@ -39,6 +48,14 @@ export default function Calculator() {
   };
 
   const inputOperation = (nextOperation: string) => {
+    // Track secret sequence for operation symbols too
+    const newSequence = secretSequence + nextOperation;
+    if (secretCode && secretCode.startsWith(newSequence)) {
+      setSecretSequence(newSequence);
+    } else if (secretSequence !== "") {
+      setSecretSequence("");
+    }
+
     const inputValue = parseFloat(display);
 
     if (previousValue === "") {
@@ -101,6 +118,7 @@ export default function Calculator() {
   const clearEntry = () => {
     setDisplay("0");
     setWaitingForNewValue(false);
+    // Don't reset secret sequence on CE - only on C
   };
 
   const inputPercent = () => {
@@ -262,7 +280,8 @@ export default function Calculator() {
           {/* Secret hint */}
           <div className="text-center">
             <p className="text-xs text-muted-foreground">
-              Scientific Calculator v2.1
+              Scientific Calculator v2.1{" "}
+              {secretCode && secretCode !== "1234567890" ? "• Custom Mode" : ""}
             </p>
           </div>
         </CardContent>
