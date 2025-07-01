@@ -14,7 +14,6 @@ import {
   Volume2,
   Smartphone,
   Heart,
-  Scale,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
@@ -70,12 +69,6 @@ export default function Index() {
       title: "Check-In Timer",
       description: "Automated safety check-ins with emergency escalation",
       action: () => navigate("/check-in"),
-    },
-    {
-      icon: Scale,
-      title: "Legal Rights",
-      description: "Self-defense guides and legal resources",
-      action: () => {}, // Placeholder
     },
   ];
 
@@ -275,32 +268,6 @@ export default function Index() {
             ))}
           </div>
         </section>
-
-        {/* Community */}
-        <Card className="bg-gradient-to-r from-trust/5 to-safe/5 border-trust/20">
-          <CardContent className="p-6">
-            <div className="text-center space-y-4">
-              <div className="w-16 h-16 bg-trust/10 rounded-full flex items-center justify-center mx-auto">
-                <Users className="w-8 h-8 text-trust" />
-              </div>
-              <div>
-                <h3 className="text-xl font-semibold text-foreground">
-                  Join the Safety Community
-                </h3>
-                <p className="text-muted-foreground">
-                  Share safety tips, report incidents, and help keep everyone
-                  safe
-                </p>
-              </div>
-              <Button
-                variant="outline"
-                className="border-trust text-trust hover:bg-trust hover:text-trust-foreground"
-              >
-                View Community Reports
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
       </main>
 
       {/* Footer */}
