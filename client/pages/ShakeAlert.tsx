@@ -503,41 +503,92 @@ export default function ShakeAlert() {
                       </div>
                     </div>
 
-                    <div>
-                      <Label htmlFor="timeout">Check-In Timeout</Label>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="timeout"
+                          className="text-base font-semibold"
+                        >
+                          ⏱️ Check-In Timeout: {checkInTimeout} seconds
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          How long you have to respond before emergency
+                          escalation
+                        </p>
+                      </div>
                       <Select
                         value={checkInTimeout.toString()}
                         onValueChange={(value) =>
                           setCheckInTimeout(parseInt(value))
                         }
                       >
-                        <SelectTrigger>
+                        <SelectTrigger className="h-12">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="15">15 seconds</SelectItem>
-                          <SelectItem value="30">30 seconds</SelectItem>
-                          <SelectItem value="45">45 seconds</SelectItem>
-                          <SelectItem value="60">1 minute</SelectItem>
-                          <SelectItem value="120">2 minutes</SelectItem>
+                          <SelectItem value="15">
+                            ⚡ 15 seconds (Quick)
+                          </SelectItem>
+                          <SelectItem value="30">
+                            ⚖️ 30 seconds (Balanced)
+                          </SelectItem>
+                          <SelectItem value="45">
+                            🕒 45 seconds (Moderate)
+                          </SelectItem>
+                          <SelectItem value="60">
+                            ⏰ 1 minute (Relaxed)
+                          </SelectItem>
+                          <SelectItem value="120">
+                            🕰️ 2 minutes (Extended)
+                          </SelectItem>
                         </SelectContent>
                       </Select>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Time to respond before emergency escalation
-                      </p>
                     </div>
                   </div>
 
-                  <div className="space-y-4">
-                    <div className="bg-muted/30 rounded-lg p-4">
-                      <h4 className="font-semibold mb-2">How It Works:</h4>
-                      <ol className="text-sm text-muted-foreground space-y-1">
-                        <li>1. Shake/jerk motion detected</li>
-                        <li>2. Check-in prompt appears</li>
-                        <li>3. If no response in {checkInTimeout}s:</li>
-                        <li>4. Call priority 1 contact</li>
-                        <li>5. Message other contacts</li>
-                      </ol>
+                  <div className="space-y-6">
+                    <div className="bg-gradient-to-r from-trust/10 to-safe/10 rounded-lg p-6 border border-trust/20">
+                      <h4 className="font-semibold text-lg mb-4 flex items-center space-x-2">
+                        <Zap className="w-5 h-5 text-trust" />
+                        <span>🔄 How It Works</span>
+                      </h4>
+                      <div className="space-y-4">
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-trust rounded-full flex items-center justify-center text-xs font-bold text-white">
+                            1
+                          </div>
+                          <div>
+                            <p className="font-medium">📱 Motion Detection</p>
+                            <p className="text-sm text-muted-foreground">
+                              Device detects sudden shake/jerk movement
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-warning rounded-full flex items-center justify-center text-xs font-bold text-white">
+                            2
+                          </div>
+                          <div>
+                            <p className="font-medium">⚠️ Safety Check</p>
+                            <p className="text-sm text-muted-foreground">
+                              Check-in prompt appears with {checkInTimeout}s
+                              countdown
+                            </p>
+                          </div>
+                        </div>
+                        <div className="flex items-start space-x-3">
+                          <div className="w-6 h-6 bg-emergency rounded-full flex items-center justify-center text-xs font-bold text-white">
+                            3
+                          </div>
+                          <div>
+                            <p className="font-medium">🚨 Emergency Response</p>
+                            <p className="text-sm text-muted-foreground">
+                              If no response: Call priority contact & message
+                              others
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     </div>
 
                     {/* Motion Visualization */}
