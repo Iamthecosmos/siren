@@ -422,28 +422,33 @@ export default function ShakeAlert() {
           </TabsList>
 
           {/* Setup Tab */}
-          <TabsContent value="setup" className="space-y-6">
+          <TabsContent value="setup" className="space-y-8">
             {/* Motion Permission */}
             {motionPermission !== "granted" && (
               <Card className="border-warning bg-warning/5">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-4">
-                    <Smartphone className="w-8 h-8 text-warning" />
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-foreground">
-                        Motion Sensor Access Required
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        Shake alert needs access to your device's motion sensors
-                        to detect sudden movements.
-                      </p>
+                <CardContent className="p-8">
+                  <div className="flex items-start space-x-6">
+                    <div className="w-12 h-12 bg-warning/10 rounded-full flex items-center justify-center flex-shrink-0">
+                      <Smartphone className="w-6 h-6 text-warning" />
                     </div>
-                    <Button
-                      onClick={requestMotionPermission}
-                      className="bg-warning hover:bg-warning/90 text-warning-foreground"
-                    >
-                      Grant Access
-                    </Button>
+                    <div className="flex-1 space-y-4">
+                      <div className="space-y-2">
+                        <h3 className="text-lg font-semibold text-foreground">
+                          📱 Motion Sensor Access Required
+                        </h3>
+                        <p className="text-muted-foreground">
+                          Shake alert needs access to your device's motion
+                          sensors to detect sudden movements and trigger
+                          emergency responses.
+                        </p>
+                      </div>
+                      <Button
+                        onClick={requestMotionPermission}
+                        className="bg-warning hover:bg-warning/90 text-warning-foreground px-6 py-3"
+                      >
+                        🔓 Grant Access
+                      </Button>
+                    </div>
                   </div>
                 </CardContent>
               </Card>
