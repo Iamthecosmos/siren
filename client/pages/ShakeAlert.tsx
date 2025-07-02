@@ -330,29 +330,37 @@ export default function ShakeAlert() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted"
+                className="hover:bg-muted px-4 py-2"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-3" />
                 Back
               </Button>
-              <div className="flex items-center space-x-2">
-                <Smartphone className="w-6 h-6 text-trust" />
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <Smartphone className="w-6 h-6 text-trust" />
+                  {isMonitoring && (
+                    <div className="absolute -top-1 -right-1 w-3 h-3 bg-trust rounded-full animate-pulse"></div>
+                  )}
+                </div>
                 <h1 className="text-xl font-bold text-foreground">
                   Shake Alert
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <ThemeToggle />
-              <Badge variant={isMonitoring ? "default" : "outline"}>
-                {isMonitoring ? "Monitoring" : "Ready"}
+              <Badge
+                variant={isMonitoring ? "default" : "outline"}
+                className={`px-3 py-1 ${isMonitoring ? "bg-trust text-trust-foreground animate-pulse" : ""}`}
+              >
+                {isMonitoring ? "🟢 Active" : "⚪ Ready"}
               </Badge>
             </div>
           </div>
