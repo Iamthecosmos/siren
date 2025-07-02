@@ -40,6 +40,7 @@ import {
   Navigation,
   Shield,
   Timer,
+  Phone,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
