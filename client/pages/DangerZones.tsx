@@ -340,23 +340,25 @@ export default function DangerZones() {
         {locationPermission !== "granted" && (
           <Card className="border-warning bg-warning/5">
             <CardContent className="p-8">
-              <div className="flex items-center space-x-6">
-                <Navigation className="w-10 h-10 text-warning" />
-                <div className="flex-1 space-y-2">
-                  <h3 className="font-semibold text-foreground text-lg">
-                    Location Access Required
-                  </h3>
-                  <p className="text-muted-foreground">
-                    Enable location access to check danger zones and safety
-                    information for your current area.
-                  </p>
+              <div className="flex items-start space-x-6">
+                <Navigation className="w-10 h-10 text-warning flex-shrink-0" />
+                <div className="flex-1 space-y-4">
+                  <div className="space-y-2">
+                    <h3 className="font-semibold text-foreground text-lg">
+                      Location Access Required
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Enable location access to check danger zones and safety
+                      information for your current area.
+                    </p>
+                  </div>
+                  <Button
+                    onClick={requestLocationAccess}
+                    className="bg-warning hover:bg-warning/90 text-warning-foreground px-6 py-3"
+                  >
+                    Enable Location
+                  </Button>
                 </div>
-                <Button
-                  onClick={requestLocationAccess}
-                  className="bg-warning hover:bg-warning/90 text-warning-foreground px-6 py-3"
-                >
-                  Enable Location
-                </Button>
               </div>
             </CardContent>
           </Card>
