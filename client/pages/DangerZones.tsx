@@ -366,11 +366,31 @@ export default function DangerZones() {
           onValueChange={setActiveTab}
           className="space-y-8"
         >
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="current">Current Area</TabsTrigger>
-            <TabsTrigger value="search">Search Areas</TabsTrigger>
-            <TabsTrigger value="routes">Route Safety</TabsTrigger>
-            <TabsTrigger value="reports">Community Reports</TabsTrigger>
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
+            <TabsTrigger
+              value="current"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              Current Area
+            </TabsTrigger>
+            <TabsTrigger
+              value="search"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              Search Areas
+            </TabsTrigger>
+            <TabsTrigger
+              value="routes"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              Route Safety
+            </TabsTrigger>
+            <TabsTrigger
+              value="reports"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              Community Reports
+            </TabsTrigger>
           </TabsList>
 
           {/* Current Area Safety */}
