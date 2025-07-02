@@ -339,51 +339,54 @@ export default function Location() {
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
+              <div className="space-y-2">
                 <p className="font-medium text-foreground">Permission Status</p>
                 <p className={`text-sm ${getPermissionStatus().color}`}>
                   {getPermissionStatus().text}
                 </p>
               </div>
-              {locationPermission === "denied" && (
-                <Button
-                  variant="outline"
-                  onClick={checkLocationPermission}
-                  className="border-warning text-warning hover:bg-warning hover:text-warning-foreground"
-                >
-                  Check Again
-                </Button>
-              )}
-              {locationPermission === "prompt" && (
-                <Button
-                  onClick={requestLocationPermission}
-                  className="bg-trust hover:bg-trust/90"
-                  disabled={locationPermission === "checking"}
-                >
-                  {locationPermission === "checking" ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-trust-foreground border-t-transparent rounded-full animate-spin" />
-                      <span>Requesting...</span>
-                    </div>
-                  ) : (
-                    <>
-                      <Navigation className="w-4 h-4 mr-2" />
-                      Grant Access
-                    </>
-                  )}
-                </Button>
-              )}
+              <div className="w-full sm:w-auto">
+                {locationPermission === "denied" && (
+                  <Button
+                    variant="outline"
+                    onClick={checkLocationPermission}
+                    className="border-warning text-warning hover:bg-warning hover:text-warning-foreground w-full sm:w-auto"
+                  >
+                    Check Again
+                  </Button>
+                )}
+                {locationPermission === "prompt" && (
+                  <Button
+                    onClick={requestLocationPermission}
+                    className="bg-trust hover:bg-trust/90 w-full sm:w-auto"
+                    disabled={locationPermission === "checking"}
+                  >
+                    {locationPermission === "checking" ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="w-4 h-4 border-2 border-trust-foreground border-t-transparent rounded-full animate-spin" />
+                        <span>Requesting...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <Navigation className="w-4 h-4 mr-2" />
+                        Grant Access
+                      </>
+                    )}
+                  </Button>
+                )}
+              </div>
             </div>
 
             {locationPermission === "denied" && (
-              <div className="bg-emergency/10 border border-emergency/20 rounded-lg p-4">
-                <p className="text-sm text-foreground font-medium mb-2">
+              <div className="bg-emergency/10 border border-emergency/20 rounded-lg p-4 space-y-3">
+                <p className="text-sm text-foreground font-medium">
                   Location access is required for safety features
                 </p>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-sm text-muted-foreground leading-relaxed">
                   Please enable location access in your browser settings or
-                  device settings to use live location sharing.
+                  device settings to use live location sharing and emergency
+                  features.
                 </p>
               </div>
             )}
