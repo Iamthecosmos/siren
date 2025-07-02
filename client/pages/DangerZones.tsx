@@ -400,24 +400,28 @@ export default function DangerZones() {
               <>
                 {/* Interactive Map */}
                 <Card>
-                  <CardHeader>
+                  <CardHeader className="pb-6">
                     <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center space-x-3">
                         <MapPin className="w-5 h-5" />
                         <span>Local Safety Map</span>
                       </div>
-                      <div className="flex items-center space-x-2">
-                        <Badge variant="outline" className="text-xs">
+                      <div className="flex items-center space-x-3">
+                        <Badge variant="outline" className="text-xs px-3 py-1">
                           Real-time
                         </Badge>
-                        <Button variant="outline" size="sm">
-                          <Navigation className="w-3 h-3 mr-1" />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="px-4 py-2"
+                        >
+                          <Navigation className="w-3 h-3 mr-2" />
                           Center
                         </Button>
                       </div>
                     </CardTitle>
                   </CardHeader>
-                  <CardContent>
+                  <CardContent className="px-6 pb-6">
                     <div className="relative w-full h-80 bg-gradient-to-br from-safe/10 to-trust/10 rounded-lg border overflow-hidden">
                       {/* Map Grid Background */}
                       <div className="absolute inset-0 opacity-10">
