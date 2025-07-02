@@ -591,21 +591,54 @@ export default function ShakeAlert() {
                       </div>
                     </div>
 
-                    {/* Motion Visualization */}
+                    {/* Enhanced Motion Visualization */}
                     {isMonitoring && currentMotion && (
-                      <div className="bg-trust/10 rounded-lg p-4">
-                        <h4 className="font-semibold mb-2">Live Motion Data</h4>
-                        <div className="space-y-2">
-                          <div className="flex justify-between text-sm">
-                            <span>Current Level:</span>
-                            <span>{currentMotion.magnitude.toFixed(1)}</span>
+                      <div className="bg-gradient-to-r from-trust/10 to-safe/10 rounded-lg p-6 border border-trust/20">
+                        <h4 className="font-semibold text-lg mb-4 flex items-center space-x-2">
+                          <Activity className="w-5 h-5 text-trust animate-pulse" />
+                          <span>📊 Live Motion Data</span>
+                        </h4>
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-center text-sm">
+                            <span className="font-medium">Current Level:</span>
+                            <div className="flex items-center space-x-2">
+                              <span className="text-lg font-bold text-trust">
+                                {currentMotion.magnitude.toFixed(1)}
+                              </span>
+                              <span className="text-muted-foreground">
+                                / {sensitivity}
+                              </span>
+                            </div>
                           </div>
-                          <Progress
-                            value={getMotionLevel()}
-                            className="w-full"
-                          />
-                          <div className="text-xs text-muted-foreground">
-                            Threshold: {sensitivity}
+                          <div className="space-y-2">
+                            <Progress
+                              value={getMotionLevel()}
+                              className="w-full h-3"
+                            />
+                            <div className="flex justify-between text-xs text-muted-foreground">
+                              <span>Calm</span>
+                              <span className="font-semibold text-trust">
+                                {Math.round(getMotionLevel())}%
+                              </span>
+                              <span>Threshold</span>
+                            </div>
+                          </div>
+                          <div className="grid grid-cols-3 gap-2 pt-2 text-xs">
+                            <div className="text-center p-2 bg-background/50 rounded">
+                              <div className="font-bold">
+                                X: {currentMotion.x.toFixed(1)}
+                              </div>
+                            </div>
+                            <div className="text-center p-2 bg-background/50 rounded">
+                              <div className="font-bold">
+                                Y: {currentMotion.y.toFixed(1)}
+                              </div>
+                            </div>
+                            <div className="text-center p-2 bg-background/50 rounded">
+                              <div className="font-bold">
+                                Z: {currentMotion.z.toFixed(1)}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -613,24 +646,26 @@ export default function ShakeAlert() {
                   </div>
                 </div>
 
-                <div className="flex justify-center">
+                <div className="flex justify-center pt-4">
                   {!isMonitoring ? (
                     <Button
                       onClick={startMonitoring}
                       disabled={motionPermission !== "granted"}
-                      className="bg-trust hover:bg-trust/90 text-trust-foreground"
+                      className="bg-trust hover:bg-trust/90 text-trust-foreground px-8 py-4 text-lg h-auto"
+                      size="lg"
                     >
-                      <Activity className="w-4 h-4 mr-2" />
-                      Start Shake Monitoring
+                      <Activity className="w-5 h-5 mr-3" />
+                      🚀 Start Shake Monitoring
                     </Button>
                   ) : (
                     <Button
                       onClick={stopMonitoring}
                       variant="outline"
-                      className="border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
+                      className="border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground px-8 py-4 text-lg h-auto"
+                      size="lg"
                     >
-                      <XCircle className="w-4 h-4 mr-2" />
-                      Stop Monitoring
+                      <XCircle className="w-5 h-5 mr-3" />
+                      🛑 Stop Monitoring
                     </Button>
                   )}
                 </div>
