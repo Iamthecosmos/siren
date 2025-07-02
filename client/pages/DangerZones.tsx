@@ -299,31 +299,32 @@ export default function DangerZones() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted"
+                className="hover:bg-muted px-4 py-2"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-3" />
                 Back
               </Button>
-              <div className="flex items-center space-x-2">
+              <div className="flex items-center space-x-3">
                 <AlertTriangle className="w-6 h-6 text-warning" />
                 <h1 className="text-xl font-bold text-foreground">
                   Danger Zones
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4">
               <ThemeToggle />
               <Badge
                 variant={
                   locationPermission === "granted" ? "default" : "destructive"
                 }
+                className="px-3 py-1"
               >
                 {locationPermission === "granted"
                   ? "Location Active"
