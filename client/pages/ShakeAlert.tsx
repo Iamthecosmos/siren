@@ -456,20 +456,32 @@ export default function ShakeAlert() {
 
             {/* Setup Configuration */}
             <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center space-x-2">
-                  <Settings className="w-5 h-5" />
-                  <span>Configure Shake Alert</span>
+              <CardHeader className="pb-6">
+                <CardTitle className="flex items-center space-x-3">
+                  <div className="w-8 h-8 bg-trust/10 rounded-full flex items-center justify-center">
+                    <Settings className="w-4 h-4 text-trust" />
+                  </div>
+                  <span>⚙️ Configure Shake Alert</span>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="sensitivity">
-                        Shake Sensitivity: {getSensitivityLabel(sensitivity)}
-                      </Label>
-                      <div className="mt-2">
+              <CardContent className="space-y-8">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                  <div className="space-y-6">
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label
+                          htmlFor="sensitivity"
+                          className="text-base font-semibold"
+                        >
+                          🎯 Shake Sensitivity:{" "}
+                          {getSensitivityLabel(sensitivity)}
+                        </Label>
+                        <p className="text-sm text-muted-foreground">
+                          Adjust how sensitive the detection is to device
+                          movement
+                        </p>
+                      </div>
+                      <div className="space-y-3">
                         <input
                           type="range"
                           id="sensitivity"
@@ -479,12 +491,16 @@ export default function ShakeAlert() {
                           onChange={(e) =>
                             setSensitivity(parseInt(e.target.value))
                           }
-                          className="w-full"
+                          className="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer"
                         />
+                        <div className="flex justify-between text-xs text-muted-foreground">
+                          <span>Very Sensitive</span>
+                          <span className="font-semibold text-trust">
+                            {sensitivity}
+                          </span>
+                          <span>Least Sensitive</span>
+                        </div>
                       </div>
-                      <p className="text-sm text-muted-foreground mt-1">
-                        Lower values = more sensitive to movement
-                      </p>
                     </div>
 
                     <div>
