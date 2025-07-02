@@ -508,7 +508,7 @@ export default function FakeCall() {
             onValueChange={setActiveTab}
             className="space-y-8"
           >
-            <TabsList className="flex w-full overflow-x-auto gap-2 p-1">
+            <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
               <TabsTrigger
                 value="call"
                 className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
