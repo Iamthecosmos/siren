@@ -365,37 +365,37 @@ export default function DangerZones() {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-3 p-2">
             <TabsTrigger
               value="current"
-              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
             >
               Current Area
             </TabsTrigger>
             <TabsTrigger
               value="search"
-              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
             >
               Search Areas
             </TabsTrigger>
             <TabsTrigger
               value="routes"
-              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
             >
               Route Safety
             </TabsTrigger>
             <TabsTrigger
               value="reports"
-              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
             >
               Community Reports
             </TabsTrigger>
           </TabsList>
 
           {/* Current Area Safety */}
-          <TabsContent value="current" className="space-y-6">
+          <TabsContent value="current" className="space-y-8">
             {currentLocation && (
               <>
                 {/* Interactive Map */}
