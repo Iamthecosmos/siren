@@ -1025,51 +1025,66 @@ export default function ShakeAlert() {
           </TabsContent>
         </Tabs>
 
-        {/* Check-In Dialog */}
+        {/* Enhanced Check-In Dialog */}
         <Dialog open={showCheckInDialog} onOpenChange={() => {}}>
-          <DialogContent className="max-w-md">
+          <DialogContent className="max-w-lg">
             <DialogHeader>
-              <DialogTitle className="flex items-center space-x-2">
-                <AlertTriangle className="w-5 h-5 text-warning" />
-                <span>Shake Detected - Are You Safe?</span>
+              <DialogTitle className="flex items-center justify-center space-x-3 text-xl">
+                <div className="w-8 h-8 bg-warning/10 rounded-full flex items-center justify-center">
+                  <AlertTriangle className="w-5 h-5 text-warning animate-pulse" />
+                </div>
+                <span>🚨 Shake Detected - Are You Safe?</span>
               </DialogTitle>
             </DialogHeader>
-            <div className="space-y-6">
-              <div className="text-center space-y-4">
-                <div className="w-16 h-16 bg-warning/10 rounded-full flex items-center justify-center mx-auto">
-                  <Smartphone className="w-8 h-8 text-warning animate-bounce" />
+            <div className="space-y-8 p-2">
+              <div className="text-center space-y-6">
+                <div className="w-20 h-20 bg-warning/10 rounded-full flex items-center justify-center mx-auto border-4 border-warning/20">
+                  <Smartphone className="w-10 h-10 text-warning animate-bounce" />
                 </div>
-                <div>
-                  <p className="font-semibold text-foreground">
-                    Sudden movement detected!
-                  </p>
-                  <p className="text-sm text-muted-foreground">
+                <div className="space-y-3">
+                  <h3 className="text-lg font-bold text-foreground">
+                    📱 Sudden Movement Detected!
+                  </h3>
+                  <p className="text-muted-foreground">
                     Please confirm you're safe to prevent emergency escalation
                   </p>
                 </div>
-                <div className="text-3xl font-bold text-warning">
-                  {checkInCountdown}
+                <div className="space-y-4">
+                  <div className="text-4xl font-bold text-warning animate-pulse">
+                    {checkInCountdown}
+                  </div>
+                  <div className="space-y-2">
+                    <Progress
+                      value={
+                        ((checkInTimeout - checkInCountdown) / checkInTimeout) *
+                        100
+                      }
+                      className="w-full h-4"
+                    />
+                    <div className="text-xs text-muted-foreground">
+                      Time remaining before emergency contacts are notified
+                    </div>
+                  </div>
                 </div>
-                <Progress
-                  value={
-                    ((checkInTimeout - checkInCountdown) / checkInTimeout) * 100
-                  }
-                  className="w-full"
-                />
               </div>
 
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <Button
                   onClick={handleCheckIn}
-                  className="w-full bg-safe hover:bg-safe/90 text-safe-foreground"
+                  className="w-full bg-safe hover:bg-safe/90 text-safe-foreground py-4 text-lg h-auto"
+                  size="lg"
                 >
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  I'm Safe - Cancel Alert
+                  <CheckCircle className="w-5 h-5 mr-3" />✅ I'm Safe - Cancel
+                  Alert
                 </Button>
-                <p className="text-xs text-center text-muted-foreground">
-                  If no response in {checkInCountdown} seconds, emergency
-                  contacts will be notified
-                </p>
+                <div className="text-center p-4 bg-emergency/10 rounded-lg border border-emergency/20">
+                  <p className="text-sm font-medium text-emergency">
+                    ⚠️ If no response in {checkInCountdown} seconds:
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Emergency contacts will be called and messaged automatically
+                  </p>
+                </div>
               </div>
             </div>
           </DialogContent>
