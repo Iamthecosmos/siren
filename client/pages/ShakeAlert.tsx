@@ -367,18 +367,20 @@ export default function ShakeAlert() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
-        {/* Escalation Dialog */}
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+        {/* Enhanced Escalation Dialog */}
         {isEscalating && (
           <Card className="border-emergency bg-emergency/5 animate-pulse">
-            <CardContent className="p-6">
-              <div className="flex items-center space-x-4">
-                <AlertTriangle className="w-8 h-8 text-emergency" />
-                <div>
-                  <h3 className="font-semibold text-foreground">
-                    Emergency Escalation Active
+            <CardContent className="p-8">
+              <div className="flex items-start space-x-6">
+                <div className="w-12 h-12 bg-emergency/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <AlertTriangle className="w-6 h-6 text-emergency animate-bounce" />
+                </div>
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-emergency">
+                    🚨 Emergency Escalation Active
                   </h3>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-muted-foreground">
                     Contacting emergency contacts due to missed check-in...
                   </p>
                 </div>
@@ -390,13 +392,33 @@ export default function ShakeAlert() {
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="setup">Setup</TabsTrigger>
-            <TabsTrigger value="monitor">Monitor</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-3 p-2">
+            <TabsTrigger
+              value="setup"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+            >
+              📱 Setup
+            </TabsTrigger>
+            <TabsTrigger
+              value="monitor"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+            >
+              📊 Monitor
+            </TabsTrigger>
+            <TabsTrigger
+              value="settings"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+            >
+              ⚙️ Settings
+            </TabsTrigger>
+            <TabsTrigger
+              value="history"
+              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+            >
+              📜 History
+            </TabsTrigger>
           </TabsList>
 
           {/* Setup Tab */}
