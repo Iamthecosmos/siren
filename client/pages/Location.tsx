@@ -321,7 +321,7 @@ export default function Location() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
         {/* Location Permission Card */}
         <Card
           className={`border-2 transition-all ${
@@ -393,13 +393,13 @@ export default function Location() {
         {/* Current Location & Controls */}
         {locationPermission === "granted" && (
           <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center justify-between">
+            <CardHeader className="pb-4">
+              <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0">
                 <div className="flex items-center space-x-2">
                   <MapPin className="w-5 h-5" />
                   <span>Current Location</span>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   <Label htmlFor="tracking" className="text-sm">
                     Auto-track
                   </Label>
@@ -414,15 +414,15 @@ export default function Location() {
             <CardContent className="space-y-6">
               {currentLocation ? (
                 <div className="space-y-4">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                    <div className="space-y-3">
                       <Label className="text-sm font-medium">Coordinates</Label>
-                      <p className="text-sm font-mono bg-muted p-2 rounded">
+                      <p className="text-sm font-mono bg-muted p-3 rounded-lg break-all">
                         {currentLocation.latitude.toFixed(6)},{" "}
                         {currentLocation.longitude.toFixed(6)}
                       </p>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <Label className="text-sm font-medium">Accuracy</Label>
                       <p
                         className={`text-sm font-medium ${getAccuracyColor(currentLocation.accuracy)}`}
@@ -433,15 +433,15 @@ export default function Location() {
                   </div>
 
                   {currentLocation.address && (
-                    <div className="space-y-2">
+                    <div className="space-y-3">
                       <Label className="text-sm font-medium">Address</Label>
-                      <p className="text-sm text-muted-foreground">
+                      <p className="text-sm text-muted-foreground leading-relaxed bg-muted/50 p-3 rounded-lg">
                         {currentLocation.address}
                       </p>
                     </div>
                   )}
 
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     <Label className="text-sm font-medium">
                       Tracking Accuracy
                     </Label>
@@ -449,18 +449,37 @@ export default function Location() {
                       value={accuracy}
                       onValueChange={(value: any) => setAccuracy(value)}
                     >
-                      <SelectTrigger>
+                      <SelectTrigger className="h-12">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
-                        <SelectItem value="high">
-                          High (GPS + Network) - Better accuracy, more battery
+                        <SelectItem value="high" className="py-3">
+                          <div className="space-y-1">
+                            <div className="font-medium">
+                              High (GPS + Network)
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Better accuracy, more battery
+                            </div>
+                          </div>
                         </SelectItem>
-                        <SelectItem value="balanced">
-                          Balanced (Network) - Good accuracy, normal battery
+                        <SelectItem value="balanced" className="py-3">
+                          <div className="space-y-1">
+                            <div className="font-medium">
+                              Balanced (Network)
+                            </div>
+                            <div className="text-xs text-muted-foreground">
+                              Good accuracy, normal battery
+                            </div>
+                          </div>
                         </SelectItem>
-                        <SelectItem value="battery">
-                          Battery Saver - Lower accuracy, saves battery
+                        <SelectItem value="battery" className="py-3">
+                          <div className="space-y-1">
+                            <div className="font-medium">Battery Saver</div>
+                            <div className="text-xs text-muted-foreground">
+                              Lower accuracy, saves battery
+                            </div>
+                          </div>
                         </SelectItem>
                       </SelectContent>
                     </Select>
@@ -475,12 +494,12 @@ export default function Location() {
                 </div>
               )}
 
-              <div className="flex space-x-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 {!isSharing ? (
                   <Button
                     onClick={startLocationSharing}
                     disabled={!currentLocation}
-                    className="flex-1 bg-trust hover:bg-trust/90"
+                    className="flex-1 bg-trust hover:bg-trust/90 h-12"
                   >
                     <Share className="w-4 h-4 mr-2" />
                     Start Sharing Location
@@ -489,13 +508,17 @@ export default function Location() {
                   <Button
                     onClick={stopLocationSharing}
                     variant="outline"
-                    className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
+                    className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground h-12"
                   >
                     <EyeOff className="w-4 h-4 mr-2" />
                     Stop Sharing
                   </Button>
                 )}
-                <Button variant="outline" disabled={!currentLocation}>
+                <Button
+                  variant="outline"
+                  disabled={!currentLocation}
+                  className="sm:w-auto h-12"
+                >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy Coordinates
                 </Button>
@@ -507,28 +530,28 @@ export default function Location() {
         {/* Active Sharing Session */}
         {isSharing && (
           <Card className="border-trust/20 bg-trust/5">
-            <CardHeader>
+            <CardHeader className="pb-4">
               <CardTitle className="flex items-center space-x-2">
                 <Eye className="w-5 h-5 text-trust" />
                 <span>Active Sharing Session</span>
               </CardTitle>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="flex items-center justify-between">
-                <div>
+            <CardContent className="space-y-6">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-4 sm:space-y-0">
+                <div className="space-y-2">
                   <p className="font-medium text-foreground">
                     Session Duration
                   </p>
-                  <p className="text-2xl font-mono text-trust">
+                  <p className="text-3xl font-mono text-trust">
                     {formatDuration(sessionDuration)}
                   </p>
                 </div>
-                <div className="text-right">
+                <div className="text-left sm:text-right space-y-2">
                   <p className="text-sm text-muted-foreground">
                     {emergencyContacts.filter((c) => c.isSharing).length}{" "}
                     contacts receiving updates
                   </p>
-                  <div className="flex items-center space-x-1 mt-1">
+                  <div className="flex items-center space-x-2">
                     {isTracking ? (
                       <Wifi className="w-4 h-4 text-safe" />
                     ) : (
@@ -542,17 +565,22 @@ export default function Location() {
               </div>
 
               {shareUrl && (
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <Label className="text-sm font-medium">Share Link</Label>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <input
                       type="text"
                       value={shareUrl}
                       readOnly
-                      className="flex-1 px-3 py-2 text-sm bg-background border rounded-md"
+                      className="flex-1 px-3 py-3 text-sm bg-background border rounded-md font-mono"
                     />
-                    <Button variant="outline" size="sm" onClick={copyShareUrl}>
-                      <Copy className="w-4 h-4" />
+                    <Button
+                      variant="outline"
+                      onClick={copyShareUrl}
+                      className="sm:w-auto h-12"
+                    >
+                      <Copy className="w-4 h-4 mr-2" />
+                      Copy Link
                     </Button>
                   </div>
                 </div>
@@ -563,13 +591,13 @@ export default function Location() {
 
         {/* Emergency Contacts */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
+          <CardHeader className="pb-4">
+            <CardTitle className="flex flex-col sm:flex-row items-start sm:items-center justify-between space-y-3 sm:space-y-0">
               <div className="flex items-center space-x-2">
                 <Users className="w-5 h-5" />
                 <span>Emergency Contacts</span>
               </div>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" className="sm:w-auto">
                 <Plus className="w-4 h-4 mr-2" />
                 Add Contact
               </Button>
@@ -579,32 +607,33 @@ export default function Location() {
             {emergencyContacts.map((contact) => (
               <div
                 key={contact.id}
-                className="flex items-center justify-between p-3 border rounded-lg"
+                className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 border rounded-lg space-y-3 sm:space-y-0"
               >
-                <div className="flex items-center space-x-3">
-                  <Avatar className="w-10 h-10">
+                <div className="flex items-center space-x-4 flex-1">
+                  <Avatar className="w-12 h-12 flex-shrink-0">
                     <AvatarImage src={contact.avatar} />
                     <AvatarFallback className="bg-trust/10">
                       {contact.name.charAt(0)}
                     </AvatarFallback>
                   </Avatar>
-                  <div>
+                  <div className="flex-1 space-y-1">
                     <h4 className="font-semibold text-foreground">
                       {contact.name}
                     </h4>
                     <p className="text-sm text-muted-foreground">
-                      {contact.relationship} • {contact.phone}
+                      {contact.relationship}
                     </p>
-                  </div>
-                </div>
-                <div className="flex items-center space-x-3">
-                  {contact.isSharing && contact.lastUpdate && (
-                    <div className="text-right">
-                      <p className="text-xs text-muted-foreground">
+                    <p className="text-xs text-muted-foreground font-mono">
+                      {contact.phone}
+                    </p>
+                    {contact.isSharing && contact.lastUpdate && (
+                      <p className="text-xs text-safe">
                         Updated {contact.lastUpdate}
                       </p>
-                    </div>
-                  )}
+                    )}
+                  </div>
+                </div>
+                <div className="flex items-center space-x-3 w-full sm:w-auto">
                   <div className="flex items-center space-x-2">
                     <Switch checked={contact.isSharing} disabled={!isSharing} />
                     <Badge
@@ -616,6 +645,9 @@ export default function Location() {
                       {contact.isSharing ? "Sharing" : "Paused"}
                     </Badge>
                   </div>
+                  <Button variant="outline" size="sm">
+                    <Phone className="w-4 h-4" />
+                  </Button>
                 </div>
               </div>
             ))}
@@ -623,34 +655,34 @@ export default function Location() {
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <Button
             variant="outline"
-            className="h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+            className="h-20 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
           >
-            <div className="text-center">
-              <Timer className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Set Auto-Stop Timer</div>
+            <div className="text-center space-y-2">
+              <Timer className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">Set Auto-Stop Timer</div>
             </div>
           </Button>
 
           <Button
             variant="outline"
-            className="h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
+            className="h-20 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
           >
-            <div className="text-center">
-              <Shield className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Safe Zone Alert</div>
+            <div className="text-center space-y-2">
+              <Shield className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">Safe Zone Alert</div>
             </div>
           </Button>
 
           <Button
             variant="outline"
-            className="h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
+            className="h-20 border-warning text-warning hover:bg-warning hover:text-warning-foreground sm:col-span-2 lg:col-span-1"
           >
-            <div className="text-center">
-              <AlertCircle className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Emergency Signal</div>
+            <div className="text-center space-y-2">
+              <AlertCircle className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">Emergency Signal</div>
             </div>
           </Button>
         </div>
