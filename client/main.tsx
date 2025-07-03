@@ -49,6 +49,7 @@ const App = () => (
             <Route path="/check-in" element={<CheckIn />} />
             <Route path="/voice-activation" element={<VoiceActivation />} />
             <Route path="/shake-alert" element={<ShakeAlert />} />
+            <Route path="/report-incident" element={<ReportIncident />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
