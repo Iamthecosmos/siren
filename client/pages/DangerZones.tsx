@@ -983,7 +983,12 @@ export default function DangerZones() {
                   <Users className="w-5 h-5" />
                   <span>Community Safety Reports</span>
                 </CardTitle>
-                <Button variant="outline" size="sm" className="px-4 py-2">
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="px-4 py-2"
+                  onClick={() => navigate("/report-incident")}
+                >
                   <Flag className="w-4 h-4 mr-2" />
                   Report Incident
                 </Button>
