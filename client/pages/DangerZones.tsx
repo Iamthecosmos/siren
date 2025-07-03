@@ -976,21 +976,21 @@ export default function DangerZones() {
           </TabsContent>
 
           {/* Community Reports */}
-          <TabsContent value="reports" className="space-y-6">
+          <TabsContent value="reports" className="space-y-8">
             <Card>
-              <CardHeader>
+              <CardHeader className="pb-6">
                 <CardTitle className="flex items-center justify-between">
-                  <div className="flex items-center space-x-2">
+                  <div className="flex items-center space-x-3">
                     <Users className="w-5 h-5" />
                     <span>Community Safety Reports</span>
                   </div>
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="px-4 py-2">
                     <Flag className="w-4 h-4 mr-2" />
                     Report Incident
                   </Button>
                 </CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 px-6 pb-6">
                 {[...currentAreaSafety.recentIncidents, ...nearbyIncidents].map(
                   (incident) => {
                     const IconComponent = getIncidentIcon(incident.type);
