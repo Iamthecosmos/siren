@@ -849,11 +849,11 @@ export default function DangerZones() {
 
             {/* Popular Searches */}
             <Card>
-              <CardHeader>
+              <CardHeader className="pb-6">
                 <CardTitle>Popular Safety Searches</CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              <CardContent className="px-6 pb-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   {[
                     "Downtown Plaza",
                     "University District",
@@ -865,15 +865,15 @@ export default function DangerZones() {
                     <Button
                       key={index}
                       variant="outline"
-                      size="sm"
+                      size="default"
                       onClick={() => {
                         setSearchLocation(area);
                         searchArea();
                       }}
-                      className="justify-start"
+                      className="justify-start h-12 px-4 py-3"
                     >
-                      <MapPin className="w-3 h-3 mr-2" />
-                      {area}
+                      <MapPin className="w-4 h-4 mr-3 flex-shrink-0" />
+                      <span className="truncate">{area}</span>
                     </Button>
                   ))}
                 </div>
