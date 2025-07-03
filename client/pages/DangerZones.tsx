@@ -296,7 +296,7 @@ export default function DangerZones() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5 overflow-x-hidden">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-6 py-6">
