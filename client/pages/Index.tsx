@@ -122,26 +122,28 @@ export default function Index() {
         {/* Emergency Banner */}
         <Card className="border-emergency/20 bg-emergency/5">
           <CardContent className="p-6">
-            <div className="flex items-center space-x-4">
-              <div className="w-12 h-12 bg-emergency rounded-full flex items-center justify-center">
+            <div className="flex items-start space-x-4">
+              <div className="w-12 h-12 bg-emergency rounded-full flex items-center justify-center flex-shrink-0">
                 <Shield className="w-6 h-6 text-emergency-foreground" />
               </div>
-              <div className="flex-1">
-                <h2 className="text-lg font-semibold text-foreground">
-                  Emergency Ready
-                </h2>
-                <p className="text-sm text-muted-foreground">
-                  Your safety network is active. Tap any quick action for
-                  immediate help.
-                </p>
+              <div className="flex-1 space-y-4">
+                <div className="space-y-2">
+                  <h2 className="text-lg font-semibold text-foreground">
+                    Emergency Ready
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Your safety network is active. Tap any quick action for
+                    immediate help.
+                  </p>
+                </div>
+                <Button
+                  size="lg"
+                  className="bg-emergency hover:bg-emergency/90 text-emergency-foreground"
+                  onClick={() => navigate("/emergency")}
+                >
+                  SOS
+                </Button>
               </div>
-              <Button
-                size="lg"
-                className="bg-emergency hover:bg-emergency/90 text-emergency-foreground"
-                onClick={() => navigate("/emergency")}
-              >
-                SOS
-              </Button>
             </div>
           </CardContent>
         </Card>
