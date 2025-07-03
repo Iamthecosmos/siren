@@ -997,26 +997,26 @@ export default function DangerZones() {
                     return (
                       <div
                         key={incident.id}
-                        className="border rounded-lg p-6 hover:shadow-md transition-all hover:-translate-y-1"
+                        className="border rounded-lg p-4 hover:shadow-md transition-all hover:-translate-y-1"
                       >
-                        <div className="flex items-start space-x-4">
+                        <div className="flex items-start space-x-3">
                           <div
-                            className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getSeverityColor(incident.severity)}`}
+                            className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${getSeverityColor(incident.severity)}`}
                           >
-                            <IconComponent className="w-5 h-5" />
+                            <IconComponent className="w-4 h-4" />
                           </div>
-                          <div className="flex-1 space-y-3">
-                            <div className="flex items-start justify-between gap-4">
-                              <h4 className="font-semibold capitalize text-foreground text-base">
+                          <div className="flex-1 min-w-0 space-y-2">
+                            <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+                              <h4 className="font-semibold capitalize text-foreground truncate">
                                 {incident.type} - {incident.severity} severity
                               </h4>
-                              <div className="flex items-center space-x-3 flex-shrink-0">
+                              <div className="flex items-center space-x-2 flex-shrink-0">
                                 {incident.distance && (
                                   <Badge
                                     variant="outline"
                                     className="text-xs px-2 py-1"
                                   >
-                                    {incident.distance}km away
+                                    {incident.distance}km
                                   </Badge>
                                 )}
                                 {incident.verified ? (
@@ -1026,24 +1026,28 @@ export default function DangerZones() {
                                 )}
                               </div>
                             </div>
-                            <p className="text-muted-foreground leading-relaxed">
+                            <p className="text-sm text-muted-foreground leading-relaxed">
                               {incident.description}
                             </p>
-                            <div className="flex items-center justify-between pt-2">
-                              <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-                                <span>{incident.location}</span>
-                                <span>{formatTimeAgo(incident.timestamp)}</span>
-                                <span>
+                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 pt-1">
+                              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-muted-foreground">
+                                <span className="truncate max-w-32">
+                                  {incident.location}
+                                </span>
+                                <span className="whitespace-nowrap">
+                                  {formatTimeAgo(incident.timestamp)}
+                                </span>
+                                <span className="whitespace-nowrap">
                                   by {incident.reportedBy.replace("_", " ")}
                                 </span>
                               </div>
                               <Button
                                 variant="ghost"
                                 size="sm"
-                                className="px-3 py-2"
+                                className="px-2 py-1 text-xs self-start sm:self-auto"
                               >
-                                <Phone className="w-3 h-3 mr-2" />
-                                Contact Police
+                                <Phone className="w-3 h-3 mr-1" />
+                                Police
                               </Button>
                             </div>
                           </div>
