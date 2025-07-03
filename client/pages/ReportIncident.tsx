@@ -181,31 +181,31 @@ export default function ReportIncident() {
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5 overflow-x-hidden">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-6">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
+        <div className="max-w-4xl mx-auto px-4 py-4">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-2 min-w-0">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/danger-zones")}
-                className="hover:bg-muted px-4 py-2"
+                className="hover:bg-muted px-2 py-1 h-8 text-sm flex-shrink-0"
               >
-                <ArrowLeft className="w-4 h-4 mr-3" />
+                <ArrowLeft className="w-3 h-3 mr-1" />
                 Back
               </Button>
-              <div className="flex items-center space-x-3">
-                <div className="w-8 h-8 bg-warning/10 rounded-full flex items-center justify-center">
-                  <Flag className="w-4 h-4 text-warning" />
+              <div className="flex items-center space-x-2 min-w-0">
+                <div className="w-6 h-6 bg-warning/10 rounded-full flex items-center justify-center flex-shrink-0">
+                  <Flag className="w-3 h-3 text-warning" />
                 </div>
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg font-bold text-foreground truncate">
                   Report Safety Incident
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 flex-shrink-0">
               <ThemeToggle />
-              <Badge variant="outline" className="px-3 py-1">
-                🔒 Secure Report
+              <Badge variant="outline" className="px-2 py-1 text-xs">
+                🔒 Secure
               </Badge>
             </div>
           </div>
@@ -663,7 +663,7 @@ export default function ReportIncident() {
                 </p>
                 <div className="space-y-2 text-sm text-muted-foreground">
                   <p>📧 You'll receive a confirmation email shortly</p>
-                  <p>🔍 Reports are typically reviewed within 24 hours</p>
+                  <p>���� Reports are typically reviewed within 24 hours</p>
                   <p>👮 Relevant authorities will be notified if needed</p>
                 </div>
               </div>
