@@ -19,6 +19,7 @@ import Clock from "./pages/Clock";
 import CheckIn from "./pages/CheckIn";
 import VoiceActivation from "./pages/VoiceActivation";
 import ShakeAlert from "./pages/ShakeAlert";
+import ReportIncident from "./pages/ReportIncident";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
