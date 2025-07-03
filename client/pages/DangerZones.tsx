@@ -997,22 +997,25 @@ export default function DangerZones() {
                     return (
                       <div
                         key={incident.id}
-                        className="border rounded-lg p-4 hover:shadow-md transition-shadow"
+                        className="border rounded-lg p-6 hover:shadow-md transition-all hover:-translate-y-1"
                       >
-                        <div className="flex items-start space-x-3">
+                        <div className="flex items-start space-x-4">
                           <div
-                            className={`w-8 h-8 rounded-full flex items-center justify-center ${getSeverityColor(incident.severity)}`}
+                            className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${getSeverityColor(incident.severity)}`}
                           >
-                            <IconComponent className="w-4 h-4" />
+                            <IconComponent className="w-5 h-5" />
                           </div>
-                          <div className="flex-1">
-                            <div className="flex items-center justify-between">
-                              <h4 className="font-semibold capitalize text-foreground">
+                          <div className="flex-1 space-y-3">
+                            <div className="flex items-start justify-between gap-4">
+                              <h4 className="font-semibold capitalize text-foreground text-base">
                                 {incident.type} - {incident.severity} severity
                               </h4>
-                              <div className="flex items-center space-x-2">
+                              <div className="flex items-center space-x-3 flex-shrink-0">
                                 {incident.distance && (
-                                  <Badge variant="outline" className="text-xs">
+                                  <Badge
+                                    variant="outline"
+                                    className="text-xs px-2 py-1"
+                                  >
                                     {incident.distance}km away
                                   </Badge>
                                 )}
@@ -1023,19 +1026,23 @@ export default function DangerZones() {
                                 )}
                               </div>
                             </div>
-                            <p className="text-sm text-muted-foreground mt-1">
+                            <p className="text-muted-foreground leading-relaxed">
                               {incident.description}
                             </p>
-                            <div className="flex items-center justify-between mt-3">
-                              <div className="flex items-center space-x-4 text-xs text-muted-foreground">
+                            <div className="flex items-center justify-between pt-2">
+                              <div className="flex items-center space-x-6 text-sm text-muted-foreground">
                                 <span>{incident.location}</span>
                                 <span>{formatTimeAgo(incident.timestamp)}</span>
                                 <span>
                                   by {incident.reportedBy.replace("_", " ")}
                                 </span>
                               </div>
-                              <Button variant="ghost" size="sm">
-                                <Phone className="w-3 h-3 mr-1" />
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="px-3 py-2"
+                              >
+                                <Phone className="w-3 h-3 mr-2" />
                                 Contact Police
                               </Button>
                             </div>
