@@ -588,7 +588,7 @@ export default function CheckIn() {
           </TabsContent>
 
           {/* Monitor Tab */}
-          <TabsContent value="monitor" className="space-y-6">
+          <TabsContent value="monitor" className="space-y-8">
             {activeSession && (
               <>
                 {/* Active Session Status */}
