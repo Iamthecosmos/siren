@@ -867,7 +867,7 @@ export default function CheckIn() {
           </TabsContent>
 
           {/* History Tab */}
-          <TabsContent value="history" className="space-y-6">
+          <TabsContent value="history" className="space-y-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
