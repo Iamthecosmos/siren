@@ -233,13 +233,15 @@ export default function Emergency() {
 
         {/* Emergency Contacts */}
         <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center space-x-2">
-              <Users className="w-5 h-5" />
-              <span>Emergency Contacts</span>
+          <CardHeader className="pb-6">
+            <CardTitle className="flex items-center space-x-3">
+              <div className="w-8 h-8 bg-trust/10 rounded-full flex items-center justify-center">
+                <Users className="w-4 h-4 text-trust" />
+              </div>
+              <span>👥 Emergency Contacts</span>
             </CardTitle>
           </CardHeader>
-          <CardContent className="space-y-4">
+          <CardContent className="space-y-6 px-6 pb-6">
             {emergencyContacts.map((contact, index) => (
               <div
                 key={index}
