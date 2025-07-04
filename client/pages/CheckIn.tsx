@@ -344,32 +344,35 @@ export default function CheckIn() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5 overflow-x-hidden">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-4 min-w-0">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted"
+                className="hover:bg-muted px-4 py-2 flex-shrink-0"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-3" />
                 Back
               </Button>
-              <div className="flex items-center space-x-2">
-                <Clock className="w-6 h-6 text-trust" />
-                <h1 className="text-xl font-bold text-foreground">
+              <div className="flex items-center space-x-3 min-w-0">
+                <Clock className="w-6 h-6 text-trust flex-shrink-0" />
+                <h1 className="text-xl font-bold text-foreground truncate">
                   Safety Check-In
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4 flex-shrink-0">
               <ThemeToggle />
-              <Badge variant={activeSession?.isActive ? "default" : "outline"}>
-                {activeSession?.isActive ? "Active Session" : "Ready"}
+              <Badge
+                variant={activeSession?.isActive ? "default" : "outline"}
+                className="px-3 py-1"
+              >
+                {activeSession?.isActive ? "🟢 Active" : "⚪ Ready"}
               </Badge>
             </div>
           </div>
