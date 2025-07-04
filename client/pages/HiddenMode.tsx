@@ -142,23 +142,24 @@ export default function HiddenMode() {
         <Card
           className={`border-2 transition-all ${isCodeSet ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}
         >
-          <CardHeader>
-            <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Key className="w-5 h-5" />
-                <span>Secret Return Code</span>
-              </div>
-              {isCodeSet ? (
-                <div className="flex items-center space-x-2">
-                  <Check className="w-4 h-4 text-safe" />
-                  <span className="text-sm text-safe font-normal">
-                    Code Set
-                  </span>
-                </div>
-              ) : (
-                <AlertCircle className="w-5 h-5 text-warning" />
-              )}
+          <CardHeader className="pb-6">
+            <CardTitle className="flex items-center space-x-2 mb-4">
+              <Key className="w-5 h-5" />
+              <span>Secret Return Code</span>
             </CardTitle>
+            {isCodeSet ? (
+              <div className="flex items-center space-x-2">
+                <Check className="w-4 h-4 text-safe" />
+                <span className="text-sm text-safe font-normal">Code Set</span>
+              </div>
+            ) : (
+              <div className="flex items-center space-x-2">
+                <AlertCircle className="w-4 h-4 text-warning" />
+                <span className="text-sm text-warning font-normal">
+                  Code Not Set
+                </span>
+              </div>
+            )}
           </CardHeader>
           <CardContent className="space-y-4">
             {isCodeSet ? (
