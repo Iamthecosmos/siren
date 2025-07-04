@@ -245,14 +245,14 @@ export default function Emergency() {
             {emergencyContacts.map((contact, index) => (
               <div
                 key={index}
-                className="flex items-center justify-between p-3 border rounded-lg"
+                className="flex items-center justify-between p-5 border rounded-lg hover:shadow-md transition-all"
               >
-                <div className="flex items-center space-x-3">
-                  <div className="w-10 h-10 bg-trust/10 rounded-full flex items-center justify-center">
-                    <Users className="w-5 h-5 text-trust" />
+                <div className="flex items-center space-x-4">
+                  <div className="w-12 h-12 bg-trust/10 rounded-full flex items-center justify-center">
+                    <Users className="w-6 h-6 text-trust" />
                   </div>
                   <div>
-                    <h4 className="font-semibold text-foreground">
+                    <h4 className="font-semibold text-foreground text-base">
                       {contact.name}
                     </h4>
                     <p className="text-sm text-muted-foreground">
@@ -260,24 +260,26 @@ export default function Emergency() {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center space-x-2">
+                <div className="flex items-center space-x-3">
                   {contact.status === "notified" ? (
-                    <Badge className="bg-safe text-safe-foreground">
-                      <CheckCircle className="w-3 h-3 mr-1" />
+                    <Badge className="bg-safe text-safe-foreground px-3 py-1">
+                      <CheckCircle className="w-3 h-3 mr-2" />
                       Notified
                     </Badge>
                   ) : contact.status === "pending" && sosActivated ? (
                     <Badge
                       variant="outline"
-                      className="border-warning text-warning"
+                      className="border-warning text-warning px-3 py-1"
                     >
-                      <Clock className="w-3 h-3 mr-1" />
+                      <Clock className="w-3 h-3 mr-2" />
                       Sending...
                     </Badge>
                   ) : (
-                    <Badge variant="outline">Ready</Badge>
+                    <Badge variant="outline" className="px-3 py-1">
+                      Ready
+                    </Badge>
                   )}
-                  <Button variant="outline" size="sm">
+                  <Button variant="outline" size="sm" className="px-3 py-2">
                     <Phone className="w-4 h-4" />
                   </Button>
                 </div>
