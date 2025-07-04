@@ -163,7 +163,7 @@ export default function HiddenMode() {
           </CardHeader>
           <CardContent className="space-y-4">
             {isCodeSet ? (
-              <div className="flex items-center justify-between">
+              <div className="space-y-4">
                 <div>
                   <p className="font-medium text-foreground">
                     Your secret code is set
