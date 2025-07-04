@@ -101,7 +101,7 @@ export default function Emergency() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
         {/* SOS Activation */}
         <Card
           className={`border-2 transition-all ${sosActivated ? "border-emergency bg-emergency/5" : "border-emergency/20"}`}
