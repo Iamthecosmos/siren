@@ -593,16 +593,14 @@ export default function CheckIn() {
               <>
                 {/* Active Session Status */}
                 <Card className="border-trust/20 bg-trust/5">
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <Activity className="w-5 h-5 text-trust" />
-                        <span>Active Check-In Session</span>
-                      </div>
-                      <Badge className="bg-trust text-trust-foreground">
-                        {activeSession.status}
-                      </Badge>
+                  <CardHeader className="pb-6">
+                    <CardTitle className="flex items-center space-x-2 mb-4">
+                      <Activity className="w-5 h-5 text-trust" />
+                      <span>Active Check-In Session</span>
                     </CardTitle>
+                    <Badge className="bg-trust text-trust-foreground">
+                      {activeSession.status}
+                    </Badge>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
@@ -795,7 +793,7 @@ export default function CheckIn() {
                           {contact.name}
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          {contact.relationship} • {contact.phone}
+                          {contact.relationship} �� {contact.phone}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           Priority {contact.priority} - Will be contacted{" "}
