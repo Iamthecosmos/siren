@@ -379,19 +379,38 @@ export default function CheckIn() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-8"
+          className="space-y-12"
         >
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="setup">Setup</TabsTrigger>
-            <TabsTrigger value="monitor" disabled={!activeSession?.isActive}>
-              Monitor
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
+            <TabsTrigger
+              value="setup"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              📝 Setup
             </TabsTrigger>
-            <TabsTrigger value="contacts">Contacts</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger
+              value="monitor"
+              disabled={!activeSession?.isActive}
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              📊 Monitor
+            </TabsTrigger>
+            <TabsTrigger
+              value="contacts"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              👥 Contacts
+            </TabsTrigger>
+            <TabsTrigger
+              value="history"
+              className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+            >
+              📜 History
+            </TabsTrigger>
           </TabsList>
 
           {/* Setup Tab */}
