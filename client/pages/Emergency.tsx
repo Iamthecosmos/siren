@@ -106,17 +106,17 @@ export default function Emergency() {
         <Card
           className={`border-2 transition-all ${sosActivated ? "border-emergency bg-emergency/5" : "border-emergency/20"}`}
         >
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-foreground">
-              {sosActivated ? "SOS Activated!" : "Emergency SOS"}
+          <CardHeader className="text-center pb-8">
+            <CardTitle className="text-2xl text-foreground mb-4">
+              {sosActivated ? "🚨 SOS Activated!" : "🔴 Emergency SOS"}
             </CardTitle>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-lg">
               {sosActivated
                 ? "Your emergency alert is being sent to your trusted contacts"
                 : "Press and hold the button below to send an emergency alert"}
             </p>
           </CardHeader>
-          <CardContent className="text-center space-y-6">
+          <CardContent className="text-center space-y-8 px-8 pb-8">
             {sosActivated ? (
               <div className="space-y-6">
                 <div className="w-24 h-24 bg-emergency rounded-full flex items-center justify-center mx-auto animate-pulse">
