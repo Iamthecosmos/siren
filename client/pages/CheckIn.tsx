@@ -414,7 +414,7 @@ export default function CheckIn() {
           </TabsList>
 
           {/* Setup Tab */}
-          <TabsContent value="setup" className="space-y-6">
+          <TabsContent value="setup" className="space-y-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center space-x-2">
