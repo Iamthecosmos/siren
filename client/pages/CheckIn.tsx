@@ -767,7 +767,7 @@ export default function CheckIn() {
           </TabsContent>
 
           {/* Contacts Tab */}
-          <TabsContent value="contacts" className="space-y-6">
+          <TabsContent value="contacts" className="space-y-8">
             <Card>
               <CardHeader>
                 <CardTitle className="flex items-center justify-between">
