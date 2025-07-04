@@ -699,16 +699,14 @@ export default function DangerZones() {
 
                 {/* Recent Incidents */}
                 <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <AlertTriangle className="w-5 h-5" />
-                        <span>Recent Incidents Nearby</span>
-                      </div>
-                      <Badge variant="outline">
-                        {currentAreaSafety.recentIncidents.length} reports
-                      </Badge>
+                  <CardHeader className="pb-6">
+                    <CardTitle className="flex items-center space-x-2 mb-4">
+                      <AlertTriangle className="w-5 h-5" />
+                      <span>Recent Incidents Nearby</span>
                     </CardTitle>
+                    <Badge variant="outline">
+                      {currentAreaSafety.recentIncidents.length} reports
+                    </Badge>
                   </CardHeader>
                   <CardContent className="space-y-4">
                     {currentAreaSafety.recentIncidents.map((incident) => {
