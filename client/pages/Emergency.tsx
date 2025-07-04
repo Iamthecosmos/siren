@@ -66,32 +66,35 @@ export default function Emergency() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5 overflow-x-hidden">
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-3">
+        <div className="max-w-4xl mx-auto px-6 py-6">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex items-center space-x-4 min-w-0">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted"
+                className="hover:bg-muted px-4 py-2 flex-shrink-0"
               >
-                <ArrowLeft className="w-4 h-4 mr-2" />
+                <ArrowLeft className="w-4 h-4 mr-3" />
                 Back
               </Button>
-              <div className="flex items-center space-x-2">
-                <Shield className="w-6 h-6 text-emergency" />
-                <h1 className="text-xl font-bold text-foreground">
+              <div className="flex items-center space-x-3 min-w-0">
+                <Shield className="w-6 h-6 text-emergency flex-shrink-0" />
+                <h1 className="text-xl font-bold text-foreground truncate">
                   Emergency SOS
                 </h1>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-4 flex-shrink-0">
               <ThemeToggle />
-              <Badge variant={sosActivated ? "destructive" : "outline"}>
-                {sosActivated ? "SOS Active" : "Ready"}
+              <Badge
+                variant={sosActivated ? "destructive" : "outline"}
+                className="px-3 py-1"
+              >
+                {sosActivated ? "🚨 Active" : "🔴 Ready"}
               </Badge>
             </div>
           </div>
