@@ -604,20 +604,18 @@ export default function VoiceActivation() {
                 <Card
                   className={`border-2 ${isListening ? "border-trust bg-trust/5" : "border-muted"}`}
                 >
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        {isListening ? (
-                          <Activity className="w-5 h-5 text-trust animate-pulse" />
-                        ) : (
-                          <MicOff className="w-5 h-5 text-muted-foreground" />
-                        )}
-                        <span>Voice Monitoring</span>
-                      </div>
-                      <Badge variant={isListening ? "default" : "outline"}>
-                        {isListening ? "Active" : "Inactive"}
-                      </Badge>
+                  <CardHeader className="pb-6">
+                    <CardTitle className="flex items-center space-x-2 mb-4">
+                      {isListening ? (
+                        <Activity className="w-5 h-5 text-trust animate-pulse" />
+                      ) : (
+                        <MicOff className="w-5 h-5 text-muted-foreground" />
+                      )}
+                      <span>Voice Monitoring</span>
                     </CardTitle>
+                    <Badge variant={isListening ? "default" : "outline"}>
+                      {isListening ? "Active" : "Inactive"}
+                    </Badge>
                   </CardHeader>
                   <CardContent className="space-y-6">
                     <div className="text-center space-y-4">
