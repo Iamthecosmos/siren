@@ -581,7 +581,7 @@ export default function FakeCall() {
             </TabsContent>
 
             <TabsContent value="personas" className="space-y-6">
-              <div className="flex items-center justify-between">
+              <div className="space-y-4">
                 <div>
                   <h2 className="text-2xl font-bold text-foreground">
                     Your Personas
