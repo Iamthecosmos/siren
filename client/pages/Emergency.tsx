@@ -289,34 +289,34 @@ export default function Emergency() {
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Button
             variant="outline"
-            className="h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+            className="h-20 border-trust text-trust hover:bg-trust hover:text-trust-foreground transition-all hover:-translate-y-1"
           >
-            <div className="text-center">
-              <Phone className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Call Police</div>
+            <div className="text-center space-y-2">
+              <Phone className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">📞 Call Police</div>
             </div>
           </Button>
 
           <Button
             variant="outline"
-            className="h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
+            className="h-20 border-safe text-safe hover:bg-safe hover:text-safe-foreground transition-all hover:-translate-y-1"
           >
-            <div className="text-center">
-              <MessageSquare className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Text Update</div>
+            <div className="text-center space-y-2">
+              <MessageSquare className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">💬 Text Update</div>
             </div>
           </Button>
 
           <Button
             variant="outline"
-            className="h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
+            className="h-20 border-warning text-warning hover:bg-warning hover:text-warning-foreground transition-all hover:-translate-y-1"
           >
-            <div className="text-center">
-              <MapPin className="w-5 h-5 mx-auto mb-1" />
-              <div className="text-sm">Share Location</div>
+            <div className="text-center space-y-2">
+              <MapPin className="w-6 h-6 mx-auto" />
+              <div className="text-sm font-medium">📍 Share Location</div>
             </div>
           </Button>
         </div>
