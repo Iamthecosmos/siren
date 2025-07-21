@@ -679,29 +679,31 @@ export default function CheckIn() {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="flex space-x-4">
+                    <div className="space-y-4">
                       <Button
                         onClick={handleCheckIn}
-                        className="flex-1 bg-safe hover:bg-safe/90 text-safe-foreground"
+                        className="w-full bg-safe hover:bg-safe/90 text-safe-foreground"
                       >
                         <CheckCircle className="w-4 h-4 mr-2" />
                         I'm Safe - Check In
                       </Button>
-                      <Button
-                        onClick={completeSession}
-                        variant="outline"
-                        className="border-trust text-trust hover:bg-trust hover:text-trust-foreground"
-                      >
-                        <Square className="w-4 h-4 mr-2" />
-                        Complete Session
-                      </Button>
-                      <Button
-                        onClick={cancelSession}
-                        variant="outline"
-                        className="border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
-                      >
-                        Cancel
-                      </Button>
+                      <div className="flex space-x-4">
+                        <Button
+                          onClick={completeSession}
+                          variant="outline"
+                          className="flex-1 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+                        >
+                          <Square className="w-4 h-4 mr-2" />
+                          Complete Session
+                        </Button>
+                        <Button
+                          onClick={cancelSession}
+                          variant="outline"
+                          className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
+                        >
+                          Cancel
+                        </Button>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
@@ -786,30 +788,27 @@ export default function CheckIn() {
                       <div className="w-10 h-10 bg-trust/10 rounded-full flex items-center justify-center">
                         <Users className="w-5 h-5 text-trust" />
                       </div>
-                      <div>
+                      <div className="flex-1">
                         <h4 className="font-semibold text-foreground">
                           {contact.name}
                         </h4>
                         <p className="text-sm text-muted-foreground">
-                          {contact.relationship} �� {contact.phone}
+                          {contact.relationship} • {contact.phone}
                         </p>
-                        <p className="text-xs text-muted-foreground">
-                          Priority {contact.priority} - Will be contacted{" "}
-                          {contact.priority === 1
-                            ? "first"
-                            : `${contact.priority === 2 ? "second" : "third"}`}
+                        <p className="text-xs text-muted-foreground mb-2">
+                          Priority {contact.priority} - Will be contacted {contact.priority === 1 ? "first" : `${contact.priority === 2 ? "second" : "third"}`}
                         </p>
+                        <div className="flex space-x-2 mt-1">
+                          <Button variant="outline" size="sm">
+                            <Phone className="w-3 h-3 mr-1" />
+                            Test Call
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <MessageSquare className="w-3 h-3 mr-1" />
+                            Test Message
+                          </Button>
+                        </div>
                       </div>
-                    </div>
-                    <div className="flex space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Phone className="w-3 h-3 mr-1" />
-                        Test Call
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <MessageSquare className="w-3 h-3 mr-1" />
-                        Test Message
-                      </Button>
                     </div>
                   </div>
                 ))}
