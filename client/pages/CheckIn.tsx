@@ -574,12 +574,11 @@ export default function CheckIn() {
                           setCheckInInterval(template.interval);
                           setDestination(template.name);
                         }}
-                        className="h-16 flex flex-col min-w-[250px] snap-start shrink-0"
+                        className="h-14 flex flex-col min-w-[220px] snap-start shrink-0 px-2 py-2"
                       >
                         <div className="font-semibold">{template.name}</div>
                         <div className="text-xs text-muted-foreground">
-                          {template.duration}min • Check every {template.interval}
-                          min
+                          {template.duration}min • Check every {template.interval}min
                         </div>
                       </Button>
                     ))}
