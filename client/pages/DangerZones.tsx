@@ -369,7 +369,7 @@ export default function DangerZones() {
           onValueChange={setActiveTab}
           className="space-y-12"
         >
-          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1 pl-4 space-x-4">
             <TabsTrigger
               value="current"
               className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
