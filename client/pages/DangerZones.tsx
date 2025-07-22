@@ -843,29 +843,31 @@ export default function DangerZones() {
                 <CardTitle>Popular Safety Searches</CardTitle>
               </CardHeader>
               <CardContent className="px-0 pb-6">
-                <div className="flex overflow-x-auto pl-4 space-x-4 snap-x">
-                  {[
-                    "Downtown Plaza",
-                    "University District",
-                    "Central Train Station",
-                    "River Park",
-                    "Shopping Mall",
-                    "Airport Area",
-                  ].map((area, index) => (
-                    <Button
-                      key={index}
-                      variant="outline"
-                      size="default"
-                      onClick={() => {
-                        setSearchLocation(area);
-                        searchArea();
-                      }}
-                      className="justify-start h-12 px-4 py-3 min-w-[250px] snap-start"
-                    >
-                      <MapPin className="w-4 h-4 mr-3 flex-shrink-0" />
-                      <span className="truncate">{area}</span>
-                    </Button>
-                  ))}
+                <div className="overflow-x-auto pl-4 pr-4">
+                  <div className="flex space-x-4 snap-x snap-mandatory">
+                    {[
+                      "Downtown Plaza",
+                      "University District",
+                      "Central Train Station",
+                      "River Park",
+                      "Shopping Mall",
+                      "Airport Area",
+                    ].map((area, index) => (
+                      <Button
+                        key={index}
+                        variant="outline"
+                        size="default"
+                        onClick={() => {
+                          setSearchLocation(area);
+                          searchArea();
+                        }}
+                        className="justify-start h-12 px-4 py-3 min-w-[250px] snap-start shrink-0"
+                      >
+                        <MapPin className="w-4 h-4 mr-3 flex-shrink-0" />
+                        <span className="truncate">{area}</span>
+                      </Button>
+                    ))}
+                  </div>
                 </div>
               </CardContent>
             </Card>
