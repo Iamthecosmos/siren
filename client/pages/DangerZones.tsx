@@ -109,7 +109,7 @@ export default function DangerZones() {
   const [locationPermission, setLocationPermission] = useState<
     "prompt" | "granted" | "denied"
   >("prompt");
-  const [activeTab, setActiveTab] = useState("current");
+  const [activeTab, setActiveTab] = useState("search");
   const [searchLocation, setSearchLocation] = useState("");
   const [isSearching, setIsSearching] = useState(false);
   const [selectedIncident, setSelectedIncident] =
@@ -843,7 +843,7 @@ export default function DangerZones() {
                 <CardTitle>Popular Safety Searches</CardTitle>
               </CardHeader>
               <CardContent className="px-0 pb-6">
-                <div className="flex overflow-x-auto pl-4 space-x-4">
+                <div className="flex overflow-x-auto pl-4 space-x-4 snap-x">
                   {[
                     "Downtown Plaza",
                     "University District",
@@ -860,7 +860,7 @@ export default function DangerZones() {
                         setSearchLocation(area);
                         searchArea();
                       }}
-                      className="justify-start h-12 px-4 py-3 min-w-[12rem]"
+                      className="justify-start h-12 px-4 py-3 min-w-[250px] snap-start"
                     >
                       <MapPin className="w-4 h-4 mr-3 flex-shrink-0" />
                       <span className="truncate">{area}</span>

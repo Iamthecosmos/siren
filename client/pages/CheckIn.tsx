@@ -559,7 +559,7 @@ export default function CheckIn() {
                 <CardTitle>Quick Setup Templates</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex overflow-x-auto pl-4 space-x-4">
+                <div className="flex overflow-x-auto pl-4 space-x-4 snap-x">
                   {[
                     { name: "Evening Walk", duration: 45, interval: 15 },
                     { name: "Study Session", duration: 120, interval: 30 },
@@ -573,7 +573,7 @@ export default function CheckIn() {
                         setCheckInInterval(template.interval);
                         setDestination(template.name);
                       }}
-                      className="h-16 flex flex-col min-w-[12rem]"
+                      className="h-16 flex flex-col min-w-[250px] snap-start"
                     >
                       <div className="font-semibold">{template.name}</div>
                       <div className="text-xs text-muted-foreground">
