@@ -558,7 +558,7 @@ export default function CheckIn() {
               <CardHeader>
                 <CardTitle>Quick Setup Templates</CardTitle>
               </CardHeader>
-              <CardContent>
+              <CardContent className="px-0">
                 <div className="flex overflow-x-auto pl-4 space-x-4 snap-x">
                   {[
                     { name: "Evening Walk", duration: 45, interval: 15 },
