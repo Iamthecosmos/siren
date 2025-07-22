@@ -545,11 +545,11 @@ export default function FakeCall() {
                   </p>
                 </CardHeader>
                 <CardContent className="px-0">
-                  <div className="flex overflow-x-auto pl-4 space-x-4">
+                  <div className="flex overflow-x-auto pl-4 space-x-4 snap-x">
                     {personas.map((persona) => (
                       <Card
                         key={persona.id}
-                        className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 min-w-[14rem]"
+                        className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 min-w-[250px] snap-start"
                         onClick={() => startCall(persona.id)}
                       >
                         <CardContent className="p-4 text-center space-y-3">
