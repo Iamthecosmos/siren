@@ -306,7 +306,7 @@ export default function DangerZones() {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted px-4 py-2"
+                className="hover:bg-muted"
               >
                 <ArrowLeft className="w-4 h-4 mr-3" />
                 Back

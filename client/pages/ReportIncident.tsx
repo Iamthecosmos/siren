@@ -188,7 +188,7 @@ export default function ReportIncident() {
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/danger-zones")}
-                className="hover:bg-muted px-2 py-1 h-8 text-sm flex-shrink-0"
+                className="hover:bg-muted"
               >
                 <ArrowLeft className="w-3 h-3 mr-1" />
                 Back
