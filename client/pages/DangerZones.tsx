@@ -116,6 +116,7 @@ export default function DangerZones() {
     useState<SafetyIncident | null>(null);
   const [routeOrigin, setRouteOrigin] = useState("");
   const [routeDestination, setRouteDestination] = useState("");
+  const [activeCard, setActiveCard] = useState("search-area");
 
   // Sample data
   const currentAreaSafety: AreaSafety = {
@@ -844,7 +845,7 @@ export default function DangerZones() {
               </CardHeader>
               <CardContent className="px-0 pb-6">
                 <div className="w-full overflow-x-auto">
-                  <div className="flex space-x-4 pl-4 pr-4 snap-x snap-mandatory">
+                  <div className="flex gap-4 pl-4 pr-4 snap-x snap-mandatory">
                     {[
                       "Downtown Plaza",
                       "University District",
@@ -853,7 +854,10 @@ export default function DangerZones() {
                       "Shopping Mall",
                       "Airport Area",
                     ].map((area, index) => (
-                      <div key={index} className="min-w-[250px] snap-start shrink-0">
+                      <div
+                        key={index}
+                        className="min-w-[80%] max-w-[80%] shrink-0 snap-start rounded-lg border bg-white p-4 shadow"
+                      >
                         <Button
                           variant="outline"
                           size="default"

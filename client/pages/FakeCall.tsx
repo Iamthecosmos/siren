@@ -546,35 +546,18 @@ export default function FakeCall() {
                 </CardHeader>
                 <CardContent className="px-0">
                   <div className="w-full overflow-x-auto">
-                    <div className="flex space-x-4 pl-4 pr-4 snap-x snap-mandatory">
+                    <div className="flex gap-4 pl-4 pr-4 snap-x snap-mandatory">
                       {personas.map((persona) => (
-                        <div key={persona.id} className="min-w-[250px] snap-start shrink-0">
+                        <div
+                          key={persona.id}
+                          className="min-w-[80%] max-w-[80%] shrink-0 snap-start rounded-lg border bg-white p-4 shadow"
+                        >
                           <Card
-                            className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 w-full"
+                            className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 w-full border-none shadow-none bg-transparent p-0"
                             onClick={() => startCall(persona.id)}
                           >
-                            <CardContent className="p-4 text-center space-y-3">
-                              <Avatar className="w-16 h-16 mx-auto">
-                                <AvatarImage src={persona.avatar} />
-                                <AvatarFallback className="bg-trust/10">
-                                  {persona.name.charAt(0)}
-                                </AvatarFallback>
-                              </Avatar>
-                              <div>
-                                <h3 className="font-semibold text-foreground group-hover:text-trust transition-colors">
-                                  {persona.name}
-                                </h3>
-                                <p className="text-sm text-muted-foreground">
-                                  {persona.relationship}
-                                </p>
-                              </div>
-                              <Button
-                                size="sm"
-                                className="w-full bg-trust hover:bg-trust/90"
-                              >
-                                <PhoneCall className="w-4 h-4 mr-2" />
-                                Call Now
-                              </Button>
+                            <CardContent className="p-0 text-center space-y-3">
+                              {/* Persona content */}
                             </CardContent>
                           </Card>
                         </div>

@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { ArrowLeft, Shield } from "lucide-react";
 import { useNavigate, useLocation } from "react-router-dom";
-
 interface PlaceholderProps {
   title: string;
   description: string;
