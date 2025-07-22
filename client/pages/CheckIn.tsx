@@ -559,28 +559,29 @@ export default function CheckIn() {
                 <CardTitle>Quick Setup Templates</CardTitle>
               </CardHeader>
               <CardContent className="px-0">
-                <div className="overflow-x-auto pl-4 pr-4">
-                  <div className="flex space-x-4 snap-x snap-mandatory">
+                <div className="w-full overflow-x-auto">
+                  <div className="flex space-x-4 pl-4 pr-4 snap-x snap-mandatory">
                     {[
                       { name: "Evening Walk", duration: 45, interval: 15 },
                       { name: "Study Session", duration: 120, interval: 30 },
                       { name: "Night Out", duration: 240, interval: 60 },
                     ].map((template, index) => (
-                      <Button
-                        key={index}
-                        variant="outline"
-                        onClick={() => {
-                          setEstimatedDuration(template.duration);
-                          setCheckInInterval(template.interval);
-                          setDestination(template.name);
-                        }}
-                        className="h-14 flex flex-col min-w-[220px] snap-start shrink-0 px-2 py-2"
-                      >
-                        <div className="font-semibold">{template.name}</div>
-                        <div className="text-xs text-muted-foreground">
-                          {template.duration}min • Check every {template.interval}min
-                        </div>
-                      </Button>
+                      <div key={index} className="min-w-[250px] snap-start shrink-0">
+                        <Button
+                          variant="outline"
+                          onClick={() => {
+                            setEstimatedDuration(template.duration);
+                            setCheckInInterval(template.interval);
+                            setDestination(template.name);
+                          }}
+                          className="h-14 flex flex-col w-full px-2 py-2"
+                        >
+                          <div className="font-semibold">{template.name}</div>
+                          <div className="text-xs text-muted-foreground">
+                            {template.duration}min • Check every {template.interval}min
+                          </div>
+                        </Button>
+                      </div>
                     ))}
                   </div>
                 </div>
