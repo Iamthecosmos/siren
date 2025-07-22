@@ -21,8 +21,8 @@ export default function Placeholder({
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Button
@@ -36,7 +36,7 @@ export default function Placeholder({
               </Button>
               <div className="flex items-center space-x-2">
                 <Icon className="w-6 h-6 text-trust" />
-                <h1 className="text-xl font-bold text-foreground">{title}</h1>
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">{title}</h1>
               </div>
             </div>
             <ThemeToggle />
@@ -44,7 +44,7 @@ export default function Placeholder({
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12">
         <Card className="border-trust/20">
           <CardHeader className="text-center">
             <div className="w-16 h-16 bg-trust/10 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -59,14 +59,14 @@ export default function Placeholder({
                 This feature is coming soon! We're working hard to bring you the
                 best safety tools.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                 <Button
                   onClick={() => navigate("/")}
-                  className="bg-trust hover:bg-trust/90 text-trust-foreground"
+                  className="w-full sm:w-auto bg-trust hover:bg-trust/90 text-trust-foreground"
                 >
                   Return to Safety Dashboard
                 </Button>
-                <Button variant="outline" className="border-trust text-trust">
+                <Button variant="outline" className="w-full sm:w-auto border-trust text-trust">
                   Get Notified When Ready
                 </Button>
               </div>

@@ -292,8 +292,8 @@ export default function Location() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Button
@@ -307,7 +307,7 @@ export default function Location() {
               </Button>
               <div className="flex items-center space-x-2">
                 <MapPin className="w-6 h-6 text-trust" />
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">
                   Live Location
                 </h1>
               </div>
@@ -322,7 +322,7 @@ export default function Location() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-6 space-y-6">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 space-y-6">
         {/* Location Permission Card */}
         <Card
           className={`border-2 transition-all ${
@@ -498,12 +498,12 @@ export default function Location() {
                 </div>
               )}
 
-              <div className="flex flex-col sm:flex-row gap-4">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 {!isSharing ? (
                   <Button
                     onClick={startLocationSharing}
                     disabled={!currentLocation}
-                    className="flex-1 bg-trust hover:bg-trust/90 h-12"
+                    className="w-full sm:w-auto bg-trust hover:bg-trust/90 h-12"
                   >
                     <Share className="w-4 h-4 mr-2" />
                     Start Sharing Location
@@ -512,7 +512,7 @@ export default function Location() {
                   <Button
                     onClick={stopLocationSharing}
                     variant="outline"
-                    className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground h-12"
+                    className="w-full sm:w-auto border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground h-12"
                   >
                     <EyeOff className="w-4 h-4 mr-2" />
                     Stop Sharing
@@ -521,7 +521,7 @@ export default function Location() {
                 <Button
                   variant="outline"
                   disabled={!currentLocation}
-                  className="sm:w-auto h-12"
+                  className="w-full sm:w-auto h-12"
                 >
                   <Copy className="w-4 h-4 mr-2" />
                   Copy Coordinates

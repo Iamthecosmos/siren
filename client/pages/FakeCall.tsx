@@ -328,8 +328,8 @@ export default function FakeCall() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Button
@@ -343,7 +343,7 @@ export default function FakeCall() {
               </Button>
               <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6 text-trust" />
-                <h1 className="text-xl font-bold text-foreground">Fake Call</h1>
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">Fake Call</h1>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -356,7 +356,7 @@ export default function FakeCall() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12">
         {isCallActive && selectedPersonaData ? (
           // Active Call Interface
           <div className="space-y-8">

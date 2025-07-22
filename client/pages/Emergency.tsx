@@ -68,8 +68,8 @@ export default function Emergency() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-6">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center space-x-4 min-w-0">
               <Button
@@ -83,7 +83,7 @@ export default function Emergency() {
               </Button>
               <div className="flex items-center space-x-3 min-w-0">
                 <Shield className="w-6 h-6 text-emergency flex-shrink-0" />
-                <h1 className="text-xl font-bold text-foreground truncate">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground truncate">
                   Emergency SOS
                 </h1>
               </div>
@@ -101,7 +101,7 @@ export default function Emergency() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* SOS Activation */}
         <Card
           className={`border-2 transition-all ${sosActivated ? "border-emergency bg-emergency/5" : "border-emergency/20"}`}
@@ -292,7 +292,7 @@ export default function Emergency() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <Button
             variant="outline"
-            className="h-20 border-trust text-trust hover:bg-trust hover:text-trust-foreground transition-all hover:-translate-y-1"
+            className="w-full h-20 border-trust text-trust hover:bg-trust hover:text-trust-foreground transition-all hover:-translate-y-1"
           >
             <div className="text-center space-y-2">
               <Phone className="w-6 h-6 mx-auto" />
@@ -302,7 +302,7 @@ export default function Emergency() {
 
           <Button
             variant="outline"
-            className="h-20 border-safe text-safe hover:bg-safe hover:text-safe-foreground transition-all hover:-translate-y-1"
+            className="w-full h-20 border-safe text-safe hover:bg-safe hover:text-safe-foreground transition-all hover:-translate-y-1"
           >
             <div className="text-center space-y-2">
               <MessageSquare className="w-6 h-6 mx-auto" />
@@ -312,7 +312,7 @@ export default function Emergency() {
 
           <Button
             variant="outline"
-            className="h-20 border-warning text-warning hover:bg-warning hover:text-warning-foreground transition-all hover:-translate-y-1"
+            className="w-full h-20 border-warning text-warning hover:bg-warning hover:text-warning-foreground transition-all hover:-translate-y-1"
           >
             <div className="text-center space-y-2">
               <MapPin className="w-6 h-6 mx-auto" />

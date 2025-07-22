@@ -346,8 +346,8 @@ export default function CheckIn() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-6">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center space-x-4 min-w-0">
               <Button
@@ -361,7 +361,7 @@ export default function CheckIn() {
               </Button>
               <div className="flex items-center space-x-3 min-w-0">
                 <Clock className="w-6 h-6 text-trust flex-shrink-0" />
-                <h1 className="text-xl font-bold text-foreground truncate">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground truncate">
                   Safety Check-In
                 </h1>
               </div>
@@ -379,11 +379,11 @@ export default function CheckIn() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-8 sm:py-12 space-y-8 sm:space-y-12">
         <Tabs
           value={activeTab}
           onValueChange={setActiveTab}
-          className="space-y-12"
+          className="space-y-8 sm:space-y-12"
         >
           <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1">
             <TabsTrigger
@@ -588,11 +588,11 @@ export default function CheckIn() {
           </TabsContent>
 
           {/* Monitor Tab */}
-          <TabsContent value="monitor" className="space-y-8">
+          <TabsContent value="monitor" className="space-y-6 sm:space-y-8">
             {activeSession && (
               <>
                 {/* Active Session Status */}
-                <Card className="border-trust/20 bg-trust/5">
+                <Card className="border-trust/20 bg-trust/5 mx-1 sm:mx-4">
                   <CardHeader className="pb-6">
                     <CardTitle className="flex items-center space-x-2 mb-4">
                       <Activity className="w-5 h-5 text-trust" />
@@ -679,7 +679,7 @@ export default function CheckIn() {
                     )}
 
                     {/* Action Buttons */}
-                    <div className="space-y-4">
+                    <div className="flex flex-col gap-3 sm:gap-4 w-full px-2 sm:px-4">
                       <Button
                         onClick={handleCheckIn}
                         className="w-full bg-safe hover:bg-safe/90 text-safe-foreground"
@@ -687,23 +687,21 @@ export default function CheckIn() {
                         <CheckCircle className="w-4 h-4 mr-2" />
                         I'm Safe - Check In
                       </Button>
-                      <div className="flex space-x-4">
-                        <Button
-                          onClick={completeSession}
-                          variant="outline"
-                          className="flex-1 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
-                        >
-                          <Square className="w-4 h-4 mr-2" />
-                          Complete Session
-                        </Button>
-                        <Button
-                          onClick={cancelSession}
-                          variant="outline"
-                          className="flex-1 border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
-                        >
-                          Cancel
-                        </Button>
-                      </div>
+                      <Button
+                        onClick={completeSession}
+                        variant="outline"
+                        className="w-full border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+                      >
+                        <Square className="w-4 h-4 mr-2" />
+                        Complete Session
+                      </Button>
+                      <Button
+                        onClick={cancelSession}
+                        variant="outline"
+                        className="w-full border-emergency text-emergency hover:bg-emergency hover:text-emergency-foreground"
+                      >
+                        Cancel
+                      </Button>
                     </div>
                   </CardContent>
                 </Card>

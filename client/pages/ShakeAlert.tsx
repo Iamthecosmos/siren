@@ -329,8 +329,8 @@ export default function ShakeAlert() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-6">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button
@@ -349,7 +349,7 @@ export default function ShakeAlert() {
                     <div className="absolute -top-1 -right-1 w-3 h-3 bg-trust rounded-full animate-pulse"></div>
                   )}
                 </div>
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">
                   Shake Alert
                 </h1>
               </div>
@@ -367,7 +367,7 @@ export default function ShakeAlert() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* Enhanced Escalation Dialog */}
         {isEscalating && (
           <Card className="border-emergency bg-emergency/5 animate-pulse">

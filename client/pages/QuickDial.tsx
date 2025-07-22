@@ -307,8 +307,8 @@ export default function QuickDial() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Button
@@ -322,7 +322,7 @@ export default function QuickDial() {
               </Button>
               <div className="flex items-center space-x-2">
                 <Phone className="w-6 h-6 text-emergency" />
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">
                   Quick Dial
                 </h1>
               </div>
@@ -344,7 +344,7 @@ export default function QuickDial() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* Location Status */}
         <Card
           className={`border-2 transition-all ${
@@ -540,7 +540,7 @@ export default function QuickDial() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <Button
             variant="outline"
-            className="h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+            className="w-full h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
             onClick={() => navigate("/location")}
           >
             <div className="text-center">
@@ -551,7 +551,7 @@ export default function QuickDial() {
 
           <Button
             variant="outline"
-            className="h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
+            className="w-full h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
             onClick={() => navigate("/fake-call")}
           >
             <div className="text-center">
@@ -564,7 +564,7 @@ export default function QuickDial() {
             <DialogTrigger asChild>
               <Button
                 variant="outline"
-                className="h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
+                className="w-full h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
               >
                 <div className="text-center">
                   <Clock className="w-5 h-5 mx-auto mb-1" />
@@ -610,7 +610,7 @@ export default function QuickDial() {
 
           <Button
             variant="outline"
-            className="h-16 border-muted text-muted-foreground hover:bg-muted hover:text-foreground"
+            className="w-full h-16 border-muted text-muted-foreground hover:bg-muted hover:text-foreground"
           >
             <div className="text-center">
               <HelpCircle className="w-5 h-5 mx-auto mb-1" />

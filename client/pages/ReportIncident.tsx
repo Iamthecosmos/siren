@@ -180,8 +180,8 @@ export default function ReportIncident() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center space-x-2 min-w-0">
               <Button
@@ -197,7 +197,7 @@ export default function ReportIncident() {
                 <div className="w-6 h-6 bg-warning/10 rounded-full flex items-center justify-center flex-shrink-0">
                   <Flag className="w-3 h-3 text-warning" />
                 </div>
-                <h1 className="text-lg font-bold text-foreground truncate">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground truncate">
                   Report Safety Incident
                 </h1>
               </div>
@@ -212,7 +212,7 @@ export default function ReportIncident() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-8">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* Information Banner */}
         <Card className="border-trust/20 bg-trust/5">
           <CardContent className="p-6">
@@ -615,7 +615,7 @@ export default function ReportIncident() {
           </Card>
 
           {/* Submit Button */}
-          <div className="flex justify-center pt-4">
+          <div className="flex flex-col gap-3 sm:flex-row sm:gap-4 justify-center pt-4">
             <Button
               type="submit"
               disabled={
@@ -626,7 +626,7 @@ export default function ReportIncident() {
                 !formData.description ||
                 !formData.dateTime
               }
-              className="bg-warning hover:bg-warning/90 text-warning-foreground px-12 py-4 text-lg h-auto"
+              className="w-full bg-warning hover:bg-warning/90 text-warning-foreground px-12 py-4 text-lg h-auto"
               size="lg"
             >
               {isSubmitting ? (

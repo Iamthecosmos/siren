@@ -347,8 +347,8 @@ export default function VoiceActivation() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-4">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <Button
@@ -362,7 +362,7 @@ export default function VoiceActivation() {
               </Button>
               <div className="flex items-center space-x-2">
                 <Mic className="w-6 h-6 text-trust" />
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">
                   Voice Activation
                 </h1>
               </div>
@@ -377,7 +377,7 @@ export default function VoiceActivation() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* Emergency Trigger Dialog */}
         {isEmergencyTriggered && (
           <Card className="border-emergency bg-emergency/5 animate-pulse">

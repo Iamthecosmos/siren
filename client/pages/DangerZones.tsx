@@ -298,8 +298,8 @@ export default function DangerZones() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-warning/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-6">
+      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
               <Button
@@ -313,7 +313,7 @@ export default function DangerZones() {
               </Button>
               <div className="flex items-center space-x-3">
                 <AlertTriangle className="w-6 h-6 text-warning" />
-                <h1 className="text-xl font-bold text-foreground">
+                <h1 className="text-lg sm:text-xl font-extrabold text-foreground">
                   Danger Zones
                 </h1>
               </div>
@@ -335,7 +335,7 @@ export default function DangerZones() {
         </div>
       </header>
 
-      <main className="max-w-4xl mx-auto px-6 py-12 space-y-12">
+      <main className="max-w-4xl mx-auto px-2 sm:px-4 py-6 sm:py-12 space-y-8 sm:space-y-12">
         {/* Location Permission */}
         {locationPermission !== "granted" && (
           <Card className="border-warning bg-warning/5">
@@ -754,7 +754,7 @@ export default function DangerZones() {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <Button
                     variant="outline"
-                    className="h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
+                    className="w-full h-16 border-trust text-trust hover:bg-trust hover:text-trust-foreground"
                     onClick={() => navigate("/emergency")}
                   >
                     <div className="text-center">
@@ -765,7 +765,7 @@ export default function DangerZones() {
 
                   <Button
                     variant="outline"
-                    className="h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
+                    className="w-full h-16 border-safe text-safe hover:bg-safe hover:text-safe-foreground"
                     onClick={() => navigate("/location")}
                   >
                     <div className="text-center">
@@ -776,7 +776,7 @@ export default function DangerZones() {
 
                   <Button
                     variant="outline"
-                    className="h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
+                    className="w-full h-16 border-warning text-warning hover:bg-warning hover:text-warning-foreground"
                   >
                     <div className="text-center">
                       <Flag className="w-5 h-5 mx-auto mb-1" />
