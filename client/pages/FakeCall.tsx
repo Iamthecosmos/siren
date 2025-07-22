@@ -544,38 +544,40 @@ export default function FakeCall() {
                     help you exit uncomfortable situations
                   </p>
                 </CardHeader>
-                <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {personas.map((persona) => (
-                    <Card
-                      key={persona.id}
-                      className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1"
-                      onClick={() => startCall(persona.id)}
-                    >
-                      <CardContent className="p-4 text-center space-y-3">
-                        <Avatar className="w-16 h-16 mx-auto">
-                          <AvatarImage src={persona.avatar} />
-                          <AvatarFallback className="bg-trust/10">
-                            {persona.name.charAt(0)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div>
-                          <h3 className="font-semibold text-foreground group-hover:text-trust transition-colors">
-                            {persona.name}
-                          </h3>
-                          <p className="text-sm text-muted-foreground">
-                            {persona.relationship}
-                          </p>
-                        </div>
-                        <Button
-                          size="sm"
-                          className="w-full bg-trust hover:bg-trust/90"
-                        >
-                          <PhoneCall className="w-4 h-4 mr-2" />
-                          Call Now
-                        </Button>
-                      </CardContent>
-                    </Card>
-                  ))}
+                <CardContent className="px-0">
+                  <div className="flex overflow-x-auto pl-4 space-x-4">
+                    {personas.map((persona) => (
+                      <Card
+                        key={persona.id}
+                        className="group cursor-pointer transition-all hover:shadow-lg hover:-translate-y-1 min-w-[14rem]"
+                        onClick={() => startCall(persona.id)}
+                      >
+                        <CardContent className="p-4 text-center space-y-3">
+                          <Avatar className="w-16 h-16 mx-auto">
+                            <AvatarImage src={persona.avatar} />
+                            <AvatarFallback className="bg-trust/10">
+                              {persona.name.charAt(0)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <h3 className="font-semibold text-foreground group-hover:text-trust transition-colors">
+                              {persona.name}
+                            </h3>
+                            <p className="text-sm text-muted-foreground">
+                              {persona.relationship}
+                            </p>
+                          </div>
+                          <Button
+                            size="sm"
+                            className="w-full bg-trust hover:bg-trust/90"
+                          >
+                            <PhoneCall className="w-4 h-4 mr-2" />
+                            Call Now
+                          </Button>
+                        </CardContent>
+                      </Card>
+                    ))}
+                  </div>
                 </CardContent>
               </Card>
             </TabsContent>

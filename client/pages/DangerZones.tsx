@@ -842,8 +842,8 @@ export default function DangerZones() {
               <CardHeader className="pb-6">
                 <CardTitle>Popular Safety Searches</CardTitle>
               </CardHeader>
-              <CardContent className="px-6 pb-6">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              <CardContent className="px-0 pb-6">
+                <div className="flex overflow-x-auto pl-4 space-x-4">
                   {[
                     "Downtown Plaza",
                     "University District",
@@ -860,7 +860,7 @@ export default function DangerZones() {
                         setSearchLocation(area);
                         searchArea();
                       }}
-                      className="justify-start h-12 px-4 py-3"
+                      className="justify-start h-12 px-4 py-3 min-w-[12rem]"
                     >
                       <MapPin className="w-4 h-4 mr-3 flex-shrink-0" />
                       <span className="truncate">{area}</span>
