@@ -1,0 +1,54 @@
+{
+  "expo": {
+    "name": "Siren - Safety App",
+    "slug": "siren-safety-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#000000"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.siren.safetyapp",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "Siren needs location access to provide emergency location sharing and safety features.",
+        "NSMicrophoneUsageDescription": "Siren needs microphone access for voice activation and emergency features.",
+        "NSCameraUsageDescription": "Siren needs camera access for emergency photo capture.",
+        "NSContactsUsageDescription": "Siren needs contacts access to manage emergency contacts."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#000000"
+      },
+      "package": "com.siren.safetyapp",
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "RECORD_AUDIO",
+        "CAMERA",
+        "READ_CONTACTS",
+        "SEND_SMS",
+        "CALL_PHONE",
+        "VIBRATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-location",
+      "expo-av",
+      "expo-sensors",
+      "expo-notifications"
+    ]
+  }
+}
