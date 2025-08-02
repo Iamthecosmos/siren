@@ -388,7 +388,7 @@ export default function CheckIn() {
           <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 sm:gap-2 p-1 pl-4">
             <TabsTrigger
               value="setup"
-              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap ml-[15px] sm:ml-0"
             >
               📝 Setup
             </TabsTrigger>
