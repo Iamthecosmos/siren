@@ -581,7 +581,8 @@ export default function CheckIn() {
                         >
                           <div className="font-semibold">{template.name}</div>
                           <div className="text-xs text-muted-foreground">
-                            {template.duration}min • Check every {template.interval}min
+                            {template.duration}min • Check every{" "}
+                            {template.interval}min
                           </div>
                         </Button>
                       </div>
@@ -799,7 +800,10 @@ export default function CheckIn() {
                           {contact.relationship} • {contact.phone}
                         </p>
                         <p className="text-xs text-muted-foreground mb-2">
-                          Priority {contact.priority} - Will be contacted {contact.priority === 1 ? "first" : `${contact.priority === 2 ? "second" : "third"}`}
+                          Priority {contact.priority} - Will be contacted{" "}
+                          {contact.priority === 1
+                            ? "first"
+                            : `${contact.priority === 2 ? "second" : "third"}`}
                         </p>
                         <div className="flex space-x-2 mt-1">
                           <Button variant="outline" size="sm">
