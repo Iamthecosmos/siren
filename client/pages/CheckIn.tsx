@@ -560,7 +560,7 @@ export default function CheckIn() {
               </CardHeader>
               <CardContent className="px-0">
                 <div className="w-full overflow-x-auto">
-                  <div className="flex gap-2 pl-4 pr-4 snap-x snap-mandatory">
+                  <div className="flex gap-3 px-4 snap-x snap-mandatory">
                     {[
                       { name: "Evening Walk", duration: 45, interval: 15 },
                       { name: "Study Session", duration: 120, interval: 30 },
@@ -568,7 +568,7 @@ export default function CheckIn() {
                     ].map((template, index) => (
                       <div
                         key={index}
-                        className="min-w-[70%] max-w-[70%] shrink-0 snap-start rounded-lg border bg-white p-4 shadow"
+                        className="min-w-[60%] max-w-[60%] shrink-0 snap-start rounded-lg border bg-white p-3 shadow"
                       >
                         <Button
                           variant="outline"
