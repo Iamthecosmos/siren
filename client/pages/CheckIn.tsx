@@ -346,22 +346,22 @@ export default function CheckIn() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/98 shadow-md backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-6 py-4 sm:py-6">
-          <div className="flex items-center justify-between gap-4">
-            <div className="flex items-center space-x-4 min-w-0">
+      <header className="bg-background shadow-lg backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-4 py-5">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center space-x-2 min-w-0">
               <Button
                 variant="ghost"
                 size="sm"
                 onClick={() => navigate("/")}
-                className="hover:bg-muted"
+                className="hover:bg-muted px-2 py-1 h-8 text-sm"
               >
-                <ArrowLeft className="w-4 h-4 mr-3" />
+                <ArrowLeft className="w-3 h-3 mr-1" />
                 Back
               </Button>
-              <div className="flex items-center space-x-3 min-w-0">
-                <Clock className="w-6 h-6 text-trust flex-shrink-0" />
-                <h1 className="text-lg sm:text-xl font-extrabold text-foreground truncate">
+              <div className="flex items-center space-x-2 min-w-0">
+                <Clock className="w-5 h-5 text-trust flex-shrink-0" />
+                <h1 className="text-xl font-bold text-foreground">
                   Safety Check-In
                 </h1>
               </div>
