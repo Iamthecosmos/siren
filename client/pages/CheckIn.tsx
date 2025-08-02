@@ -346,8 +346,8 @@ export default function CheckIn() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-trust/5 overflow-x-hidden">
       {/* Header */}
-      <header className="bg-background/95 shadow-sm backdrop-blur-sm border-b sticky top-0 z-50">
-        <div className="max-w-4xl mx-auto px-4 py-2 sm:py-4">
+      <header className="bg-background/98 shadow-md backdrop-blur-sm border-b sticky top-0 z-50">
+        <div className="max-w-4xl mx-auto px-6 py-4 sm:py-6">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center space-x-4 min-w-0">
               <Button
