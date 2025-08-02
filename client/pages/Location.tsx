@@ -75,7 +75,7 @@ export default function Location() {
   const navigate = useNavigate();
   const [locationPermission, setLocationPermission] = useState<
     "prompt" | "granted" | "denied" | "checking"
-  >("prompt");
+  >("checking");
   const [currentLocation, setCurrentLocation] = useState<LocationData | null>(
     null,
   );
@@ -357,7 +357,7 @@ export default function Location() {
                     Check Again
                   </Button>
                 )}
-                {locationPermission === "prompt" && (
+                {(locationPermission === "prompt" || locationPermission === "checking") && (
                   <Button
                     onClick={requestLocationPermission}
                     className="bg-trust hover:bg-trust/90 w-full sm:w-auto"
