@@ -388,26 +388,26 @@ export default function CheckIn() {
           <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1 pl-4 space-x-4">
             <TabsTrigger
               value="setup"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
             >
               📝 Setup
             </TabsTrigger>
             <TabsTrigger
               value="monitor"
               disabled={!activeSession?.isActive}
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
             >
               📊 Monitor
             </TabsTrigger>
             <TabsTrigger
               value="contacts"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
             >
               👥 Contacts
             </TabsTrigger>
             <TabsTrigger
               value="history"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
             >
               📜 History
             </TabsTrigger>
