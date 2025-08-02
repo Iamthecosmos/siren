@@ -385,7 +385,7 @@ export default function CheckIn() {
           onValueChange={setActiveTab}
           className="space-y-8 sm:space-y-12"
         >
-          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1 pl-4 space-x-4 sm:space-x-4">
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 sm:gap-2 p-1 pl-4">
             <TabsTrigger
               value="setup"
               className="flex-shrink-0 min-w-fit px-[15px] sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
