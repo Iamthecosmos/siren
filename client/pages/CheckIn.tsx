@@ -568,7 +568,7 @@ export default function CheckIn() {
                     ].map((template, index) => (
                       <div
                         key={index}
-                        className="min-w-[80%] max-w-[80%] shrink-0 snap-start rounded-lg border bg-white p-4 shadow"
+                        className="min-w-[70%] max-w-[70%] shrink-0 snap-start rounded-lg border bg-white p-4 shadow"
                       >
                         <Button
                           variant="outline"
