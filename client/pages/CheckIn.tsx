@@ -560,7 +560,7 @@ export default function CheckIn() {
               </CardHeader>
               <CardContent className="px-0">
                 <div className="w-full overflow-x-auto">
-                  <div className="flex gap-4 pl-4 pr-4 snap-x snap-mandatory">
+                  <div className="flex gap-2 pl-4 pr-4 snap-x snap-mandatory">
                     {[
                       { name: "Evening Walk", duration: 45, interval: 15 },
                       { name: "Study Session", duration: 120, interval: 30 },
