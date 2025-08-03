@@ -41,12 +41,40 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+interface Contact {
+  id: string;
+  name: string;
+  phone: string;
+  relationship: string;
+  priority: number;
+  synced?: boolean;
+}
+
 export default function Emergency() {
   const navigate = useNavigate();
   const [sosActivated, setSosActivated] = useState(false);
   const [countdown, setCountdown] = useState(5);
   const [locationShared, setLocationShared] = useState(false);
   const [contactsNotified, setContactsNotified] = useState(false);
+
+  // Contact Sync Features
+  const [contactsPermission, setContactsPermission] = useState<"prompt" | "granted" | "denied">("prompt");
+  const [syncedContacts, setSyncedContacts] = useState<Contact[]>([]);
+  const [showContactSync, setShowContactSync] = useState(false);
+  const [isSyncingContacts, setIsSyncingContacts] = useState(false);
+
+  // Location Sync Features
+  const [locationPermission, setLocationPermission] = useState<"prompt" | "granted" | "denied">("prompt");
+  const [locationSyncEnabled, setLocationSyncEnabled] = useState(false);
+  const [showLocationSync, setShowLocationSync] = useState(false);
+  const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number, address: string} | null>(null);
+
+  // Auto-Stop Timer Features
+  const [autoStopEnabled, setAutoStopEnabled] = useState(false);
+  const [autoStopTime, setAutoStopTime] = useState(30); // minutes
+  const [showAutoStopSettings, setShowAutoStopSettings] = useState(false);
+  const [locationSharingActive, setLocationSharingActive] = useState(false);
+  const [lastLocationUpdate, setLastLocationUpdate] = useState<Date | null>(null);
 
   useEffect(() => {
     if (sosActivated && countdown > 0) {
