@@ -76,6 +76,7 @@ export default function Emergency() {
   const [locationSharingActive, setLocationSharingActive] = useState(false);
   const [lastLocationUpdate, setLastLocationUpdate] = useState<Date | null>(null);
 
+  // SOS Countdown Effect
   useEffect(() => {
     if (sosActivated && countdown > 0) {
       const timer = setTimeout(() => {
@@ -87,6 +88,96 @@ export default function Emergency() {
       setTimeout(() => setContactsNotified(true), 1500);
     }
   }, [sosActivated, countdown]);
+
+  // Auto-Stop Timer Effect
+  useEffect(() => {
+    if (autoStopEnabled && locationSharingActive && lastLocationUpdate) {
+      const checkInterval = setInterval(() => {
+        const now = new Date();
+        const timeDiff = (now.getTime() - lastLocationUpdate.getTime()) / (1000 * 60); // minutes
+
+        if (timeDiff >= autoStopTime) {
+          setLocationSharingActive(false);
+          console.log("Location sharing auto-stopped due to inactivity");
+        }
+      }, 60000); // Check every minute
+
+      return () => clearInterval(checkInterval);
+    }
+  }, [autoStopEnabled, locationSharingActive, lastLocationUpdate, autoStopTime]);
+
+  // Contact Sync Functions
+  const requestContactsPermission = async () => {
+    try {
+      // In a real app, this would use the Contacts API
+      setIsSyncingContacts(true);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+
+      const mockContacts: Contact[] = [
+        { id: "1", name: "Mom", phone: "+1 (555) 0123", relationship: "Mother", priority: 1, synced: true },
+        { id: "2", name: "Dad", phone: "+1 (555) 0124", relationship: "Father", priority: 2, synced: true },
+        { id: "3", name: "Sarah", phone: "+1 (555) 0125", relationship: "Best Friend", priority: 3, synced: true },
+        { id: "4", name: "John Smith", phone: "+1 (555) 0126", relationship: "Brother", priority: 4, synced: true },
+        { id: "5", name: "Emergency Services", phone: "911", relationship: "Emergency", priority: 5, synced: true },
+      ];
+
+      setSyncedContacts(mockContacts);
+      setContactsPermission("granted");
+      setIsSyncingContacts(false);
+      setShowContactSync(false);
+    } catch (error) {
+      setContactsPermission("denied");
+      setIsSyncingContacts(false);
+    }
+  };
+
+  const makePhoneCall = (contact: Contact) => {
+    if (contactsPermission !== "granted") {
+      setShowContactSync(true);
+      return;
+    }
+
+    // In a real app, this would initiate a phone call
+    window.location.href = `tel:${contact.phone}`;
+    console.log(`Calling ${contact.name} at ${contact.phone}`);
+  };
+
+  // Location Sync Functions
+  const requestLocationPermission = async () => {
+    try {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const location = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+              address: `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`
+            };
+            setCurrentLocation(location);
+            setLocationPermission("granted");
+            setLocationSyncEnabled(true);
+            setLocationSharingActive(true);
+            setLastLocationUpdate(new Date());
+            setShowLocationSync(false);
+          },
+          (error) => {
+            setLocationPermission("denied");
+            console.error("Location error:", error);
+          }
+        );
+      }
+    } catch (error) {
+      setLocationPermission("denied");
+    }
+  };
+
+  // Auto-Stop Timer Functions
+  const updateLocationSharing = () => {
+    setLastLocationUpdate(new Date());
+    if (!locationSharingActive) {
+      setLocationSharingActive(true);
+    }
+  };
 
   const handleSosActivation = () => {
     setSosActivated(true);
