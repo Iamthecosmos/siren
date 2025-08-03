@@ -394,28 +394,28 @@ export default function ShakeAlert() {
           onValueChange={setActiveTab}
           className="space-y-12"
         >
-          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-3 p-2">
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 p-1">
             <TabsTrigger
               value="setup"
-              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               📱 Setup
             </TabsTrigger>
             <TabsTrigger
               value="monitor"
-              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               📊 Monitor
             </TabsTrigger>
             <TabsTrigger
               value="settings"
-              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               ⚙️ Settings
             </TabsTrigger>
             <TabsTrigger
               value="history"
-              className="flex-shrink-0 min-w-fit px-8 py-4 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               📜 History
             </TabsTrigger>
