@@ -404,11 +404,11 @@ export default function VoiceActivation() {
           onValueChange={setActiveTab}
           className="space-y-8"
         >
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="setup">Setup</TabsTrigger>
-            <TabsTrigger value="monitor">Monitor</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 p-1">
+            <TabsTrigger value="setup" className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0">Setup</TabsTrigger>
+            <TabsTrigger value="monitor" className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0">Monitor</TabsTrigger>
+            <TabsTrigger value="settings" className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0">Settings</TabsTrigger>
+            <TabsTrigger value="history" className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0">History</TabsTrigger>
           </TabsList>
 
           {/* Setup Tab */}
