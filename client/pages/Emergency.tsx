@@ -190,23 +190,31 @@ export default function Emergency() {
     setContactsNotified(false);
   };
 
-  const emergencyContacts = [
+  const defaultContacts: Contact[] = [
     {
+      id: "default1",
+      name: "Emergency Services",
+      phone: "911",
+      relationship: "Emergency",
+      priority: 1,
+    },
+    {
+      id: "default2",
       name: "Mom",
       phone: "+1 (555) 0123",
-      status: contactsNotified ? "notified" : "pending",
+      relationship: "Mother",
+      priority: 2,
     },
     {
+      id: "default3",
       name: "Dad",
       phone: "+1 (555) 0124",
-      status: contactsNotified ? "notified" : "pending",
-    },
-    {
-      name: "Sarah (Best Friend)",
-      phone: "+1 (555) 0125",
-      status: contactsNotified ? "notified" : "pending",
+      relationship: "Father",
+      priority: 3,
     },
   ];
+
+  const displayContacts = syncedContacts.length > 0 ? syncedContacts : defaultContacts;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5 overflow-x-hidden">
