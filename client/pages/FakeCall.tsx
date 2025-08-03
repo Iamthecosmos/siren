@@ -508,28 +508,28 @@ export default function FakeCall() {
             onValueChange={setActiveTab}
             className="space-y-8"
           >
-            <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1 pl-4 space-x-4">
+            <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 p-1 pl-4">
               <TabsTrigger
                 value="call"
-                className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+                className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
               >
                 Start Call
               </TabsTrigger>
               <TabsTrigger
                 value="personas"
-                className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+                className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
               >
                 Personas
               </TabsTrigger>
               <TabsTrigger
                 value="voices"
-                className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+                className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
               >
                 Voice Library
               </TabsTrigger>
               <TabsTrigger
                 value="tts"
-                className="flex-shrink-0 min-w-fit px-6 py-3 text-sm font-medium whitespace-nowrap"
+                className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
               >
                 TTS Voices
               </TabsTrigger>
