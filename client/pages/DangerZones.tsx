@@ -370,28 +370,28 @@ export default function DangerZones() {
           onValueChange={setActiveTab}
           className="space-y-12"
         >
-          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-2 p-1 pl-4 space-x-4">
+          <TabsList className="flex w-full overflow-x-auto overflow-y-hidden gap-1 p-1 pl-4">
             <TabsTrigger
               value="current"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               Current Area
             </TabsTrigger>
             <TabsTrigger
               value="search"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               Search Areas
             </TabsTrigger>
             <TabsTrigger
               value="routes"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               Route Safety
             </TabsTrigger>
             <TabsTrigger
               value="reports"
-              className="flex-shrink-0 min-w-fit px-4 sm:px-6 py-3 text-sm font-medium whitespace-nowrap"
+              className="flex-shrink-0 min-w-fit px-[15px] py-3 text-sm font-medium whitespace-nowrap m-0"
             >
               Community Reports
             </TabsTrigger>
