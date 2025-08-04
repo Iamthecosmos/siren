@@ -649,19 +649,40 @@ export default function Emergency() {
               <div className="space-y-3">
                 <Button
                   onClick={requestLocationPermission}
+                  disabled={isRequestingLocation}
                   className="w-full bg-trust hover:bg-trust/90"
                 >
-                  <Navigation className="w-4 h-4 mr-2" />
-                  Enable Location Access
+                  {isRequestingLocation ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Requesting Location...
+                    </>
+                  ) : (
+                    <>
+                      <Navigation className="w-4 h-4 mr-2" />
+                      Enable Location Access
+                    </>
+                  )}
                 </Button>
                 <Button
                   variant="outline"
                   onClick={() => setShowLocationSync(false)}
                   className="w-full"
+                  disabled={isRequestingLocation}
                 >
                   Skip for Now
                 </Button>
               </div>
+
+              {locationPermission === "denied" && (
+                <div className="bg-warning/10 border border-warning/20 rounded-lg p-3">
+                  <p className="text-sm text-warning font-medium">⚠️ Location Access Issues?</p>
+                  <p className="text-xs text-muted-foreground mt-1">
+                    Make sure location is enabled in your browser settings.
+                    Try refreshing the page if you continue having issues.
+                  </p>
+                </div>
+              )}
             </div>
           </DialogContent>
         </Dialog>
