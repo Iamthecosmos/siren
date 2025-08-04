@@ -59,16 +59,24 @@ export default function Emergency() {
   const [contactsNotified, setContactsNotified] = useState(false);
 
   // Contact Sync Features
-  const [contactsPermission, setContactsPermission] = useState<"prompt" | "granted" | "denied">("prompt");
+  const [contactsPermission, setContactsPermission] = useState<
+    "prompt" | "granted" | "denied"
+  >("prompt");
   const [syncedContacts, setSyncedContacts] = useState<Contact[]>([]);
   const [showContactSync, setShowContactSync] = useState(false);
   const [isSyncingContacts, setIsSyncingContacts] = useState(false);
 
   // Location Sync Features
-  const [locationPermission, setLocationPermission] = useState<"prompt" | "granted" | "denied">("prompt");
+  const [locationPermission, setLocationPermission] = useState<
+    "prompt" | "granted" | "denied"
+  >("prompt");
   const [locationSyncEnabled, setLocationSyncEnabled] = useState(false);
   const [showLocationSync, setShowLocationSync] = useState(false);
-  const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number, address: string} | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<{
+    lat: number;
+    lng: number;
+    address: string;
+  } | null>(null);
   const [isRequestingLocation, setIsRequestingLocation] = useState(false);
 
   // Auto-Stop Timer Features
@@ -76,7 +84,9 @@ export default function Emergency() {
   const [autoStopTime, setAutoStopTime] = useState(30); // minutes
   const [showAutoStopSettings, setShowAutoStopSettings] = useState(false);
   const [locationSharingActive, setLocationSharingActive] = useState(false);
-  const [lastLocationUpdate, setLastLocationUpdate] = useState<Date | null>(null);
+  const [lastLocationUpdate, setLastLocationUpdate] = useState<Date | null>(
+    null,
+  );
 
   // SOS Countdown Effect
   useEffect(() => {
@@ -96,7 +106,8 @@ export default function Emergency() {
     if (autoStopEnabled && locationSharingActive && lastLocationUpdate) {
       const checkInterval = setInterval(() => {
         const now = new Date();
-        const timeDiff = (now.getTime() - lastLocationUpdate.getTime()) / (1000 * 60); // minutes
+        const timeDiff =
+          (now.getTime() - lastLocationUpdate.getTime()) / (1000 * 60); // minutes
 
         if (timeDiff >= autoStopTime) {
           setLocationSharingActive(false);
@@ -106,20 +117,60 @@ export default function Emergency() {
 
       return () => clearInterval(checkInterval);
     }
-  }, [autoStopEnabled, locationSharingActive, lastLocationUpdate, autoStopTime]);
+  }, [
+    autoStopEnabled,
+    locationSharingActive,
+    lastLocationUpdate,
+    autoStopTime,
+  ]);
 
   // Contact Sync Functions
   const requestContactsPermission = async () => {
     try {
       setIsSyncingContacts(true);
-      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate API call
+      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
 
       const mockContacts: Contact[] = [
-        { id: "1", name: "Mom", phone: "+1 (555) 0123", relationship: "Mother", priority: 1, synced: true },
-        { id: "2", name: "Dad", phone: "+1 (555) 0124", relationship: "Father", priority: 2, synced: true },
-        { id: "3", name: "Sarah", phone: "+1 (555) 0125", relationship: "Best Friend", priority: 3, synced: true },
-        { id: "4", name: "John Smith", phone: "+1 (555) 0126", relationship: "Brother", priority: 4, synced: true },
-        { id: "5", name: "Emergency Services", phone: "911", relationship: "Emergency", priority: 5, synced: true },
+        {
+          id: "1",
+          name: "Mom",
+          phone: "+1 (555) 0123",
+          relationship: "Mother",
+          priority: 1,
+          synced: true,
+        },
+        {
+          id: "2",
+          name: "Dad",
+          phone: "+1 (555) 0124",
+          relationship: "Father",
+          priority: 2,
+          synced: true,
+        },
+        {
+          id: "3",
+          name: "Sarah",
+          phone: "+1 (555) 0125",
+          relationship: "Best Friend",
+          priority: 3,
+          synced: true,
+        },
+        {
+          id: "4",
+          name: "John Smith",
+          phone: "+1 (555) 0126",
+          relationship: "Brother",
+          priority: 4,
+          synced: true,
+        },
+        {
+          id: "5",
+          name: "Emergency Services",
+          phone: "911",
+          relationship: "Emergency",
+          priority: 5,
+          synced: true,
+        },
       ];
 
       setSyncedContacts(mockContacts);
@@ -152,14 +203,21 @@ export default function Emergency() {
         console.error("Geolocation is not supported by this browser");
         setLocationPermission("denied");
         setIsRequestingLocation(false);
-        alert("Geolocation is not supported by your browser. Please use a modern browser with location support.");
+        alert(
+          "Geolocation is not supported by your browser. Please use a modern browser with location support.",
+        );
         return;
       }
 
       // Check if we're on HTTPS (required for geolocation)
-      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-        console.warn("Geolocation requires HTTPS. Current protocol:", location.protocol);
-        alert("Location services require a secure connection (HTTPS). Please access this site over HTTPS.");
+      if (location.protocol !== "https:" && location.hostname !== "localhost") {
+        console.warn(
+          "Geolocation requires HTTPS. Current protocol:",
+          location.protocol,
+        );
+        alert(
+          "Location services require a secure connection (HTTPS). Please access this site over HTTPS.",
+        );
         setLocationPermission("denied");
         setIsRequestingLocation(false);
         return;
@@ -168,7 +226,7 @@ export default function Emergency() {
       const options = {
         enableHighAccuracy: true,
         timeout: 15000, // 15 seconds timeout
-        maximumAge: 300000 // Accept cached position up to 5 minutes old
+        maximumAge: 300000, // Accept cached position up to 5 minutes old
       };
 
       console.log("Requesting location with options:", options);
@@ -178,13 +236,13 @@ export default function Emergency() {
           console.log("Location access granted:", {
             coords: position.coords,
             timestamp: position.timestamp,
-            accuracy: position.coords.accuracy
+            accuracy: position.coords.accuracy,
           });
 
           const location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
-            address: `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`
+            address: `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`,
           };
 
           setCurrentLocation(location);
@@ -201,7 +259,7 @@ export default function Emergency() {
             message: error.message,
             PERMISSION_DENIED: error.PERMISSION_DENIED || 1,
             POSITION_UNAVAILABLE: error.POSITION_UNAVAILABLE || 2,
-            TIMEOUT: error.TIMEOUT || 3
+            TIMEOUT: error.TIMEOUT || 3,
           });
 
           setLocationPermission("denied");
@@ -209,30 +267,36 @@ export default function Emergency() {
 
           let errorMessage = "Unable to access your location. ";
 
-          switch(error.code) {
+          switch (error.code) {
             case 1: // PERMISSION_DENIED
-              errorMessage += "Location access was denied. Please:\n\n1. Click the location icon in your browser's address bar\n2. Select 'Allow' for location access\n3. Refresh the page and try again";
+              errorMessage +=
+                "Location access was denied. Please:\n\n1. Click the location icon in your browser's address bar\n2. Select 'Allow' for location access\n3. Refresh the page and try again";
               break;
             case 2: // POSITION_UNAVAILABLE
-              errorMessage += "Your location is currently unavailable. Please:\n\n1. Check that location services are enabled on your device\n2. Try moving to an area with better signal\n3. Ensure you're not in airplane mode";
+              errorMessage +=
+                "Your location is currently unavailable. Please:\n\n1. Check that location services are enabled on your device\n2. Try moving to an area with better signal\n3. Ensure you're not in airplane mode";
               break;
             case 3: // TIMEOUT
-              errorMessage += "Location request timed out. Please:\n\n1. Try again with a stronger signal\n2. Move closer to a window if indoors\n3. Check your internet connection";
+              errorMessage +=
+                "Location request timed out. Please:\n\n1. Try again with a stronger signal\n2. Move closer to a window if indoors\n3. Check your internet connection";
               break;
             default:
-              errorMessage += "An unknown error occurred. Please try again or contact support.";
+              errorMessage +=
+                "An unknown error occurred. Please try again or contact support.";
               break;
           }
 
           alert(errorMessage);
         },
-        options
+        options,
       );
     } catch (error) {
       console.error("Unexpected location error:", error);
       setLocationPermission("denied");
       setIsRequestingLocation(false);
-      alert("An unexpected error occurred while accessing location services. Please try refreshing the page and trying again.");
+      alert(
+        "An unexpected error occurred while accessing location services. Please try refreshing the page and trying again.",
+      );
     }
   };
 
@@ -279,7 +343,8 @@ export default function Emergency() {
     },
   ];
 
-  const displayContacts = syncedContacts.length > 0 ? syncedContacts : defaultContacts;
+  const displayContacts =
+    syncedContacts.length > 0 ? syncedContacts : defaultContacts;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-emergency/5 overflow-x-hidden">
@@ -321,11 +386,15 @@ export default function Emergency() {
         {/* Sync Features Banner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {/* Contact Sync */}
-          <Card className={`border ${contactsPermission === "granted" ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}>
+          <Card
+            className={`border ${contactsPermission === "granted" ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}
+          >
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <Users className={`w-5 h-5 ${contactsPermission === "granted" ? "text-safe" : "text-warning"}`} />
+                  <Users
+                    className={`w-5 h-5 ${contactsPermission === "granted" ? "text-safe" : "text-warning"}`}
+                  />
                   <span className="font-semibold text-sm">Contacts</span>
                 </div>
                 {contactsPermission === "granted" ? (
@@ -337,8 +406,7 @@ export default function Emergency() {
               <p className="text-xs text-muted-foreground mb-3">
                 {contactsPermission === "granted"
                   ? `${syncedContacts.length} contacts synced`
-                  : "Sync contacts for quick emergency calling"
-                }
+                  : "Sync contacts for quick emergency calling"}
               </p>
               <Button
                 size="sm"
@@ -352,11 +420,15 @@ export default function Emergency() {
           </Card>
 
           {/* Location Sync */}
-          <Card className={`border ${locationPermission === "granted" ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}>
+          <Card
+            className={`border ${locationPermission === "granted" ? "border-safe bg-safe/5" : "border-warning bg-warning/5"}`}
+          >
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <MapPin className={`w-5 h-5 ${locationPermission === "granted" ? "text-safe" : "text-warning"}`} />
+                  <MapPin
+                    className={`w-5 h-5 ${locationPermission === "granted" ? "text-safe" : "text-warning"}`}
+                  />
                   <span className="font-semibold text-sm">Location</span>
                 </div>
                 {locationPermission === "granted" ? (
@@ -368,8 +440,7 @@ export default function Emergency() {
               <p className="text-xs text-muted-foreground mb-3">
                 {locationPermission === "granted"
                   ? "Location tracking enabled"
-                  : "Enable location for danger zone alerts"
-                }
+                  : "Enable location for danger zone alerts"}
               </p>
               <Button
                 size="sm"
@@ -383,11 +454,15 @@ export default function Emergency() {
           </Card>
 
           {/* Auto-Stop Timer */}
-          <Card className={`border ${autoStopEnabled ? "border-safe bg-safe/5" : "border-muted bg-muted/5"}`}>
+          <Card
+            className={`border ${autoStopEnabled ? "border-safe bg-safe/5" : "border-muted bg-muted/5"}`}
+          >
             <CardContent className="p-4">
               <div className="flex items-center justify-between mb-3">
                 <div className="flex items-center space-x-2">
-                  <Timer className={`w-5 h-5 ${autoStopEnabled ? "text-safe" : "text-muted-foreground"}`} />
+                  <Timer
+                    className={`w-5 h-5 ${autoStopEnabled ? "text-safe" : "text-muted-foreground"}`}
+                  />
                   <span className="font-semibold text-sm">Auto-Stop</span>
                 </div>
                 {autoStopEnabled ? (
@@ -399,8 +474,7 @@ export default function Emergency() {
               <p className="text-xs text-muted-foreground mb-3">
                 {autoStopEnabled
                   ? `Auto-stop after ${autoStopTime} min`
-                  : "Auto-stop location sharing when inactive"
-                }
+                  : "Auto-stop location sharing when inactive"}
               </p>
               <Button
                 size="sm"
@@ -538,7 +612,10 @@ export default function Emergency() {
                       Notified
                     </Badge>
                   ) : sosActivated ? (
-                    <Badge variant="outline" className="border-warning text-warning">
+                    <Badge
+                      variant="outline"
+                      className="border-warning text-warning"
+                    >
                       <Clock className="w-3 h-3 mr-1" />
                       Sending...
                     </Badge>
@@ -578,8 +655,8 @@ export default function Emergency() {
                     Access Your Contacts
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    We'll sync your contacts to make emergency calling faster and easier.
-                    Your contact data stays secure and private.
+                    We'll sync your contacts to make emergency calling faster
+                    and easier. Your contact data stays secure and private.
                   </p>
                 </div>
               </div>
@@ -633,16 +710,20 @@ export default function Emergency() {
                     Enable Location Services
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Location access helps us provide accurate danger zone alerts and
-                    updates your safe locations automatically.
+                    Location access helps us provide accurate danger zone alerts
+                    and updates your safe locations automatically.
                   </p>
                 </div>
               </div>
 
               {currentLocation && (
                 <div className="bg-safe/10 rounded-lg p-3">
-                  <p className="text-sm font-medium text-safe">Current Location:</p>
-                  <p className="text-xs text-muted-foreground">{currentLocation.address}</p>
+                  <p className="text-sm font-medium text-safe">
+                    Current Location:
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    {currentLocation.address}
+                  </p>
                 </div>
               )}
 
@@ -676,10 +757,12 @@ export default function Emergency() {
 
               {locationPermission === "denied" && (
                 <div className="bg-warning/10 border border-warning/20 rounded-lg p-3">
-                  <p className="text-sm text-warning font-medium">⚠️ Location Access Issues?</p>
+                  <p className="text-sm text-warning font-medium">
+                    ⚠️ Location Access Issues?
+                  </p>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Make sure location is enabled in your browser settings.
-                    Try refreshing the page if you continue having issues.
+                    Make sure location is enabled in your browser settings. Try
+                    refreshing the page if you continue having issues.
                   </p>
                 </div>
               )}
@@ -688,7 +771,10 @@ export default function Emergency() {
         </Dialog>
 
         {/* Auto-Stop Timer Settings Dialog */}
-        <Dialog open={showAutoStopSettings} onOpenChange={setShowAutoStopSettings}>
+        <Dialog
+          open={showAutoStopSettings}
+          onOpenChange={setShowAutoStopSettings}
+        >
           <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle className="flex items-center space-x-2">
@@ -706,8 +792,8 @@ export default function Emergency() {
                     Automatic Stop Timer
                   </h3>
                   <p className="text-sm text-muted-foreground">
-                    Automatically stop location sharing when your device becomes inactive
-                    for a specified time period.
+                    Automatically stop location sharing when your device becomes
+                    inactive for a specified time period.
                   </p>
                 </div>
               </div>
@@ -727,7 +813,9 @@ export default function Emergency() {
                     <Label htmlFor="timer">Stop after (minutes)</Label>
                     <Select
                       value={autoStopTime.toString()}
-                      onValueChange={(value) => setAutoStopTime(parseInt(value))}
+                      onValueChange={(value) =>
+                        setAutoStopTime(parseInt(value))
+                      }
                     >
                       <SelectTrigger>
                         <SelectValue />
