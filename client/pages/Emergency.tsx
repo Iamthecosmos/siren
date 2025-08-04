@@ -69,6 +69,7 @@ export default function Emergency() {
   const [locationSyncEnabled, setLocationSyncEnabled] = useState(false);
   const [showLocationSync, setShowLocationSync] = useState(false);
   const [currentLocation, setCurrentLocation] = useState<{lat: number, lng: number, address: string} | null>(null);
+  const [isRequestingLocation, setIsRequestingLocation] = useState(false);
 
   // Auto-Stop Timer Features
   const [autoStopEnabled, setAutoStopEnabled] = useState(false);
