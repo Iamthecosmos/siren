@@ -145,60 +145,82 @@ export default function Emergency() {
 
   // Location Sync Functions
   const requestLocationPermission = async () => {
+    setIsRequestingLocation(true);
+
     try {
       if (!navigator.geolocation) {
         console.error("Geolocation is not supported by this browser");
         setLocationPermission("denied");
+        setIsRequestingLocation(false);
         alert("Geolocation is not supported by your browser. Please use a modern browser with location support.");
+        return;
+      }
+
+      // Check if we're on HTTPS (required for geolocation)
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+        console.warn("Geolocation requires HTTPS. Current protocol:", location.protocol);
+        alert("Location services require a secure connection (HTTPS). Please access this site over HTTPS.");
+        setLocationPermission("denied");
+        setIsRequestingLocation(false);
         return;
       }
 
       const options = {
         enableHighAccuracy: true,
-        timeout: 10000, // 10 seconds timeout
-        maximumAge: 60000 // Accept cached position up to 1 minute old
+        timeout: 15000, // 15 seconds timeout
+        maximumAge: 300000 // Accept cached position up to 5 minutes old
       };
+
+      console.log("Requesting location with options:", options);
 
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          console.log("Location access granted:", position);
+          console.log("Location access granted:", {
+            coords: position.coords,
+            timestamp: position.timestamp,
+            accuracy: position.coords.accuracy
+          });
+
           const location = {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
             address: `${position.coords.latitude.toFixed(6)}, ${position.coords.longitude.toFixed(6)}`
           };
+
           setCurrentLocation(location);
           setLocationPermission("granted");
           setLocationSyncEnabled(true);
           setLocationSharingActive(true);
           setLastLocationUpdate(new Date());
           setShowLocationSync(false);
+          setIsRequestingLocation(false);
         },
         (error) => {
           console.error("Geolocation error details:", {
             code: error.code,
             message: error.message,
-            PERMISSION_DENIED: error.PERMISSION_DENIED,
-            POSITION_UNAVAILABLE: error.POSITION_UNAVAILABLE,
-            TIMEOUT: error.TIMEOUT
+            PERMISSION_DENIED: error.PERMISSION_DENIED || 1,
+            POSITION_UNAVAILABLE: error.POSITION_UNAVAILABLE || 2,
+            TIMEOUT: error.TIMEOUT || 3
           });
 
           setLocationPermission("denied");
+          setIsRequestingLocation(false);
 
           let errorMessage = "Unable to access your location. ";
 
           switch(error.code) {
-            case error.PERMISSION_DENIED:
-              errorMessage += "Location access was denied. Please enable location permissions in your browser settings and try again.";
+            case 1: // PERMISSION_DENIED
+              errorMessage += "Location access was denied. Please:\n\n1. Click the location icon in your browser's address bar\n2. Select 'Allow' for location access\n3. Refresh the page and try again";
               break;
-            case error.POSITION_UNAVAILABLE:
-              errorMessage += "Your location is currently unavailable. Please check your device's location settings and try again.";
+            case 2: // POSITION_UNAVAILABLE
+              errorMessage += "Your location is currently unavailable. Please:\n\n1. Check that location services are enabled on your device\n2. Try moving to an area with better signal\n3. Ensure you're not in airplane mode";
               break;
-            case error.TIMEOUT:
-              errorMessage += "Location request timed out. Please try again with a stronger signal.";
+            case 3: // TIMEOUT
+              errorMessage += "Location request timed out. Please:\n\n1. Try again with a stronger signal\n2. Move closer to a window if indoors\n3. Check your internet connection";
               break;
             default:
-              errorMessage += "An unknown error occurred while accessing your location.";
+              errorMessage += "An unknown error occurred. Please try again or contact support.";
               break;
           }
 
@@ -209,7 +231,8 @@ export default function Emergency() {
     } catch (error) {
       console.error("Unexpected location error:", error);
       setLocationPermission("denied");
-      alert("An unexpected error occurred while accessing location services. Please try again.");
+      setIsRequestingLocation(false);
+      alert("An unexpected error occurred while accessing location services. Please try refreshing the page and trying again.");
     }
   };
 
