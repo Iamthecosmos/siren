@@ -83,7 +83,7 @@ class ApiClient {
                 id: 1,
                 uuid: "mock-uuid",
                 username: "mockuser",
-                email: "mock@example.com",
+                phoneNumber: "+1 (555) 123-4567",
                 fullName: "Mock User",
                 isVerified: true,
                 isAdmin: false,
@@ -116,9 +116,9 @@ class ApiClient {
   // Authentication
   async register(userData: {
     username: string;
-    email: string;
-    password: string;
+    phoneNumber: string;
     fullName: string;
+    otp: string;
   }) {
     return this.request<{ token: string; user: User }>("/auth/register", {
       method: "POST",
@@ -126,7 +126,7 @@ class ApiClient {
     });
   }
 
-  async login(credentials: { email: string; password: string }) {
+  async login(credentials: { phoneNumber: string; otp: string }) {
     return this.request<{ token: string; user: User }>("/auth/login", {
       method: "POST",
       body: JSON.stringify(credentials),
