@@ -1,26 +1,20 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { User, api } from "@/lib/api";
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { User, api } from '@/lib/api';
 
 interface AuthContextType {
   user: User | null;
   token: string | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (
-    email: string,
-    password: string,
-  ) => Promise<{ success: boolean; error?: string }>;
+  login: (phoneNumber: string, otp: string) => Promise<{ success: boolean; error?: string }>;
   register: (userData: {
     username: string;
-    email: string;
-    password: string;
+    phoneNumber: string;
     fullName: string;
+    otp: string;
   }) => Promise<{ success: boolean; error?: string }>;
   logout: () => void;
-  updateProfile: (profileData: {
-    fullName?: string;
-    username?: string;
-  }) => Promise<{ success: boolean; error?: string }>;
+  updateProfile: (profileData: { fullName?: string; username?: string }) => Promise<{ success: boolean; error?: string }>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -28,7 +22,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const useAuth = () => {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 };
@@ -39,9 +33,7 @@ interface AuthProviderProps {
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(
-    localStorage.getItem("auth_token"),
-  );
+  const [token, setToken] = useState<string | null>(localStorage.getItem('auth_token'));
   const [isLoading, setIsLoading] = useState(true);
 
   const isAuthenticated = !!token && !!user;
@@ -55,7 +47,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
           setUser(response.data);
         } else {
           // Invalid token, clear it
-          localStorage.removeItem("auth_token");
+          localStorage.removeItem('auth_token');
           setToken(null);
         }
       }
@@ -65,71 +57,65 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, [token]);
 
-  const login = async (email: string, password: string) => {
+  const login = async (phoneNumber: string, otp: string) => {
     try {
-      const response = await api.login({ email, password });
-
+      const response = await api.login({ phoneNumber, otp });
+      
       if (response.data) {
         const { token: newToken, user: userData } = response.data;
-        localStorage.setItem("auth_token", newToken);
+        localStorage.setItem('auth_token', newToken);
         setToken(newToken);
         setUser(userData);
         return { success: true };
       } else {
-        return { success: false, error: response.error || "Login failed" };
+        return { success: false, error: response.error || 'Login failed' };
       }
     } catch (error) {
-      return { success: false, error: "Network error" };
+      return { success: false, error: 'Network error' };
     }
   };
 
   const register = async (userData: {
     username: string;
-    email: string;
-    password: string;
+    phoneNumber: string;
     fullName: string;
+    otp: string;
   }) => {
     try {
       const response = await api.register(userData);
-
+      
       if (response.data) {
         const { token: newToken, user: newUser } = response.data;
-        localStorage.setItem("auth_token", newToken);
+        localStorage.setItem('auth_token', newToken);
         setToken(newToken);
         setUser(newUser);
         return { success: true };
       } else {
-        return {
-          success: false,
-          error: response.error || "Registration failed",
-        };
+        return { success: false, error: response.error || 'Registration failed' };
       }
     } catch (error) {
-      return { success: false, error: "Network error" };
+      return { success: false, error: 'Network error' };
     }
   };
 
   const logout = () => {
-    localStorage.removeItem("auth_token");
+    localStorage.removeItem('auth_token');
     setToken(null);
     setUser(null);
   };
 
-  const updateProfile = async (profileData: {
-    fullName?: string;
-    username?: string;
-  }) => {
+  const updateProfile = async (profileData: { fullName?: string; username?: string }) => {
     try {
       const response = await api.updateProfile(profileData);
-
+      
       if (response.data) {
         setUser(response.data);
         return { success: true };
       } else {
-        return { success: false, error: response.error || "Update failed" };
+        return { success: false, error: response.error || 'Update failed' };
       }
     } catch (error) {
-      return { success: false, error: "Network error" };
+      return { success: false, error: 'Network error' };
     }
   };
 
