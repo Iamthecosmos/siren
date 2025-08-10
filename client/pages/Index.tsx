@@ -107,11 +107,8 @@ export default function Index() {
                   fontFamily: "Tapestry, sans-serif",
                 }}
               ></div>
-              <div>
-                <h1 className="text-xl font-bold text-foreground">Siren</h1>
-                <p className="text-sm text-muted-foreground">
-                  Your personal safety companion
-                </p>
+              <div className="text-xl font-bold text-foreground ml-3 sm:pr-0 pr-[9px]">
+                Siren
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -145,12 +142,17 @@ export default function Index() {
                   </Button>
                 </div>
               )}
-              <ThemeToggle />
-              <Badge variant="outline" className="text-safe border-safe">
+              <div className="sm:ml-3 ml-[10px]">
+                <ThemeToggle />
+              </div>
+              <Badge variant="outline" className="text-safe border-safe sm:ml-3 ml-[10px] sm:m-0 m-[5px_5px_0_10px]">
                 Online
               </Badge>
             </div>
           </div>
+          <p className="text-sm text-muted-foreground px-4 pb-4">
+            Your personal safety companion
+          </p>
         </div>
       </header>
 
