@@ -11,14 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, ArrowLeft, Shield } from "lucide-react";
+import { ArrowLeft, Shield, Phone, MessageSquare } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [otp, setOtp] = useState("");
+  const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -29,12 +29,47 @@ const Login = () => {
 
   const from = (location.state as any)?.from?.pathname || "/";
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     setError("");
 
-    const result = await login(email, password);
+    // Validate phone number format
+    if (!phoneNumber || phoneNumber.length < 10) {
+      setError("Please enter a valid phone number");
+      setIsLoading(false);
+      return;
+    }
+
+    try {
+      // In a real app, this would call an API to send OTP
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
+      toast({
+        title: "OTP Sent!",
+        description: `We've sent a verification code to ${phoneNumber}`,
+      });
+
+      setStep('otp');
+    } catch (error) {
+      setError("Failed to send OTP. Please try again.");
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleVerifyOTP = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError("");
+
+    if (!otp || otp.length !== 6) {
+      setError("Please enter a valid 6-digit OTP");
+      setIsLoading(false);
+      return;
+    }
+
+    const result = await login(phoneNumber, otp);
 
     if (result.success) {
       toast({
@@ -43,7 +78,7 @@ const Login = () => {
       });
       navigate(from, { replace: true });
     } else {
-      setError(result.error || "Login failed");
+      setError(result.error || "Invalid OTP. Please try again.");
     }
 
     setIsLoading(false);
@@ -73,62 +108,93 @@ const Login = () => {
         {/* Login Form */}
         <Card>
           <CardHeader>
-            <CardTitle>Sign In</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              {step === 'phone' ? <Phone className="h-5 w-5" /> : <MessageSquare className="h-5 w-5" />}
+              {step === 'phone' ? 'Enter Phone Number' : 'Verify OTP'}
+            </CardTitle>
             <CardDescription>
-              Enter your credentials to access your account
+              {step === 'phone'
+                ? 'Enter your phone number to receive a verification code'
+                : `Enter the 6-digit code sent to ${phoneNumber}`
+              }
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
+            {step === 'phone' ? (
+              <form onSubmit={handleSendOTP} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="phone">Phone Number</Label>
                   <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    placeholder="Enter your password"
+                    id="phone"
+                    type="tel"
+                    value={phoneNumber}
+                    onChange={(e) => setPhoneNumber(e.target.value)}
+                    placeholder="+1 (555) 123-4567"
                     required
                   />
+                  <p className="text-xs text-muted-foreground">
+                    We'll send you a verification code via SMS
+                  </p>
+                </div>
+
+                <Button type="submit" className="w-full" disabled={isLoading}>
+                  {isLoading ? 'Sending OTP...' : 'Send Verification Code'}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerifyOTP} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="otp">Verification Code</Label>
+                  <Input
+                    id="otp"
+                    type="text"
+                    value={otp}
+                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    placeholder="123456"
+                    maxLength={6}
+                    required
+                    className="text-center text-lg tracking-widest"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Enter the 6-digit code sent to your phone
+                  </p>
+                </div>
+
+                <div className="flex gap-2">
                   <Button
                     type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
+                    variant="outline"
+                    onClick={() => {
+                      setStep('phone');
+                      setOtp('');
+                      setError('');
+                    }}
+                    className="flex-1"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
+                    Change Number
+                  </Button>
+                  <Button type="submit" className="flex-1" disabled={isLoading}>
+                    {isLoading ? 'Verifying...' : 'Verify & Sign In'}
                   </Button>
                 </div>
-              </div>
 
-              <Button type="submit" className="w-full" disabled={isLoading}>
-                {isLoading ? "Signing in..." : "Sign In"}
-              </Button>
-            </form>
+                <Button
+                  type="button"
+                  variant="link"
+                  onClick={handleSendOTP}
+                  className="w-full text-sm"
+                  disabled={isLoading}
+                >
+                  Didn't receive code? Resend
+                </Button>
+              </form>
+            )}
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
