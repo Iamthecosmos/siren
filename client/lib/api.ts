@@ -307,7 +307,7 @@ export interface User {
   id: number;
   uuid: string;
   username: string;
-  email: string;
+  phoneNumber: string;
   fullName: string;
   avatarUrl?: string;
   isVerified: boolean;
