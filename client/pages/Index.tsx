@@ -145,15 +145,15 @@ export default function Index() {
               <div className="sm:ml-3 ml-[10px]">
                 <ThemeToggle />
               </div>
-              <Badge variant="outline" className="text-safe border-safe sm:ml-3 ml-[10px] sm:m-0 m-[5px_5px_0_10px]">
+              <Badge variant="outline" className="text-safe border-safe ml-3 mt-[5px]">
                 Online
               </Badge>
             </div>
           </div>
-          <p className="text-sm text-muted-foreground px-4 pb-4">
-            Your personal safety companion
-          </p>
         </div>
+        <p className="text-sm text-muted-foreground px-4 pb-4 sm:ml-0 ml-[9px]">
+          Your personal safety companion
+        </p>
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8 space-y-8">
