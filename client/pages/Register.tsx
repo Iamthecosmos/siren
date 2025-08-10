@@ -1,36 +1,43 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ArrowLeft, Shield, Phone, MessageSquare, User } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ArrowLeft, Shield, Phone, MessageSquare, User } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    phoneNumber: '',
-    otp: '',
+    fullName: "",
+    username: "",
+    phoneNumber: "",
+    otp: "",
   });
-  const [step, setStep] = useState<'details' | 'otp'>('details');
+  const [step, setStep] = useState<"details" | "otp">("details");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   const { register } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setFormData(prev => ({ ...prev, [field]: value }));
-  };
+  const handleInputChange =
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+    };
 
   const isFormValid = () => {
-    if (step === 'details') {
+    if (step === "details") {
       return formData.fullName && formData.username && formData.phoneNumber;
     }
     return formData.otp && formData.otp.length === 6;
@@ -38,27 +45,27 @@ const Register = () => {
 
   const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isFormValid()) {
-      setError('Please fill in all required fields');
+      setError("Please fill in all required fields");
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
     try {
       // In a real app, this would call an API to send OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
       toast({
-        title: 'OTP Sent!',
+        title: "OTP Sent!",
         description: `We've sent a verification code to ${formData.phoneNumber}`,
       });
-      
-      setStep('otp');
+
+      setStep("otp");
     } catch (error) {
-      setError('Failed to send OTP. Please try again.');
+      setError("Failed to send OTP. Please try again.");
     }
 
     setIsLoading(false);
@@ -66,14 +73,14 @@ const Register = () => {
 
   const handleVerifyAndRegister = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isFormValid()) {
-      setError('Please enter a valid 6-digit OTP');
+      setError("Please enter a valid 6-digit OTP");
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
     const result = await register({
       fullName: formData.fullName,
@@ -84,12 +91,12 @@ const Register = () => {
 
     if (result.success) {
       toast({
-        title: 'Welcome to Siren!',
-        description: 'Your account has been created successfully.',
+        title: "Welcome to Siren!",
+        description: "Your account has been created successfully.",
       });
-      navigate('/');
+      navigate("/");
     } else {
-      setError(result.error || 'Registration failed');
+      setError(result.error || "Registration failed");
     }
 
     setIsLoading(false);
@@ -100,7 +107,10 @@ const Register = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center">
-          <Link to="/" className="inline-flex items-center text-red-600 hover:text-red-700 mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center text-red-600 hover:text-red-700 mb-4"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
@@ -117,14 +127,17 @@ const Register = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {step === 'details' ? <User className="h-5 w-5" /> : <MessageSquare className="h-5 w-5" />}
-              {step === 'details' ? 'Account Details' : 'Verify Phone Number'}
+              {step === "details" ? (
+                <User className="h-5 w-5" />
+              ) : (
+                <MessageSquare className="h-5 w-5" />
+              )}
+              {step === "details" ? "Account Details" : "Verify Phone Number"}
             </CardTitle>
             <CardDescription>
-              {step === 'details'
-                ? 'Fill in your details to create your Siren account'
-                : `Enter the 6-digit code sent to ${formData.phoneNumber}`
-              }
+              {step === "details"
+                ? "Fill in your details to create your Siren account"
+                : `Enter the 6-digit code sent to ${formData.phoneNumber}`}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -134,7 +147,7 @@ const Register = () => {
               </Alert>
             )}
 
-            {step === 'details' ? (
+            {step === "details" ? (
               <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="fullName">Full Name</Label>
@@ -142,7 +155,7 @@ const Register = () => {
                     id="fullName"
                     type="text"
                     value={formData.fullName}
-                    onChange={handleInputChange('fullName')}
+                    onChange={handleInputChange("fullName")}
                     placeholder="John Doe"
                     required
                   />
@@ -154,7 +167,7 @@ const Register = () => {
                     id="username"
                     type="text"
                     value={formData.username}
-                    onChange={handleInputChange('username')}
+                    onChange={handleInputChange("username")}
                     placeholder="johndoe"
                     required
                   />
@@ -166,7 +179,7 @@ const Register = () => {
                     id="phoneNumber"
                     type="tel"
                     value={formData.phoneNumber}
-                    onChange={handleInputChange('phoneNumber')}
+                    onChange={handleInputChange("phoneNumber")}
                     placeholder="+1 (555) 123-4567"
                     required
                   />
@@ -175,12 +188,12 @@ const Register = () => {
                   </p>
                 </div>
 
-                <Button 
-                  type="submit" 
-                  className="w-full" 
+                <Button
+                  type="submit"
+                  className="w-full"
                   disabled={isLoading || !isFormValid()}
                 >
-                  {isLoading ? 'Sending OTP...' : 'Send Verification Code'}
+                  {isLoading ? "Sending OTP..." : "Send Verification Code"}
                 </Button>
               </form>
             ) : (
@@ -191,10 +204,12 @@ const Register = () => {
                     id="otp"
                     type="text"
                     value={formData.otp}
-                    onChange={(e) => setFormData(prev => ({ 
-                      ...prev, 
-                      otp: e.target.value.replace(/\D/g, '').slice(0, 6) 
-                    }))}
+                    onChange={(e) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        otp: e.target.value.replace(/\D/g, "").slice(0, 6),
+                      }))
+                    }
                     placeholder="123456"
                     maxLength={6}
                     required
@@ -206,24 +221,24 @@ const Register = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <Button 
-                    type="button" 
-                    variant="outline" 
+                  <Button
+                    type="button"
+                    variant="outline"
                     onClick={() => {
-                      setStep('details');
-                      setFormData(prev => ({ ...prev, otp: '' }));
-                      setError('');
+                      setStep("details");
+                      setFormData((prev) => ({ ...prev, otp: "" }));
+                      setError("");
                     }}
                     className="flex-1"
                   >
                     Back
                   </Button>
-                  <Button 
-                    type="submit" 
-                    className="flex-1" 
+                  <Button
+                    type="submit"
+                    className="flex-1"
                     disabled={isLoading || !isFormValid()}
                   >
-                    {isLoading ? 'Creating Account...' : 'Create Account'}
+                    {isLoading ? "Creating Account..." : "Create Account"}
                   </Button>
                 </div>
 
@@ -241,8 +256,11 @@ const Register = () => {
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{' '}
-                <Link to="/login" className="text-red-600 hover:text-red-700 font-medium">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-red-600 hover:text-red-700 font-medium"
+                >
                   Sign in
                 </Link>
               </p>
@@ -254,9 +272,15 @@ const Register = () => {
         <div className="text-center text-sm text-gray-600">
           <p>By joining Siren, you can:</p>
           <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Report safety incidents</span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Contribute voice recordings</span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Help keep communities safe</span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Report safety incidents
+            </span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Contribute voice recordings
+            </span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Help keep communities safe
+            </span>
           </div>
         </div>
       </div>

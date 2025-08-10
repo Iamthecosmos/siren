@@ -18,7 +18,7 @@ import { useToast } from "@/hooks/use-toast";
 const Login = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState<'phone' | 'otp'>('phone');
+  const [step, setStep] = useState<"phone" | "otp">("phone");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -43,14 +43,14 @@ const Login = () => {
 
     try {
       // In a real app, this would call an API to send OTP
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast({
         title: "OTP Sent!",
         description: `We've sent a verification code to ${phoneNumber}`,
       });
 
-      setStep('otp');
+      setStep("otp");
     } catch (error) {
       setError("Failed to send OTP. Please try again.");
     }
@@ -109,14 +109,17 @@ const Login = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {step === 'phone' ? <Phone className="h-5 w-5" /> : <MessageSquare className="h-5 w-5" />}
-              {step === 'phone' ? 'Enter Phone Number' : 'Verify OTP'}
+              {step === "phone" ? (
+                <Phone className="h-5 w-5" />
+              ) : (
+                <MessageSquare className="h-5 w-5" />
+              )}
+              {step === "phone" ? "Enter Phone Number" : "Verify OTP"}
             </CardTitle>
             <CardDescription>
-              {step === 'phone'
-                ? 'Enter your phone number to receive a verification code'
-                : `Enter the 6-digit code sent to ${phoneNumber}`
-              }
+              {step === "phone"
+                ? "Enter your phone number to receive a verification code"
+                : `Enter the 6-digit code sent to ${phoneNumber}`}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -126,7 +129,7 @@ const Login = () => {
               </Alert>
             )}
 
-            {step === 'phone' ? (
+            {step === "phone" ? (
               <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="phone">Phone Number</Label>
@@ -144,7 +147,7 @@ const Login = () => {
                 </div>
 
                 <Button type="submit" className="w-full" disabled={isLoading}>
-                  {isLoading ? 'Sending OTP...' : 'Send Verification Code'}
+                  {isLoading ? "Sending OTP..." : "Send Verification Code"}
                 </Button>
               </form>
             ) : (
@@ -155,7 +158,9 @@ const Login = () => {
                     id="otp"
                     type="text"
                     value={otp}
-                    onChange={(e) => setOtp(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                    onChange={(e) =>
+                      setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))
+                    }
                     placeholder="123456"
                     maxLength={6}
                     required
@@ -171,16 +176,16 @@ const Login = () => {
                     type="button"
                     variant="outline"
                     onClick={() => {
-                      setStep('phone');
-                      setOtp('');
-                      setError('');
+                      setStep("phone");
+                      setOtp("");
+                      setError("");
                     }}
                     className="flex-1"
                   >
                     Change Number
                   </Button>
                   <Button type="submit" className="flex-1" disabled={isLoading}>
-                    {isLoading ? 'Verifying...' : 'Verify & Sign In'}
+                    {isLoading ? "Verifying..." : "Verify & Sign In"}
                   </Button>
                 </div>
 
