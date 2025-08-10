@@ -1,8 +1,8 @@
-const sqlite3 = require('sqlite3').verbose();
-const path = require('path');
-const fs = require('fs').promises;
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
+const fs = require("fs").promises;
 
-const DB_PATH = process.env.DATABASE_URL || './database/siren.db';
+const DB_PATH = process.env.DATABASE_URL || "./database/siren.db";
 
 let db;
 
@@ -16,15 +16,15 @@ async function initializeDatabase() {
     db = new sqlite3.Database(DB_PATH);
 
     // Enable foreign keys
-    await runQuery('PRAGMA foreign_keys = ON');
+    await runQuery("PRAGMA foreign_keys = ON");
 
     // Create tables
     await createTables();
-    
-    console.log('Database initialized successfully');
+
+    console.log("Database initialized successfully");
     return db;
   } catch (error) {
-    console.error('Database initialization failed:', error);
+    console.error("Database initialization failed:", error);
     throw error;
   }
 }
@@ -145,22 +145,38 @@ async function createTables() {
   `);
 
   // Create indexes for better performance
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_reports_location ON community_reports (latitude, longitude)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_reports_timestamp ON community_reports (timestamp)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_reports_type ON community_reports (incident_type)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_reports_severity ON community_reports (severity)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_voices_type ON voice_contributions (voice_type)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_voices_rating ON voice_contributions (rating_average)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_voices_downloads ON voice_contributions (download_count)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_users_email ON users (email)');
-  await runQuery('CREATE INDEX IF NOT EXISTS idx_users_username ON users (username)');
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_reports_location ON community_reports (latitude, longitude)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_reports_timestamp ON community_reports (timestamp)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_reports_type ON community_reports (incident_type)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_reports_severity ON community_reports (severity)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_voices_type ON voice_contributions (voice_type)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_voices_rating ON voice_contributions (rating_average)",
+  );
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_voices_downloads ON voice_contributions (download_count)",
+  );
+  await runQuery("CREATE INDEX IF NOT EXISTS idx_users_email ON users (email)");
+  await runQuery(
+    "CREATE INDEX IF NOT EXISTS idx_users_username ON users (username)",
+  );
 
-  console.log('All tables created successfully');
+  console.log("All tables created successfully");
 }
 
 function runQuery(sql, params = []) {
   return new Promise((resolve, reject) => {
-    db.run(sql, params, function(err) {
+    db.run(sql, params, function (err) {
       if (err) {
         reject(err);
       } else {
@@ -203,5 +219,5 @@ module.exports = {
   runQuery,
   getQuery,
   allQuery,
-  getDatabase
+  getDatabase,
 };

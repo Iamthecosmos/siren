@@ -5,6 +5,7 @@ A comprehensive backend server for the Siren safety app, handling community safe
 ## 🚀 Features
 
 ### Core Functionality
+
 - **Community Safety Reports**: Location-based incident reporting with verification system
 - **Voice Contributions**: User-uploaded voice library for fake call scenarios
 - **User Authentication**: JWT-based secure authentication system
@@ -13,6 +14,7 @@ A comprehensive backend server for the Siren safety app, handling community safe
 - **Geographic Filtering**: Location-based data retrieval and filtering
 
 ### Security & Performance
+
 - **Rate Limiting**: API request throttling
 - **Input Validation**: Comprehensive data validation
 - **File Security**: Safe file upload handling
@@ -22,39 +24,45 @@ A comprehensive backend server for the Siren safety app, handling community safe
 
 ## 📋 Prerequisites
 
-- Node.js 16+ 
+- Node.js 16+
 - SQLite 3
 - npm/yarn package manager
 
 ## 🛠️ Installation
 
 1. **Clone and navigate to server directory**
+
 ```bash
 cd server
 ```
 
 2. **Install dependencies**
+
 ```bash
 npm install
 ```
 
 3. **Environment setup**
+
 ```bash
 cp .env.example .env
 # Edit .env with your configuration
 ```
 
 4. **Create upload directories**
+
 ```bash
 mkdir -p uploads/voices
 ```
 
 5. **Initialize database**
+
 ```bash
 npm run migrate
 ```
 
 6. **Start development server**
+
 ```bash
 npm run dev
 ```
@@ -89,12 +97,15 @@ ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ## 📚 API Documentation
 
 ### Base URL
+
 ```
 http://localhost:3001/api
 ```
 
 ### Authentication
+
 All protected endpoints require Bearer token in Authorization header:
+
 ```
 Authorization: Bearer <token>
 ```
@@ -104,19 +115,21 @@ Authorization: Bearer <token>
 ## 🔐 Authentication Endpoints
 
 ### Register User
+
 ```http
 POST /api/auth/register
 Content-Type: application/json
 
 {
   "username": "johndoe",
-  "email": "john@example.com", 
+  "email": "john@example.com",
   "password": "SecurePass123",
   "fullName": "John Doe"
 }
 ```
 
 ### Login User
+
 ```http
 POST /api/auth/login
 Content-Type: application/json
@@ -128,12 +141,14 @@ Content-Type: application/json
 ```
 
 ### Get Current User
+
 ```http
 GET /api/auth/me
 Authorization: Bearer <token>
 ```
 
 ### Update Profile
+
 ```http
 PUT /api/auth/profile
 Authorization: Bearer <token>
@@ -150,11 +165,13 @@ Content-Type: application/json
 ## 📍 Community Reports Endpoints
 
 ### Get Reports
+
 ```http
 GET /api/reports?page=1&limit=20&type=theft&severity=high&lat=40.7128&lng=-74.0060&radius=10&since=2024-01-01T00:00:00Z
 ```
 
 **Query Parameters:**
+
 - `page` (optional): Page number (default: 1)
 - `limit` (optional): Items per page (default: 20, max: 100)
 - `type` (optional): Incident type (theft, assault, harassment, etc.)
@@ -164,6 +181,7 @@ GET /api/reports?page=1&limit=20&type=theft&severity=high&lat=40.7128&lng=-74.00
 - `since` (optional): ISO date string for time filtering
 
 ### Create Report
+
 ```http
 POST /api/reports
 Authorization: Bearer <token>
@@ -185,17 +203,20 @@ Content-Type: application/json
 ```
 
 ### Get Specific Report
+
 ```http
 GET /api/reports/{reportId}
 ```
 
 ### Verify Report
+
 ```http
 POST /api/reports/{reportId}/verify
 Authorization: Bearer <token>
 ```
 
 ### Get Reports by Area
+
 ```http
 GET /api/reports/area/{lat}/{lng}?radius=5
 ```
@@ -205,11 +226,13 @@ GET /api/reports/area/{lat}/{lng}?radius=5
 ## 🎤 Voice Contributions Endpoints
 
 ### Get Voice Library
+
 ```http
 GET /api/voices?page=1&limit=20&type=emergency&gender=female&ageRange=adult&language=en&sort=rating
 ```
 
 **Query Parameters:**
+
 - `page`, `limit`: Pagination
 - `type`: Voice type (emergency, casual, professional, family, custom)
 - `gender`: Gender (male, female, non-binary, other)
@@ -218,6 +241,7 @@ GET /api/voices?page=1&limit=20&type=emergency&gender=female&ageRange=adult&lang
 - `sort`: Sort order (recent, popular, rating, downloads)
 
 ### Upload Voice
+
 ```http
 POST /api/voices
 Authorization: Bearer <token>
@@ -240,11 +264,13 @@ Content-Type: multipart/form-data
 **Max Duration:** 5 minutes
 
 ### Get Specific Voice
+
 ```http
 GET /api/voices/{voiceId}
 ```
 
 ### Rate Voice
+
 ```http
 POST /api/voices/{voiceId}/rate
 Authorization: Bearer <token>
@@ -257,11 +283,13 @@ Content-Type: application/json
 ```
 
 ### Track Download
+
 ```http
 POST /api/voices/{voiceId}/download
 ```
 
 ### Get User's Voices
+
 ```http
 GET /api/voices/user/{userId}
 ```
@@ -271,17 +299,20 @@ GET /api/voices/user/{userId}
 ## 👥 User Management Endpoints (Admin Only)
 
 ### Get Users List
+
 ```http
 GET /api/users?page=1&limit=20&search=john&verified=true
 Authorization: Bearer <admin-token>
 ```
 
 ### Get User Profile
+
 ```http
 GET /api/users/{userId}
 ```
 
 ### Verify/Unverify User
+
 ```http
 PUT /api/users/{userId}/verify
 Authorization: Bearer <admin-token>
@@ -293,6 +324,7 @@ Content-Type: application/json
 ```
 
 ### Grant/Revoke Admin
+
 ```http
 PUT /api/users/{userId}/admin
 Authorization: Bearer <admin-token>
@@ -304,6 +336,7 @@ Content-Type: application/json
 ```
 
 ### Platform Statistics
+
 ```http
 GET /api/users/stats/overview
 Authorization: Bearer <admin-token>
@@ -314,6 +347,7 @@ Authorization: Bearer <admin-token>
 ## 📊 Database Schema
 
 ### Users Table
+
 ```sql
 - id (INTEGER PRIMARY KEY)
 - uuid (TEXT UNIQUE)
@@ -330,6 +364,7 @@ Authorization: Bearer <admin-token>
 ```
 
 ### Community Reports Table
+
 ```sql
 - id (INTEGER PRIMARY KEY)
 - uuid (TEXT UNIQUE)
@@ -352,6 +387,7 @@ Authorization: Bearer <admin-token>
 ```
 
 ### Voice Contributions Table
+
 ```sql
 - id (INTEGER PRIMARY KEY)
 - uuid (TEXT UNIQUE)
@@ -377,6 +413,7 @@ Authorization: Bearer <admin-token>
 ## 🔒 Security Features
 
 ### Input Validation
+
 - Email format validation
 - Password strength requirements
 - File type and size validation
@@ -384,17 +421,20 @@ Authorization: Bearer <admin-token>
 - Text length and content validation
 
 ### Rate Limiting
+
 - 100 requests per 15 minutes per IP
 - Configurable window and limits
 - Different limits for different endpoints
 
 ### File Security
+
 - MIME type validation
 - File size limits
 - Secure file storage
 - Virus scanning ready
 
 ### Authentication Security
+
 - JWT with expiration
 - Password hashing with bcrypt
 - Session management
@@ -403,6 +443,7 @@ Authorization: Bearer <admin-token>
 ## 🚀 Deployment
 
 ### Production Environment
+
 ```bash
 # Set production environment
 NODE_ENV=production
@@ -422,6 +463,7 @@ RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 ### Docker Deployment
+
 ```dockerfile
 FROM node:18-alpine
 WORKDIR /app
@@ -435,11 +477,13 @@ CMD ["npm", "start"]
 ## 📈 Monitoring & Health Checks
 
 ### Health Check Endpoint
+
 ```http
 GET /health
 ```
 
 Returns:
+
 ```json
 {
   "status": "OK",
@@ -450,6 +494,7 @@ Returns:
 ```
 
 ### API Documentation Endpoint
+
 ```http
 GET /api
 ```
@@ -457,10 +502,11 @@ GET /api
 ## 🛡️ Error Handling
 
 ### Standard Error Response
+
 ```json
 {
   "error": "Validation failed",
-  "message": "Please check your input data", 
+  "message": "Please check your input data",
   "details": [
     {
       "field": "email",
@@ -471,6 +517,7 @@ GET /api
 ```
 
 ### HTTP Status Codes
+
 - `200` - Success
 - `201` - Created
 - `400` - Bad Request (validation errors)
@@ -509,6 +556,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🆘 Support
 
 For support and questions:
+
 - Create an issue in the repository
 - Contact the development team
 - Check the documentation
