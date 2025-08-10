@@ -101,13 +101,13 @@ export default function Index() {
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
+                className="w-10 h-10 rounded-xl flex items-center justify-center sm:ml-0 ml-[-3px]"
                 style={{
                   backgroundColor: "rgba(255, 108, 250, 1)",
                   fontFamily: "Tapestry, sans-serif",
                 }}
               ></div>
-              <div className="text-xl font-bold text-foreground ml-3 sm:pr-0 pr-[9px]">
+              <div className="text-xl font-bold text-foreground ml-3 pr-[9px]">
                 Siren
               </div>
             </div>
