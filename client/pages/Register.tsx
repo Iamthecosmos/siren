@@ -1,99 +1,95 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Eye, EyeOff, ArrowLeft, Shield, Check } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { ArrowLeft, Shield, Phone, MessageSquare, User } from 'lucide-react';
+import { useAuth } from '@/contexts/AuthContext';
+import { useToast } from '@/hooks/use-toast';
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: "",
-    username: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
+    fullName: '',
+    username: '',
+    phoneNumber: '',
+    otp: '',
   });
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [step, setStep] = useState<'details' | 'otp'>('details');
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [passwordStrength, setPasswordStrength] = useState({
-    length: false,
-    letter: false,
-    number: false,
-    special: false,
-  });
+  const [error, setError] = useState('');
 
   const { register } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
 
-  const checkPasswordStrength = (password: string) => {
-    setPasswordStrength({
-      length: password.length >= 8,
-      letter: /[a-zA-Z]/.test(password),
-      number: /\d/.test(password),
-      special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
-    });
+  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
-
-  const handleInputChange =
-    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-      const value = e.target.value;
-      setFormData((prev) => ({ ...prev, [field]: value }));
-
-      if (field === "password") {
-        checkPasswordStrength(value);
-      }
-    };
 
   const isFormValid = () => {
-    return (
-      formData.fullName &&
-      formData.username &&
-      formData.email &&
-      formData.password &&
-      formData.password === formData.confirmPassword &&
-      Object.values(passwordStrength).every(Boolean)
-    );
+    if (step === 'details') {
+      return formData.fullName && formData.username && formData.phoneNumber;
+    }
+    return formData.otp && formData.otp.length === 6;
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSendOTP = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     if (!isFormValid()) {
-      setError("Please check all fields and requirements");
+      setError('Please fill in all required fields');
       return;
     }
 
     setIsLoading(true);
-    setError("");
+    setError('');
+
+    try {
+      // In a real app, this would call an API to send OTP
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      toast({
+        title: 'OTP Sent!',
+        description: `We've sent a verification code to ${formData.phoneNumber}`,
+      });
+      
+      setStep('otp');
+    } catch (error) {
+      setError('Failed to send OTP. Please try again.');
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleVerifyAndRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    if (!isFormValid()) {
+      setError('Please enter a valid 6-digit OTP');
+      return;
+    }
+
+    setIsLoading(true);
+    setError('');
 
     const result = await register({
       fullName: formData.fullName,
       username: formData.username,
-      email: formData.email,
-      password: formData.password,
+      phoneNumber: formData.phoneNumber,
+      otp: formData.otp,
     });
 
     if (result.success) {
       toast({
-        title: "Welcome to Siren!",
-        description: "Your account has been created successfully.",
+        title: 'Welcome to Siren!',
+        description: 'Your account has been created successfully.',
       });
-      navigate("/");
+      navigate('/');
     } else {
-      setError(result.error || "Registration failed");
+      setError(result.error || 'Registration failed');
     }
 
     setIsLoading(false);
@@ -104,10 +100,7 @@ const Register = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center">
-          <Link
-            to="/"
-            className="inline-flex items-center text-red-600 hover:text-red-700 mb-4"
-          >
+          <Link to="/" className="inline-flex items-center text-red-600 hover:text-red-700 mb-4">
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
@@ -123,167 +116,133 @@ const Register = () => {
         {/* Registration Form */}
         <Card>
           <CardHeader>
-            <CardTitle>Create Account</CardTitle>
+            <CardTitle className="flex items-center gap-2">
+              {step === 'details' ? <User className="h-5 w-5" /> : <MessageSquare className="h-5 w-5" />}
+              {step === 'details' ? 'Account Details' : 'Verify Phone Number'}
+            </CardTitle>
             <CardDescription>
-              Fill in your details to create your Siren account
+              {step === 'details'
+                ? 'Fill in your details to create your Siren account'
+                : `Enter the 6-digit code sent to ${formData.phoneNumber}`
+              }
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-4">
-              {error && (
-                <Alert variant="destructive">
-                  <AlertDescription>{error}</AlertDescription>
-                </Alert>
-              )}
+            {error && (
+              <Alert variant="destructive" className="mb-4">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
 
-              <div className="space-y-2">
-                <Label htmlFor="fullName">Full Name</Label>
-                <Input
-                  id="fullName"
-                  type="text"
-                  value={formData.fullName}
-                  onChange={handleInputChange("fullName")}
-                  placeholder="John Doe"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="username">Username</Label>
-                <Input
-                  id="username"
-                  type="text"
-                  value={formData.username}
-                  onChange={handleInputChange("username")}
-                  placeholder="johndoe"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={handleInputChange("email")}
-                  placeholder="your@email.com"
-                  required
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password">Password</Label>
-                <div className="relative">
+            {step === 'details' ? (
+              <form onSubmit={handleSendOTP} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="fullName">Full Name</Label>
                   <Input
-                    id="password"
-                    type={showPassword ? "text" : "password"}
-                    value={formData.password}
-                    onChange={handleInputChange("password")}
-                    placeholder="Create a strong password"
+                    id="fullName"
+                    type="text"
+                    value={formData.fullName}
+                    onChange={handleInputChange('fullName')}
+                    placeholder="John Doe"
                     required
                   />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowPassword(!showPassword)}
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="username">Username</Label>
+                  <Input
+                    id="username"
+                    type="text"
+                    value={formData.username}
+                    onChange={handleInputChange('username')}
+                    placeholder="johndoe"
+                    required
+                  />
+                </div>
+
+                <div className="space-y-2">
+                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <Input
+                    id="phoneNumber"
+                    type="tel"
+                    value={formData.phoneNumber}
+                    onChange={handleInputChange('phoneNumber')}
+                    placeholder="+1 (555) 123-4567"
+                    required
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    We'll send you a verification code via SMS
+                  </p>
+                </div>
+
+                <Button 
+                  type="submit" 
+                  className="w-full" 
+                  disabled={isLoading || !isFormValid()}
+                >
+                  {isLoading ? 'Sending OTP...' : 'Send Verification Code'}
+                </Button>
+              </form>
+            ) : (
+              <form onSubmit={handleVerifyAndRegister} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="otp">Verification Code</Label>
+                  <Input
+                    id="otp"
+                    type="text"
+                    value={formData.otp}
+                    onChange={(e) => setFormData(prev => ({ 
+                      ...prev, 
+                      otp: e.target.value.replace(/\D/g, '').slice(0, 6) 
+                    }))}
+                    placeholder="123456"
+                    maxLength={6}
+                    required
+                    className="text-center text-lg tracking-widest"
+                  />
+                  <p className="text-xs text-muted-foreground">
+                    Enter the 6-digit code sent to your phone
+                  </p>
+                </div>
+
+                <div className="flex gap-2">
+                  <Button 
+                    type="button" 
+                    variant="outline" 
+                    onClick={() => {
+                      setStep('details');
+                      setFormData(prev => ({ ...prev, otp: '' }));
+                      setError('');
+                    }}
+                    className="flex-1"
                   >
-                    {showPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
+                    Back
+                  </Button>
+                  <Button 
+                    type="submit" 
+                    className="flex-1" 
+                    disabled={isLoading || !isFormValid()}
+                  >
+                    {isLoading ? 'Creating Account...' : 'Create Account'}
                   </Button>
                 </div>
 
-                {/* Password Requirements */}
-                <div className="text-xs space-y-1 mt-2">
-                  <div
-                    className={`flex items-center gap-2 ${passwordStrength.length ? "text-green-600" : "text-gray-500"}`}
-                  >
-                    <Check
-                      className={`h-3 w-3 ${passwordStrength.length ? "opacity-100" : "opacity-30"}`}
-                    />
-                    At least 8 characters
-                  </div>
-                  <div
-                    className={`flex items-center gap-2 ${passwordStrength.letter ? "text-green-600" : "text-gray-500"}`}
-                  >
-                    <Check
-                      className={`h-3 w-3 ${passwordStrength.letter ? "opacity-100" : "opacity-30"}`}
-                    />
-                    Contains letters
-                  </div>
-                  <div
-                    className={`flex items-center gap-2 ${passwordStrength.number ? "text-green-600" : "text-gray-500"}`}
-                  >
-                    <Check
-                      className={`h-3 w-3 ${passwordStrength.number ? "opacity-100" : "opacity-30"}`}
-                    />
-                    Contains numbers
-                  </div>
-                  <div
-                    className={`flex items-center gap-2 ${passwordStrength.special ? "text-green-600" : "text-gray-500"}`}
-                  >
-                    <Check
-                      className={`h-3 w-3 ${passwordStrength.special ? "opacity-100" : "opacity-30"}`}
-                    />
-                    Contains special characters
-                  </div>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="confirmPassword">Confirm Password</Label>
-                <div className="relative">
-                  <Input
-                    id="confirmPassword"
-                    type={showConfirmPassword ? "text" : "password"}
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange("confirmPassword")}
-                    placeholder="Confirm your password"
-                    required
-                  />
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    className="absolute right-0 top-0 h-full px-3 py-2 hover:bg-transparent"
-                    onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                  >
-                    {showConfirmPassword ? (
-                      <EyeOff className="h-4 w-4" />
-                    ) : (
-                      <Eye className="h-4 w-4" />
-                    )}
-                  </Button>
-                </div>
-                {formData.confirmPassword &&
-                  formData.password !== formData.confirmPassword && (
-                    <p className="text-xs text-red-600">
-                      Passwords do not match
-                    </p>
-                  )}
-              </div>
-
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={isLoading || !isFormValid()}
-              >
-                {isLoading ? "Creating Account..." : "Create Account"}
-              </Button>
-            </form>
+                <Button
+                  type="button"
+                  variant="link"
+                  onClick={handleSendOTP}
+                  className="w-full text-sm"
+                  disabled={isLoading}
+                >
+                  Didn't receive code? Resend
+                </Button>
+              </form>
+            )}
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{" "}
-                <Link
-                  to="/login"
-                  className="text-red-600 hover:text-red-700 font-medium"
-                >
+                Already have an account?{' '}
+                <Link to="/login" className="text-red-600 hover:text-red-700 font-medium">
                   Sign in
                 </Link>
               </p>
@@ -295,15 +254,9 @@ const Register = () => {
         <div className="text-center text-sm text-gray-600">
           <p>By joining Siren, you can:</p>
           <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <span className="bg-white px-2 py-1 rounded-full text-xs">
-              Report safety incidents
-            </span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">
-              Contribute voice recordings
-            </span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">
-              Help keep communities safe
-            </span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">Report safety incidents</span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">Contribute voice recordings</span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">Help keep communities safe</span>
           </div>
         </div>
       </div>
