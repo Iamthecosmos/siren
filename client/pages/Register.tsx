@@ -1,26 +1,32 @@
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Eye, EyeOff, ArrowLeft, Shield, Check } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Eye, EyeOff, ArrowLeft, Shield, Check } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
 
 const Register = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    username: '',
-    email: '',
-    password: '',
-    confirmPassword: '',
+    fullName: "",
+    username: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [passwordStrength, setPasswordStrength] = useState({
     length: false,
     letter: false,
@@ -41,14 +47,15 @@ const Register = () => {
     });
   };
 
-  const handleInputChange = (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setFormData(prev => ({ ...prev, [field]: value }));
-    
-    if (field === 'password') {
-      checkPasswordStrength(value);
-    }
-  };
+  const handleInputChange =
+    (field: string) => (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      setFormData((prev) => ({ ...prev, [field]: value }));
+
+      if (field === "password") {
+        checkPasswordStrength(value);
+      }
+    };
 
   const isFormValid = () => {
     return (
@@ -63,14 +70,14 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!isFormValid()) {
-      setError('Please check all fields and requirements');
+      setError("Please check all fields and requirements");
       return;
     }
 
     setIsLoading(true);
-    setError('');
+    setError("");
 
     const result = await register({
       fullName: formData.fullName,
@@ -81,12 +88,12 @@ const Register = () => {
 
     if (result.success) {
       toast({
-        title: 'Welcome to Siren!',
-        description: 'Your account has been created successfully.',
+        title: "Welcome to Siren!",
+        description: "Your account has been created successfully.",
       });
-      navigate('/');
+      navigate("/");
     } else {
-      setError(result.error || 'Registration failed');
+      setError(result.error || "Registration failed");
     }
 
     setIsLoading(false);
@@ -97,7 +104,10 @@ const Register = () => {
       <div className="w-full max-w-md space-y-6">
         {/* Header */}
         <div className="text-center">
-          <Link to="/" className="inline-flex items-center text-red-600 hover:text-red-700 mb-4">
+          <Link
+            to="/"
+            className="inline-flex items-center text-red-600 hover:text-red-700 mb-4"
+          >
             <ArrowLeft className="h-4 w-4 mr-2" />
             Back to Home
           </Link>
@@ -132,7 +142,7 @@ const Register = () => {
                   id="fullName"
                   type="text"
                   value={formData.fullName}
-                  onChange={handleInputChange('fullName')}
+                  onChange={handleInputChange("fullName")}
                   placeholder="John Doe"
                   required
                 />
@@ -144,7 +154,7 @@ const Register = () => {
                   id="username"
                   type="text"
                   value={formData.username}
-                  onChange={handleInputChange('username')}
+                  onChange={handleInputChange("username")}
                   placeholder="johndoe"
                   required
                 />
@@ -156,7 +166,7 @@ const Register = () => {
                   id="email"
                   type="email"
                   value={formData.email}
-                  onChange={handleInputChange('email')}
+                  onChange={handleInputChange("email")}
                   placeholder="your@email.com"
                   required
                 />
@@ -167,9 +177,9 @@ const Register = () => {
                 <div className="relative">
                   <Input
                     id="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     value={formData.password}
-                    onChange={handleInputChange('password')}
+                    onChange={handleInputChange("password")}
                     placeholder="Create a strong password"
                     required
                   />
@@ -187,23 +197,39 @@ const Register = () => {
                     )}
                   </Button>
                 </div>
-                
+
                 {/* Password Requirements */}
                 <div className="text-xs space-y-1 mt-2">
-                  <div className={`flex items-center gap-2 ${passwordStrength.length ? 'text-green-600' : 'text-gray-500'}`}>
-                    <Check className={`h-3 w-3 ${passwordStrength.length ? 'opacity-100' : 'opacity-30'}`} />
+                  <div
+                    className={`flex items-center gap-2 ${passwordStrength.length ? "text-green-600" : "text-gray-500"}`}
+                  >
+                    <Check
+                      className={`h-3 w-3 ${passwordStrength.length ? "opacity-100" : "opacity-30"}`}
+                    />
                     At least 8 characters
                   </div>
-                  <div className={`flex items-center gap-2 ${passwordStrength.letter ? 'text-green-600' : 'text-gray-500'}`}>
-                    <Check className={`h-3 w-3 ${passwordStrength.letter ? 'opacity-100' : 'opacity-30'}`} />
+                  <div
+                    className={`flex items-center gap-2 ${passwordStrength.letter ? "text-green-600" : "text-gray-500"}`}
+                  >
+                    <Check
+                      className={`h-3 w-3 ${passwordStrength.letter ? "opacity-100" : "opacity-30"}`}
+                    />
                     Contains letters
                   </div>
-                  <div className={`flex items-center gap-2 ${passwordStrength.number ? 'text-green-600' : 'text-gray-500'}`}>
-                    <Check className={`h-3 w-3 ${passwordStrength.number ? 'opacity-100' : 'opacity-30'}`} />
+                  <div
+                    className={`flex items-center gap-2 ${passwordStrength.number ? "text-green-600" : "text-gray-500"}`}
+                  >
+                    <Check
+                      className={`h-3 w-3 ${passwordStrength.number ? "opacity-100" : "opacity-30"}`}
+                    />
                     Contains numbers
                   </div>
-                  <div className={`flex items-center gap-2 ${passwordStrength.special ? 'text-green-600' : 'text-gray-500'}`}>
-                    <Check className={`h-3 w-3 ${passwordStrength.special ? 'opacity-100' : 'opacity-30'}`} />
+                  <div
+                    className={`flex items-center gap-2 ${passwordStrength.special ? "text-green-600" : "text-gray-500"}`}
+                  >
+                    <Check
+                      className={`h-3 w-3 ${passwordStrength.special ? "opacity-100" : "opacity-30"}`}
+                    />
                     Contains special characters
                   </div>
                 </div>
@@ -214,9 +240,9 @@ const Register = () => {
                 <div className="relative">
                   <Input
                     id="confirmPassword"
-                    type={showConfirmPassword ? 'text' : 'password'}
+                    type={showConfirmPassword ? "text" : "password"}
                     value={formData.confirmPassword}
-                    onChange={handleInputChange('confirmPassword')}
+                    onChange={handleInputChange("confirmPassword")}
                     placeholder="Confirm your password"
                     required
                   />
@@ -234,24 +260,30 @@ const Register = () => {
                     )}
                   </Button>
                 </div>
-                {formData.confirmPassword && formData.password !== formData.confirmPassword && (
-                  <p className="text-xs text-red-600">Passwords do not match</p>
-                )}
+                {formData.confirmPassword &&
+                  formData.password !== formData.confirmPassword && (
+                    <p className="text-xs text-red-600">
+                      Passwords do not match
+                    </p>
+                  )}
               </div>
 
-              <Button 
-                type="submit" 
-                className="w-full" 
+              <Button
+                type="submit"
+                className="w-full"
                 disabled={isLoading || !isFormValid()}
               >
-                {isLoading ? 'Creating Account...' : 'Create Account'}
+                {isLoading ? "Creating Account..." : "Create Account"}
               </Button>
             </form>
 
             <div className="mt-6 text-center">
               <p className="text-sm text-gray-600">
-                Already have an account?{' '}
-                <Link to="/login" className="text-red-600 hover:text-red-700 font-medium">
+                Already have an account?{" "}
+                <Link
+                  to="/login"
+                  className="text-red-600 hover:text-red-700 font-medium"
+                >
                   Sign in
                 </Link>
               </p>
@@ -263,9 +295,15 @@ const Register = () => {
         <div className="text-center text-sm text-gray-600">
           <p>By joining Siren, you can:</p>
           <div className="flex flex-wrap justify-center gap-2 mt-2">
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Report safety incidents</span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Contribute voice recordings</span>
-            <span className="bg-white px-2 py-1 rounded-full text-xs">Help keep communities safe</span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Report safety incidents
+            </span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Contribute voice recordings
+            </span>
+            <span className="bg-white px-2 py-1 rounded-full text-xs">
+              Help keep communities safe
+            </span>
           </div>
         </div>
       </div>

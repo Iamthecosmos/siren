@@ -1,27 +1,51 @@
-import React, { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { ArrowLeft, Plus, MapPin, Clock, AlertTriangle, CheckCircle, Filter, Search } from 'lucide-react';
-import { CommunityReport, api } from '@/lib/api';
-import { useAuth } from '@/contexts/AuthContext';
-import { useToast } from '@/hooks/use-toast';
-import { formatDistanceToNow } from 'date-fns';
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import {
+  ArrowLeft,
+  Plus,
+  MapPin,
+  Clock,
+  AlertTriangle,
+  CheckCircle,
+  Filter,
+  Search,
+} from "lucide-react";
+import { CommunityReport, api } from "@/lib/api";
+import { useAuth } from "@/contexts/AuthContext";
+import { useToast } from "@/hooks/use-toast";
+import { formatDistanceToNow } from "date-fns";
 
 const Reports = () => {
   const [reports, setReports] = useState<CommunityReport[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [filters, setFilters] = useState({
-    type: '',
-    severity: '',
-    search: '',
+    type: "",
+    severity: "",
+    search: "",
   });
-  const [currentLocation, setCurrentLocation] = useState<{lat: number; lng: number} | null>(null);
+  const [currentLocation, setCurrentLocation] = useState<{
+    lat: number;
+    lng: number;
+  } | null>(null);
 
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
@@ -34,7 +58,7 @@ const Reports = () => {
 
   const loadReports = async () => {
     setIsLoading(true);
-    setError('');
+    setError("");
 
     const response = await api.getReports({
       type: filters.type || undefined,
@@ -45,20 +69,21 @@ const Reports = () => {
 
     if (response.data) {
       let filteredReports = response.data.reports;
-      
+
       // Client-side search filter
       if (filters.search) {
         const searchLower = filters.search.toLowerCase();
-        filteredReports = filteredReports.filter(report =>
-          report.title.toLowerCase().includes(searchLower) ||
-          report.description.toLowerCase().includes(searchLower) ||
-          report.address?.toLowerCase().includes(searchLower)
+        filteredReports = filteredReports.filter(
+          (report) =>
+            report.title.toLowerCase().includes(searchLower) ||
+            report.description.toLowerCase().includes(searchLower) ||
+            report.address?.toLowerCase().includes(searchLower),
         );
       }
 
       setReports(filteredReports);
     } else {
-      setError(response.error || 'Failed to load reports');
+      setError(response.error || "Failed to load reports");
     }
 
     setIsLoading(false);
@@ -74,42 +99,47 @@ const Reports = () => {
           });
         },
         (error) => {
-          console.warn('Location access denied:', error);
-        }
+          console.warn("Location access denied:", error);
+        },
       );
     }
   };
 
   const handleVerifyReport = async (reportId: string) => {
     if (!isAuthenticated) {
-      navigate('/login', { state: { from: { pathname: '/reports' } } });
+      navigate("/login", { state: { from: { pathname: "/reports" } } });
       return;
     }
 
     const response = await api.verifyReport(reportId);
-    
+
     if (response.data) {
       toast({
-        title: 'Report verified',
-        description: 'Thank you for helping verify this report.',
+        title: "Report verified",
+        description: "Thank you for helping verify this report.",
       });
       loadReports(); // Reload to update verification count
     } else {
       toast({
-        title: 'Verification failed',
-        description: response.error || 'Could not verify report',
-        variant: 'destructive',
+        title: "Verification failed",
+        description: response.error || "Could not verify report",
+        variant: "destructive",
       });
     }
   };
 
   const getSeverityColor = (severity: string) => {
     switch (severity) {
-      case 'critical': return 'bg-red-600 text-white';
-      case 'high': return 'bg-red-500 text-white';
-      case 'medium': return 'bg-yellow-500 text-white';
-      case 'low': return 'bg-green-500 text-white';
-      default: return 'bg-gray-500 text-white';
+      case "critical":
+        return "bg-red-600 text-white";
+      case "high":
+        return "bg-red-500 text-white";
+      case "medium":
+        return "bg-yellow-500 text-white";
+      case "low":
+        return "bg-green-500 text-white";
+      default:
+        return "bg-gray-500 text-white";
     }
   };
 
@@ -124,16 +154,26 @@ const Reports = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center">
-              <Link to="/" className="flex items-center text-gray-600 hover:text-gray-900">
+              <Link
+                to="/"
+                className="flex items-center text-gray-600 hover:text-gray-900"
+              >
                 <ArrowLeft className="h-5 w-5 mr-2" />
                 Back
               </Link>
               <div className="ml-6">
-                <h1 className="text-xl font-semibold text-gray-900">Community Reports</h1>
-                <p className="text-sm text-gray-600">Safety incidents reported by the community</p>
+                <h1 className="text-xl font-semibold text-gray-900">
+                  Community Reports
+                </h1>
+                <p className="text-sm text-gray-600">
+                  Safety incidents reported by the community
+                </p>
               </div>
             </div>
-            <Button onClick={() => navigate('/report-incident')} className="flex items-center gap-2">
+            <Button
+              onClick={() => navigate("/report-incident")}
+              className="flex items-center gap-2"
+            >
               <Plus className="h-4 w-4" />
               Report Incident
             </Button>
@@ -157,14 +197,18 @@ const Reports = () => {
                 <Input
                   placeholder="Search reports..."
                   value={filters.search}
-                  onChange={(e) => setFilters(prev => ({ ...prev, search: e.target.value }))}
+                  onChange={(e) =>
+                    setFilters((prev) => ({ ...prev, search: e.target.value }))
+                  }
                   className="pl-10"
                 />
               </div>
-              
+
               <Select
                 value={filters.type}
-                onValueChange={(value) => setFilters(prev => ({ ...prev, type: value }))}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, type: value }))
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Incident Type" />
@@ -175,14 +219,18 @@ const Reports = () => {
                   <SelectItem value="assault">Assault</SelectItem>
                   <SelectItem value="harassment">Harassment</SelectItem>
                   <SelectItem value="vandalism">Vandalism</SelectItem>
-                  <SelectItem value="suspicious">Suspicious Activity</SelectItem>
+                  <SelectItem value="suspicious">
+                    Suspicious Activity
+                  </SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
 
               <Select
                 value={filters.severity}
-                onValueChange={(value) => setFilters(prev => ({ ...prev, severity: value }))}
+                onValueChange={(value) =>
+                  setFilters((prev) => ({ ...prev, severity: value }))
+                }
               >
                 <SelectTrigger>
                   <SelectValue placeholder="Severity" />
@@ -196,9 +244,11 @@ const Reports = () => {
                 </SelectContent>
               </Select>
 
-              <Button 
-                variant="outline" 
-                onClick={() => setFilters({ type: '', severity: '', search: '' })}
+              <Button
+                variant="outline"
+                onClick={() =>
+                  setFilters({ type: "", severity: "", search: "" })
+                }
               >
                 Clear Filters
               </Button>
@@ -235,13 +285,15 @@ const Reports = () => {
           <Card>
             <CardContent className="text-center py-12">
               <AlertTriangle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">No reports found</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-2">
+                No reports found
+              </h3>
               <p className="text-gray-600 mb-4">
                 {filters.search || filters.type || filters.severity
-                  ? 'No reports match your current filters.'
-                  : 'No safety incidents have been reported yet.'}
+                  ? "No reports match your current filters."
+                  : "No safety incidents have been reported yet."}
               </p>
-              <Button onClick={() => navigate('/report-incident')}>
+              <Button onClick={() => navigate("/report-incident")}>
                 Report First Incident
               </Button>
             </CardContent>
@@ -249,7 +301,10 @@ const Reports = () => {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {reports.map((report) => (
-              <Card key={report.uuid} className="hover:shadow-lg transition-shadow">
+              <Card
+                key={report.uuid}
+                className="hover:shadow-lg transition-shadow"
+              >
                 <CardHeader>
                   <div className="flex items-start justify-between">
                     <div className="flex-1">
@@ -261,14 +316,12 @@ const Reports = () => {
                         <Badge className={getSeverityColor(report.severity)}>
                           {report.severity}
                         </Badge>
-                        <Badge variant="outline">
-                          {report.incidentType}
-                        </Badge>
+                        <Badge variant="outline">{report.incidentType}</Badge>
                       </div>
                     </div>
                   </div>
                 </CardHeader>
-                
+
                 <CardContent>
                   <CardDescription className="mb-4 line-clamp-3">
                     {report.description}
@@ -281,11 +334,13 @@ const Reports = () => {
                         <span className="truncate">{report.address}</span>
                       </div>
                     )}
-                    
+
                     <div className="flex items-center gap-2">
                       <Clock className="h-4 w-4" />
                       <span>
-                        {formatDistanceToNow(new Date(report.timestamp), { addSuffix: true })}
+                        {formatDistanceToNow(new Date(report.timestamp), {
+                          addSuffix: true,
+                        })}
                       </span>
                     </div>
 
@@ -305,7 +360,8 @@ const Reports = () => {
                         </Badge>
                       ) : (
                         <span className="text-gray-500">
-                          {report.verificationCount} verification{report.verificationCount !== 1 ? 's' : ''}
+                          {report.verificationCount} verification
+                          {report.verificationCount !== 1 ? "s" : ""}
                         </span>
                       )}
                     </div>
@@ -325,7 +381,7 @@ const Reports = () => {
                   {report.user && (
                     <div className="text-xs text-gray-500 mt-2">
                       Reported by @{report.user.username}
-                      {report.user.isVerified && ' ✓'}
+                      {report.user.isVerified && " ✓"}
                     </div>
                   )}
                 </CardContent>
@@ -342,13 +398,12 @@ const Reports = () => {
                 Join the community
               </h3>
               <p className="text-gray-600 mb-4">
-                Sign up to report incidents, verify reports, and help keep your community safe.
+                Sign up to report incidents, verify reports, and help keep your
+                community safe.
               </p>
               <div className="flex justify-center gap-4">
-                <Button onClick={() => navigate('/register')}>
-                  Sign Up
-                </Button>
-                <Button variant="outline" onClick={() => navigate('/login')}>
+                <Button onClick={() => navigate("/register")}>Sign Up</Button>
+                <Button variant="outline" onClick={() => navigate("/login")}>
                   Sign In
                 </Button>
               </div>

@@ -133,7 +133,11 @@ export default function Index() {
                 </div>
               ) : (
                 <div className="flex items-center space-x-2">
-                  <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => navigate("/login")}
+                  >
                     Sign In
                   </Button>
                   <Button size="sm" onClick={() => navigate("/register")}>

@@ -52,23 +52,27 @@ The frontend will run on `http://localhost:5173`
 ## ✨ New Features Added
 
 ### 🔐 User Authentication
+
 - **Sign Up/Sign In**: Complete user registration and login system
 - **JWT Authentication**: Secure token-based authentication
 - **User Profiles**: Manage user information and verification status
 
 ### 🏘️ Community Reports
+
 - **Report Incidents**: Users can report safety incidents with location data
 - **Browse Reports**: View community-reported incidents in your area
 - **Verify Reports**: Community members can verify incident reports
 - **Geographic Filtering**: Find reports near your location
 
 ### 🎤 Voice Library
+
 - **Upload Voices**: Contribute voice recordings for fake call scenarios
 - **Browse Voices**: Search and filter available voices by type, gender, age
 - **Rate & Review**: Community rating system for voice quality
 - **Download Tracking**: Analytics for most popular voices
 
 ### 🔧 Backend Features
+
 - **RESTful API**: Complete API for all frontend features
 - **File Upload**: Secure audio file handling with validation
 - **Database**: SQLite database with comprehensive schema
@@ -78,6 +82,7 @@ The frontend will run on `http://localhost:5173`
 ## 📱 How to Use
 
 ### For New Users:
+
 1. **Sign Up**: Create an account to access community features
 2. **Browse Reports**: View safety incidents in your area
 3. **Browse Voices**: Explore available voices for fake calls
@@ -85,6 +90,7 @@ The frontend will run on `http://localhost:5173`
 5. **Upload Voices**: Help others by contributing voice recordings
 
 ### For Existing Users:
+
 - All your previous safety features work as before
 - New community features are now available
 - Sign in to access full functionality
@@ -92,6 +98,7 @@ The frontend will run on `http://localhost:5173`
 ## 🔗 API Integration
 
 The frontend now connects to the backend through:
+
 - **Authentication API**: Login, registration, profile management
 - **Reports API**: Create, read, verify community reports
 - **Voices API**: Upload, browse, rate voice contributions
@@ -108,6 +115,7 @@ The frontend now connects to the backend through:
 ## 📊 Database Schema
 
 The backend includes tables for:
+
 - **Users**: User accounts and profiles
 - **Community Reports**: Safety incident reports
 - **Voice Contributions**: User-uploaded voice recordings
@@ -118,6 +126,7 @@ The backend includes tables for:
 ## 🚨 Emergency Features (Still Available)
 
 All your original emergency features work exactly as before:
+
 - Emergency SOS alerts
 - Fake call functionality (now with community voices!)
 - Location sharing
@@ -131,6 +140,7 @@ All your original emergency features work exactly as before:
 ## 📝 Environment Configuration
 
 ### Backend (.env)
+
 ```
 PORT=3001
 NODE_ENV=development
@@ -142,6 +152,7 @@ ALLOWED_ORIGINS=http://localhost:3000,http://localhost:5173
 ```
 
 ### Frontend (.env)
+
 ```
 VITE_API_URL=http://localhost:3001/api
 VITE_APP_NAME=Siren Safety App
@@ -152,12 +163,14 @@ VITE_APP_NAME=Siren Safety App
 ### Running Both Servers
 
 **Terminal 1 (Backend):**
+
 ```bash
 cd server
 npm run dev
 ```
 
 **Terminal 2 (Frontend):**
+
 ```bash
 npm run dev
 ```
@@ -175,6 +188,7 @@ cd server && npm run build
 ## 📚 API Documentation
 
 Full API documentation is available in `server/README.md` with:
+
 - Authentication endpoints
 - Community reports API
 - Voice contributions API
@@ -184,6 +198,7 @@ Full API documentation is available in `server/README.md` with:
 ## 🎯 Next Steps
 
 You now have a fully integrated safety app with:
+
 - Real user authentication
 - Community-driven safety reports
 - Shared voice library for fake calls

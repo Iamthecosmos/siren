@@ -4,12 +4,14 @@
 
 The Siren safety app is now running in **development mode** with the following configuration:
 
-### Frontend: 
+### Frontend:
+
 - **Port**: 5173 (Vite dev server)
 - **Status**: ✅ Running
 - **Features**: All UI components and safety features available
 
 ### Backend Integration:
+
 - **API**: Graceful fallback to mock data when backend unavailable
 - **Authentication**: Mock authentication for development
 - **Community Features**: Available with sample data
@@ -17,8 +19,9 @@ The Siren safety app is now running in **development mode** with the following c
 ## How to Use Right Now:
 
 1. **Main App**: All your original safety features work perfectly:
+
    - Emergency SOS
-   - Fake Call 
+   - Fake Call
    - Location sharing
    - Quick dial
    - Danger zones
@@ -27,7 +30,7 @@ The Siren safety app is now running in **development mode** with the following c
    - Voice activation
    - Shake alerts
 
-2. **New Community Features**: 
+2. **New Community Features**:
    - Sign up/Login (mock authentication)
    - Browse community reports (sample data)
    - Voice library (sample data)
@@ -49,6 +52,7 @@ npm run dev    # Runs on port 3001
 ## App is Ready! 🎉
 
 Your safety app is fully functional with:
+
 - ✅ All emergency features working
 - ✅ Beautiful UI and navigation
 - ✅ New community features (with mock data)
