@@ -145,7 +145,10 @@ export default function Index() {
               <div className="sm:ml-3 ml-[10px]">
                 <ThemeToggle />
               </div>
-              <Badge variant="outline" className="text-safe border-safe ml-3 mt-[5px]">
+              <Badge
+                variant="outline"
+                className="text-safe border-safe ml-3 mt-[5px]"
+              >
                 Online
               </Badge>
             </div>
