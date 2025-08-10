@@ -147,14 +147,14 @@ export default function Index() {
               </div>
               <Badge
                 variant="outline"
-                className="text-safe border-safe ml-3 mt-[5px]"
+                className="text-safe border-safe ml-3 mt-[5px] sm:ml-3 ml-[9px]"
               >
                 Online
               </Badge>
             </div>
           </div>
         </div>
-        <p className="text-sm text-muted-foreground px-4 pb-4 sm:ml-0 ml-[9px]">
+        <p className="text-sm text-muted-foreground px-4 pb-4 ml-[9px]">
           Your personal safety companion
         </p>
       </header>
