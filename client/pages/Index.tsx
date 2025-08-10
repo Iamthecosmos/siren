@@ -115,6 +115,32 @@ export default function Index() {
               </div>
             </div>
             <div className="flex items-center space-x-3">
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-3">
+                  <span className="text-sm text-muted-foreground">
+                    Welcome, {user?.fullName || user?.username}
+                    {user?.isVerified && " ✓"}
+                  </span>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={logout}
+                    className="flex items-center gap-2"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    Sign Out
+                  </Button>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2">
+                  <Button variant="outline" size="sm" onClick={() => navigate("/login")}>
+                    Sign In
+                  </Button>
+                  <Button size="sm" onClick={() => navigate("/register")}>
+                    Sign Up
+                  </Button>
+                </div>
+              )}
               <ThemeToggle />
               <Badge variant="outline" className="text-safe border-safe">
                 Online
