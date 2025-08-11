@@ -147,7 +147,7 @@ export default function Index() {
               </div>
               <Badge
                 variant="outline"
-                className="text-safe border-safe ml-3 mt-[5px] sm:ml-3 ml-[9px]"
+                className="text-safe border-safe ml-3 mt-[5px] sm:ml-3 ml-[9px] sm:m-[5px_0_0_12px] m-[0_5px]"
               >
                 Online
               </Badge>
