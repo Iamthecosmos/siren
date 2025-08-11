@@ -11,14 +11,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, Shield, Phone, MessageSquare } from "lucide-react";
+import { ArrowLeft, Shield, Mail, MessageSquare } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
 const Login = () => {
-  const [phoneNumber, setPhoneNumber] = useState("");
+  const [email, setEmail] = useState("");
   const [otp, setOtp] = useState("");
-  const [step, setStep] = useState<"phone" | "otp">("phone");
+  const [step, setStep] = useState<"email" | "otp">("email");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -34,9 +34,9 @@ const Login = () => {
     setIsLoading(true);
     setError("");
 
-    // Validate phone number format
-    if (!phoneNumber || phoneNumber.length < 10) {
-      setError("Please enter a valid phone number");
+    // Validate email format
+    if (!email || !/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email address");
       setIsLoading(false);
       return;
     }
@@ -47,7 +47,7 @@ const Login = () => {
 
       toast({
         title: "OTP Sent!",
-        description: `We've sent a verification code to ${phoneNumber}`,
+        description: `We've sent a verification code to ${email}`,
       });
 
       setStep("otp");
@@ -69,7 +69,7 @@ const Login = () => {
       return;
     }
 
-    const result = await login(phoneNumber, otp);
+    const result = await login(email, otp);
 
     if (result.success) {
       toast({
@@ -109,17 +109,17 @@ const Login = () => {
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
-              {step === "phone" ? (
-                <Phone className="h-5 w-5" />
+              {step === "email" ? (
+                <Mail className="h-5 w-5" />
               ) : (
                 <MessageSquare className="h-5 w-5" />
               )}
-              {step === "phone" ? "Enter Phone Number" : "Verify OTP"}
+              {step === "email" ? "Enter Email Address" : "Verify OTP"}
             </CardTitle>
             <CardDescription>
-              {step === "phone"
-                ? "Enter your phone number to receive a verification code"
-                : `Enter the 6-digit code sent to ${phoneNumber}`}
+              {step === "email"
+                ? "Enter your email address to receive a verification code"
+                : `Enter the 6-digit code sent to ${email}`}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -129,20 +129,20 @@ const Login = () => {
               </Alert>
             )}
 
-            {step === "phone" ? (
+            {step === "email" ? (
               <form onSubmit={handleSendOTP} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="phone">Phone Number</Label>
+                  <Label htmlFor="email">Email Address</Label>
                   <Input
-                    id="phone"
-                    type="tel"
-                    value={phoneNumber}
-                    onChange={(e) => setPhoneNumber(e.target.value)}
-                    placeholder="+1 (555) 123-4567"
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="your@email.com"
                     required
                   />
                   <p className="text-xs text-muted-foreground">
-                    We'll send you a verification code via SMS
+                    We'll send you a verification code via email
                   </p>
                 </div>
 
@@ -176,13 +176,13 @@ const Login = () => {
                     type="button"
                     variant="outline"
                     onClick={() => {
-                      setStep("phone");
+                      setStep("email");
                       setOtp("");
                       setError("");
                     }}
                     className="flex-1"
                   >
-                    Change Number
+                    Change Email
                   </Button>
                   <Button type="submit" className="flex-1" disabled={isLoading}>
                     {isLoading ? "Verifying..." : "Verify & Sign In"}
