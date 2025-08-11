@@ -7,12 +7,12 @@ interface AuthContextType {
   isAuthenticated: boolean;
   isLoading: boolean;
   login: (
-    phoneNumber: string,
+    email: string,
     otp: string,
   ) => Promise<{ success: boolean; error?: string }>;
   register: (userData: {
     username: string;
-    phoneNumber: string;
+    email: string;
     fullName: string;
     otp: string;
   }) => Promise<{ success: boolean; error?: string }>;
@@ -65,9 +65,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     checkAuth();
   }, [token]);
 
-  const login = async (phoneNumber: string, otp: string) => {
+  const login = async (email: string, otp: string) => {
     try {
-      const response = await api.login({ phoneNumber, otp });
+      const response = await api.login({ email, otp });
 
       if (response.data) {
         const { token: newToken, user: userData } = response.data;
@@ -85,7 +85,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (userData: {
     username: string;
-    phoneNumber: string;
+    email: string;
     fullName: string;
     otp: string;
   }) => {
