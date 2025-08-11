@@ -11,7 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, Shield, Phone, MessageSquare, User } from "lucide-react";
+import { ArrowLeft, Shield, Mail, MessageSquare, User } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { useToast } from "@/hooks/use-toast";
 
@@ -19,7 +19,7 @@ const Register = () => {
   const [formData, setFormData] = useState({
     fullName: "",
     username: "",
-    phoneNumber: "",
+    email: "",
     otp: "",
   });
   const [step, setStep] = useState<"details" | "otp">("details");
@@ -38,7 +38,7 @@ const Register = () => {
 
   const isFormValid = () => {
     if (step === "details") {
-      return formData.fullName && formData.username && formData.phoneNumber;
+      return formData.fullName && formData.username && formData.email && /\S+@\S+\.\S+/.test(formData.email);
     }
     return formData.otp && formData.otp.length === 6;
   };
@@ -60,7 +60,7 @@ const Register = () => {
 
       toast({
         title: "OTP Sent!",
-        description: `We've sent a verification code to ${formData.phoneNumber}`,
+        description: `We've sent a verification code to ${formData.email}`,
       });
 
       setStep("otp");
@@ -85,7 +85,7 @@ const Register = () => {
     const result = await register({
       fullName: formData.fullName,
       username: formData.username,
-      phoneNumber: formData.phoneNumber,
+      email: formData.email,
       otp: formData.otp,
     });
 
@@ -137,7 +137,7 @@ const Register = () => {
             <CardDescription>
               {step === "details"
                 ? "Fill in your details to create your Siren account"
-                : `Enter the 6-digit code sent to ${formData.phoneNumber}`}
+                : `Enter the 6-digit code sent to ${formData.email}`}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -174,17 +174,17 @@ const Register = () => {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phoneNumber">Phone Number</Label>
+                  <Label htmlFor="email">Email Address</Label>
                   <Input
-                    id="phoneNumber"
-                    type="tel"
-                    value={formData.phoneNumber}
-                    onChange={handleInputChange("phoneNumber")}
-                    placeholder="+1 (555) 123-4567"
+                    id="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange("email")}
+                    placeholder="your@email.com"
                     required
                   />
                   <p className="text-xs text-muted-foreground">
-                    We'll send you a verification code via SMS
+                    We'll send you a verification code via email
                   </p>
                 </div>
 
