@@ -38,7 +38,12 @@ const Register = () => {
 
   const isFormValid = () => {
     if (step === "details") {
-      return formData.fullName && formData.username && formData.email && /\S+@\S+\.\S+/.test(formData.email);
+      return (
+        formData.fullName &&
+        formData.username &&
+        formData.email &&
+        /\S+@\S+\.\S+/.test(formData.email)
+      );
     }
     return formData.otp && formData.otp.length === 6;
   };
