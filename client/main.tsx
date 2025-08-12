@@ -8,6 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "next-themes";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { PWAInstall } from "@/components/PWAInstall";
+import { OfflineIndicator } from "@/components/OfflineIndicator";
+import { usePWA } from "@/hooks/usePWA";
 import Index from "./pages/Index";
 import Emergency from "./pages/Emergency";
 import FakeCall from "./pages/FakeCall";
@@ -29,45 +32,53 @@ import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="light"
-      enableSystem={true}
-      themes={["light", "dark"]}
-    >
-      <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/emergency" element={<Emergency />} />
-              <Route path="/fake-call" element={<FakeCall />} />
-              <Route path="/location" element={<Location />} />
-              <Route path="/quick-dial" element={<QuickDial />} />
-              <Route path="/danger-zones" element={<DangerZones />} />
-              <Route path="/hidden-mode" element={<HiddenMode />} />
-              <Route path="/calculator" element={<Calculator />} />
-              <Route path="/clock" element={<Clock />} />
-              <Route path="/check-in" element={<CheckIn />} />
-              <Route path="/voice-activation" element={<VoiceActivation />} />
-              <Route path="/shake-alert" element={<ShakeAlert />} />
-              <Route path="/report-incident" element={<ReportIncident />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/reports" element={<Reports />} />
-              <Route path="/voices" element={<Voices />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
-      </AuthProvider>
-    </ThemeProvider>
-  </QueryClientProvider>
-);
+const AppContent = () => {
+  usePWA(); // Initialize PWA functionality
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="light"
+        enableSystem={true}
+        themes={["light", "dark"]}
+      >
+        <AuthProvider>
+          <TooltipProvider>
+            <Toaster />
+            <Sonner />
+            <BrowserRouter>
+              <Routes>
+                <Route path="/" element={<Index />} />
+                <Route path="/emergency" element={<Emergency />} />
+                <Route path="/fake-call" element={<FakeCall />} />
+                <Route path="/location" element={<Location />} />
+                <Route path="/quick-dial" element={<QuickDial />} />
+                <Route path="/danger-zones" element={<DangerZones />} />
+                <Route path="/hidden-mode" element={<HiddenMode />} />
+                <Route path="/calculator" element={<Calculator />} />
+                <Route path="/clock" element={<Clock />} />
+                <Route path="/check-in" element={<CheckIn />} />
+                <Route path="/voice-activation" element={<VoiceActivation />} />
+                <Route path="/shake-alert" element={<ShakeAlert />} />
+                <Route path="/report-incident" element={<ReportIncident />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/reports" element={<Reports />} />
+                <Route path="/voices" element={<Voices />} />
+                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </BrowserRouter>
+            <PWAInstall />
+            <OfflineIndicator />
+          </TooltipProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </QueryClientProvider>
+  );
+};
+
+const App = () => <AppContent />;
 
 createRoot(document.getElementById("root")!).render(<App />);
