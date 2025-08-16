@@ -103,7 +103,8 @@ export default function Index() {
               <div
                 className="w-[79px] h-[66px] sm:w-[79px] sm:h-[66px] rounded-xl flex items-center justify-center sm:ml-0 ml-[-3px]"
                 style={{
-                  backgroundImage: "url('https://cdn.builder.io/api/v1/image/assets%2F87db6342178745cf897f5e0b3b4c6d5f%2F8206157d8feb4014a14639b6f7489599')",
+                  backgroundImage:
+                    "url('https://cdn.builder.io/api/v1/image/assets%2F87db6342178745cf897f5e0b3b4c6d5f%2F8206157d8feb4014a14639b6f7489599')",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
                   backgroundSize: "cover",
