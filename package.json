@@ -36,7 +36,8 @@
     "sqlite3": "^5.1.6",
     "express-validator": "^7.0.1",
     "bcryptjs": "^2.4.3",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@hookform/resolvers": "^3.9.0",
@@ -79,6 +80,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/bcryptjs": "^2.4.6",
     "@types/multer": "^1.4.11",
+    "@types/uuid": "^9.0.8",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.176.0",
