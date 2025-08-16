@@ -60,10 +60,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // File upload configuration
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
+  destination: (req: any, file: Express.Multer.File, cb: any) => {
     cb(null, 'uploads/');
   },
-  filename: (req, file, cb) => {
+  filename: (req: any, file: Express.Multer.File, cb: any) => {
     cb(null, Date.now() + path.extname(file.originalname));
   }
 });
