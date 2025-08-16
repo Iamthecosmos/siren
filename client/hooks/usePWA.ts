@@ -1,38 +1,5 @@
 import { useState, useEffect } from 'react';
 
-interface ServiceWorkerRegistration {
-  waiting: ServiceWorker | null;
-  installing: ServiceWorker | null;
-  active: ServiceWorker | null;
-  updateViaCache: 'all' | 'imports' | 'none';
-  scope: string;
-  navigationPreload: NavigationPreloadManager | null;
-  pushManager: PushManager;
-  sync: SyncManager;
-  updateFound: boolean;
-  onupdatefound: ((this: ServiceWorkerRegistration, ev: Event) => any) | null;
-  oncontrollerchange: ((this: ServiceWorkerRegistration, ev: Event) => any) | null;
-  onstatechange: ((this: ServiceWorkerRegistration, ev: Event) => any) | null;
-  addEventListener<K extends keyof ServiceWorkerRegistrationEventMap>(
-    type: K,
-    listener: (this: ServiceWorkerRegistration, ev: ServiceWorkerRegistrationEventMap[K]) => any,
-    options?: boolean | AddEventListenerOptions
-  ): void;
-  removeEventListener<K extends keyof ServiceWorkerRegistrationEventMap>(
-    type: K,
-    listener: (this: ServiceWorkerRegistration, ev: ServiceWorkerRegistrationEventMap[K]) => any,
-    options?: boolean | EventListenerOptions
-  ): void;
-  getNotifications(options?: GetNotificationOptions): Promise<Notification[]>;
-  showNotification(title: string, options?: NotificationOptions): Promise<void>;
-  update(): Promise<void>;
-  unregister(): Promise<boolean>;
-  reload(): void;
-  getPushSubscription(options?: PushSubscriptionOptions): Promise<PushSubscription | null>;
-  pushManager: PushManager;
-  sync: SyncManager;
-}
-
 export function usePWA() {
   const [registration, setRegistration] = useState<ServiceWorkerRegistration | null>(null);
   const [updateAvailable, setUpdateAvailable] = useState(false);
@@ -140,22 +107,9 @@ export function usePWA() {
       body: 'This is a test notification from Siren',
       icon: '/icons/icon-192x192.png',
       badge: '/icons/icon-72x72.png',
-      vibrate: [200, 100, 200],
       data: {
         url: '/emergency',
       },
-      actions: [
-        {
-          action: 'view',
-          title: 'View Alert',
-          icon: '/icons/icon-96x96.png',
-        },
-        {
-          action: 'close',
-          title: 'Close',
-          icon: '/icons/icon-96x96.png',
-        },
-      ],
     });
   };
 
