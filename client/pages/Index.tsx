@@ -98,16 +98,20 @@ export default function Index() {
       {/* Header */}
       <header className="bg-background/80 backdrop-blur-sm border-b sticky top-0 z-50">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between sm:justify-between justify-start">
             <div className="flex items-center space-x-3">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center sm:ml-0 ml-[-3px]"
+                className="w-10 h-10 rounded-xl flex items-center justify-center sm:ml-0 ml-[-3px] sm:w-10 sm:h-10 w-[79px] h-[66px]"
                 style={{
                   backgroundColor: "rgba(255, 108, 250, 1)",
                   fontFamily: "Tapestry, sans-serif",
+                  backgroundImage: "var(--mobile-bg-image, none)",
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
+                  backgroundSize: "cover",
                 }}
               ></div>
-              <div className="text-xl font-bold text-foreground ml-3 pr-[9px]">
+              <div className="text-xl font-bold text-foreground ml-3 pr-[9px] sm:block hidden">
                 Siren
               </div>
             </div>
@@ -134,6 +138,7 @@ export default function Index() {
                     variant="outline"
                     size="sm"
                     onClick={() => navigate("/login")}
+                    className="sm:ml-0 ml-[10px]"
                   >
                     Sign In
                   </Button>
