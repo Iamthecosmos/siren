@@ -11,6 +11,26 @@ import multer from 'multer';
 import path from 'path';
 import cors from 'cors';
 
+// Type definitions
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  password_hash: string;
+  created_at: string;
+}
+
+interface Incident {
+  id: number;
+  user_id: number;
+  title: string;
+  description?: string;
+  location?: string;
+  severity: string;
+  image_path?: string;
+  created_at: string;
+}
+
 // Load environment variables
 dotenv.config();
 
@@ -176,7 +196,7 @@ app.post('/api/login', [
 ], (req, res) => {
   const { username, password } = req.body;
   
-  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user) => {
+  db.get('SELECT * FROM users WHERE username = ?', [username], async (err, user: User | undefined) => {
     if (err) {
       return res.status(500).json({ error: 'Database error' });
     }
@@ -237,7 +257,7 @@ app.post('/api/incidents', authenticateToken, upload.single('image'), [
 });
 
 app.get('/api/incidents', authenticateToken, (req, res) => {
-  db.all('SELECT * FROM incidents ORDER BY created_at DESC', (err, incidents) => {
+  db.all('SELECT * FROM incidents ORDER BY created_at DESC', (err, incidents: Incident[]) => {
     if (err) {
       return res.status(500).json({ error: 'Database error' });
     }
